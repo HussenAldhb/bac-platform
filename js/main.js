@@ -1,6 +1,3 @@
-// ========== دوال مساعدة عامة ==========
-
-// تحويل الثواني إلى صيغة hh:mm:ss
 function formatDuration(seconds) {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -8,11 +5,9 @@ function formatDuration(seconds) {
     return [h, m, s].map(v => String(v).padStart(2, '0')).join(':');
 }
 
-// طي وفتح الوحدات (لصفحات المواد)
 function toggleUnit(header) {
     const subUnits = header.nextElementSibling;
     const icon = header.querySelector('i');
-    
     if (subUnits.style.display === 'none') {
         subUnits.style.display = 'block';
         icon.className = 'fas fa-chevron-down';
@@ -22,17 +17,14 @@ function toggleUnit(header) {
     }
 }
 
-// حفظ التقدم (لصفحات المواد)
 function saveProgress(subjectKey, watchedIds) {
     localStorage.setItem(subjectKey, JSON.stringify(watchedIds));
 }
 
-// تحميل التقدم (لصفحات المواد)
 function loadProgress(subjectKey) {
     const stored = localStorage.getItem(subjectKey);
     return stored ? JSON.parse(stored) : [];
 }
 
-// رسالة ترحيب في الكونسول
 console.log('🚀 منصة البكالوريا الذكية - مشروع مفتوح المصدر');
-console.log('📌 GitHub: https://github.com/Hussen-Aldhb/bac-platform');
+console.log('📌 GitHub: https://github.com/HusseAldhb/bac-platform');
