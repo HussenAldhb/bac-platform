@@ -3,231 +3,856 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة البكالوريا الذكية – التعلم بذكاء</title>
+    <title>منصة البكالوريا – رمضانك معنا</title>
     
-    <!-- الخطوط والأيقونات -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- ملفات التنسيق -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/home.css">
     
     <!-- PWA manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ffd700">
+    <meta name="theme-color" content="#a8d8ea">
+    
+    <style>
+        /* ===== متغيرات الألوان الطبيعية مع لمسة رمضانية ===== */
+        :root {
+            --snow-white: #f9fbfd;
+            --ice-blue: #e1f1fd;
+            --mist-green: #d4e9e2;
+            --soft-lavender: #e2ddf2;
+            --pearl: #f5efe6;
+            --warm-sand: #f7f3e9;
+            --deep-teal: #3c6e71;
+            --ramadan-gold: #e6c300;
+            --ramadan-glow: rgba(230, 195, 0, 0.15);
+            --text-soft: #2c3e50;
+            --text-light: #5d6d7e;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            background: linear-gradient(145deg, var(--ice-blue) 0%, var(--mist-green) 100%);
+            color: var(--text-soft);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== زخارف رمضانية متحركة ===== */
+        .ramadan-decor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .lantern {
+            position: absolute;
+            color: var(--ramadan-gold);
+            font-size: 2.5rem;
+            opacity: 0.15;
+            animation: floatLantern 8s infinite alternate ease-in-out;
+        }
+
+        .lantern-1 { top: 5%; left: 2%; transform: rotate(-5deg); }
+        .lantern-2 { bottom: 8%; right: 3%; transform: rotate(8deg); animation-delay: -2s; }
+        .lantern-3 { top: 15%; right: 8%; font-size: 2rem; opacity: 0.1; }
+        
+        .crescent {
+            position: absolute;
+            top: 8%;
+            right: 5%;
+            font-size: 4rem;
+            color: var(--ramadan-gold);
+            opacity: 0.1;
+            transform: rotate(15deg);
+            animation: glowCrescent 5s infinite alternate;
+        }
+
+        @keyframes floatLantern {
+            from { transform: translateY(0) rotate(-5deg); }
+            to { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes glowCrescent {
+            from { opacity: 0.1; text-shadow: 0 0 10px var(--ramadan-gold); }
+            to { opacity: 0.2; text-shadow: 0 0 30px var(--ramadan-gold); }
+        }
+
+        /* ===== حبات الثلج مع لمسة ذهبية خفيفة ===== */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.5rem;
+            user-select: none;
+            animation: fall linear infinite;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .snowflake::before {
+            content: "❄️";
+        }
+
+        .snowflake.golden {
+            color: rgba(230, 195, 0, 0.3);
+        }
+
+        .snowflake.golden::before {
+            content: "✨";
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-10vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* ===== طبقة ضبابية ناعمة ===== */
+        .soft-mist {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 60%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* ===== الحاوية الرئيسية ===== */
+        .app-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ===== الهيدر الزجاجي الناعم ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 35px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 60px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--deep-teal);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            font-weight: 300;
+            color: var(--text-light);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--deep-teal);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+        }
+
+        #installBtn {
+            background: var(--deep-teal);
+            color: white;
+            border: none;
+        }
+
+        #installBtn:hover {
+            background: #2c5a5d;
+        }
+
+        /* ===== قسم الترحيب الرمضاني ===== */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 15;
+        }
+
+        .ramadan-greeting {
+            font-size: 1.2rem;
+            color: var(--ramadan-gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ramadan-greeting i {
+            font-size: 1.5rem;
+            animation: gentleWobble 3s infinite;
+        }
+
+        @keyframes gentleWobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--deep-teal);
+            margin-bottom: 15px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+        }
+
+        .welcome-title span {
+            color: #4a6b6e;
+            font-weight: 300;
+            display: block;
+            font-size: 1.8rem;
+            margin-top: 5px;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== إحصائيات ناعمة ===== */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .stat-soft {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 20px 35px;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s;
+        }
+
+        .stat-soft:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--deep-teal);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* ===== عنوان المواد ===== */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-heading h2 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: var(--deep-teal);
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* ===== شبكة المواد بتصميم كروت زجاجية ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 10px;
+            margin-bottom: 60px;
+        }
+
+        .subject-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--deep-teal), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .subject-card:hover::before {
+            opacity: 1;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: var(--deep-teal);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--text-soft);
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: space-around;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 15px 0;
+        }
+
+        .progress-soft {
+            background: rgba(60, 110, 113, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill-soft {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.4s;
+        }
+
+        .card-percent {
+            font-size: 0.9rem;
+            color: var(--deep-teal);
+        }
+
+        /* ===== قسم عن المنصة – تصميم طبيعي ===== */
+        .nature-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            padding: 50px 40px;
+            margin: 50px 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nature-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .profile-large-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-large {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .nature-text {
+            flex: 1;
+        }
+
+        .nature-text h3 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: var(--deep-teal);
+            margin-bottom: 20px;
+        }
+
+        .nature-text p {
+            margin-bottom: 18px;
+            line-height: 1.8;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .nature-text strong {
+            color: var(--deep-teal);
+            font-weight: 600;
+        }
+
+        .github-soft {
+            background: rgba(60, 110, 113, 0.05);
+            border: 1px solid rgba(60, 110, 113, 0.2);
+            border-radius: 40px;
+            padding: 18px 25px;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .github-soft i {
+            font-size: 2rem;
+            color: var(--deep-teal);
+        }
+
+        .github-link {
+            color: var(--deep-teal);
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 1rem;
+        }
+
+        .github-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-soft {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--deep-teal);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-soft:hover {
+            background: #2c5a5d;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(60, 110, 113, 0.2);
+        }
+
+        /* ===== تذييل ===== */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--text-light);
+            border-top: 1px solid rgba(60, 110, 113, 0.2);
+        }
+
+        .footer a {
+            color: var(--deep-teal);
+            text-decoration: none;
+        }
+
+        .footer-heart {
+            color: #e6b8b8;
+        }
+
+        /* ===== زر العودة للأعلى ===== */
+        .scroll-soft {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--deep-teal);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-soft.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-soft:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* ===== تصميم متجاوب ===== */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 18px;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-title span {
+                font-size: 1.3rem;
+            }
+            
+            .nature-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .github-soft {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- خلفية متحركة متطورة -->
-    <div id="bg-canvas"></div>
-    <div class="overlay-glow"></div>
-    
-    <!-- جزيئات متحركة إضافية -->
-    <div id="particles-js"></div>
+    <!-- زخارف رمضانية خلفية -->
+    <div class="ramadan-decor">
+        <div class="lantern lantern-1">🏮</div>
+        <div class="lantern lantern-2">🏮</div>
+        <div class="lantern lantern-3">🏮</div>
+        <div class="crescent">🌙</div>
+    </div>
+
+    <!-- حبات الثلج مع لمسة ذهبية -->
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="soft-mist"></div>
 
     <div class="app-container">
-        <!-- الهيدر الزجاجي الفاخر -->
+        <!-- الهيدر -->
         <header class="header">
-            <div class="logo">
-                <div class="logo-wrapper">
-                    <img src="assets/images/profile.png" alt="حسين الدهب" class="profile-img" onerror="this.style.display='none'">
-                    <div class="logo-text">منصة<span>البكالوريا</span></div>
-                </div>
+            <div class="logo-wrapper">
+                <img src="assets/images/profile.png" alt="حسين الدهب" class="profile-img" onerror="this.style.display='none'">
+                <div class="logo-text">منصة <span>البكالوريا</span></div>
             </div>
-            
             <div class="header-controls">
-                <button class="control-btn glass-btn" onclick="toggleDarkMode()" id="darkBtn">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="control-btn glass-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                <button class="control-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
                     <i class="fas fa-home"></i>
                 </button>
-                <button class="control-btn glass-btn" onclick="window.open('https://github.com/HusseAldhb/bac-platform', '_blank')">
+                <button class="control-btn" onclick="window.open('https://github.com/HusseAldhb/bac-platform', '_blank')">
                     <i class="fab fa-github"></i>
                 </button>
-                <button class="control-btn glass-btn" onclick="installApp()" id="installBtn">
+                <button class="control-btn" onclick="installApp()" id="installBtn">
                     <i class="fas fa-download"></i>
                 </button>
             </div>
         </header>
 
-        <!-- قسم الترحيب المتحرك -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title animate-title">
-                    منصة البكالوريا <span class="gold-text">الذكية</span>
-                </h1>
-                <p class="hero-subtitle">رحلة التعلم تصبح أكثر متعة مع تتبع التقدم والتحفيز الذكي</p>
-                <div class="hero-stats" id="heroStats">
-                    <div class="hero-stat-item">
-                        <span class="hero-stat-value" id="totalHeroLessons">0</span>
-                        <span class="hero-stat-label">درس</span>
-                    </div>
-                    <div class="hero-stat-divider"></div>
-                    <div class="hero-stat-item">
-                        <span class="hero-stat-value" id="watchedHeroLessons">0</span>
-                        <span class="hero-stat-label">شوهد</span>
-                    </div>
-                    <div class="hero-stat-divider"></div>
-                    <div class="hero-stat-item">
-                        <span class="hero-stat-value" id="heroProgress">0%</span>
-                        <span class="hero-stat-label">مكتمل</span>
-                    </div>
-                </div>
+        <!-- قسم الترحيب الرمضاني -->
+        <section class="welcome-section">
+            <div class="ramadan-greeting">
+                <i class="fas fa-star-and-crescent"></i>
+                <span>رمضان كريم • تقبل الله صيامكم وقيامكم</span>
+                <i class="fas fa-lantern"></i>
             </div>
+            <h1 class="welcome-title">
+                مرحباً بك في منصة البكالوريا
+                <span>تعلم بنقاء الثلج وهدوء الطبيعة</span>
+            </h1>
+            <p class="welcome-subtitle">
+                في هذا الشهر المبارك، نسأل الله أن ييسر دروب العلم لكم
+            </p>
         </section>
 
-        <!-- إحصائيات عامة محسنة -->
-        <div class="stats-grid">
-            <div class="stat-card premium-card">
-                <div class="stat-icon"><i class="fas fa-book-open"></i></div>
-                <div class="stat-details">
-                    <span class="stat-number" id="totalLessons">0</span>
-                    <span class="stat-label">إجمالي الدروس</span>
-                </div>
+        <!-- إحصائيات ناعمة -->
+        <div class="stats-container">
+            <div class="stat-soft">
+                <span class="stat-number" id="totalLessons">0</span>
+                <div class="stat-label">إجمالي الدروس</div>
             </div>
-            <div class="stat-card premium-card">
-                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                <div class="stat-details">
-                    <span class="stat-number" id="watchedLessons">0</span>
-                    <span class="stat-label">دروس شوهدت</span>
-                </div>
+            <div class="stat-soft">
+                <span class="stat-number" id="watchedLessons">0</span>
+                <div class="stat-label">دروس شوهدت</div>
             </div>
-            <div class="stat-card premium-card">
-                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-                <div class="stat-details">
-                    <span class="stat-number" id="overallProgress">0%</span>
-                    <span class="stat-label">التقدم العام</span>
-                </div>
+            <div class="stat-soft">
+                <span class="stat-number" id="overallProgress">0%</span>
+                <div class="stat-label">التقدم العام</div>
             </div>
         </div>
 
         <!-- عنوان المواد -->
-        <div class="section-header">
-            <h2 class="section-title">📚 المواد الدراسية</h2>
-            <p class="section-subtitle">اختر مادتك وابدأ رحلة التميز</p>
+        <div class="section-heading">
+            <h2>📚 المواد الدراسية</h2>
+            <p>اختر مادتك وابدأ رحلة التعلم</p>
         </div>
 
-        <!-- شبكة المواد بتصميم ثلاثي الأبعاد -->
+        <!-- شبكة المواد -->
         <div class="cards-grid" id="cardsGrid"></div>
 
-        <!-- قسم عن المنصة بتصميم فاخر -->
-        <section class="about-section premium-about">
-            <div class="about-content">
-                <div class="about-image-wrapper">
-                    <div class="about-image-glow"></div>
-                    <img src="assets/images/profile.png" alt="حسين الدهب" class="about-profile-img" onerror="this.style.display='none'">
+        <!-- قسم عن المنصة -->
+        <section class="nature-section">
+            <div class="nature-content">
+                <div class="profile-large-wrapper">
+                    <img src="assets/images/profile.png" alt="حسين الدهب" class="profile-large" onerror="this.style.display='none'">
                 </div>
-                <div class="about-text-wrapper">
-                    <h2 class="about-title">✨ منصة البكالوريا الذكية</h2>
-                    <div class="about-text-content">
-                        <p class="about-paragraph">
-                            <strong class="gold-text">منصة البكالوريا الذكية</strong> هي مشروع <strong class="gold-text">مفتوح المصدر</strong> 
-                            يهدف إلى تنظيم المحتوى التعليمي المنشور على YouTube لمنهاج البكالوريا السوري، 
-                            مع إضافة أدوات تفاعلية لتتبع التقدم وتحفيز الطالب.
-                        </p>
-                        <p class="about-paragraph">
-                            <span class="highlight">✨ الفكرة:</span> تجميع وتنظيم أكثر من 
-                            <strong class="gold-text">1000 فيديو تعليمي</strong> في 8 مواد دراسية، 
-                            مع إمكانية تتبع المشاهدة وخطة يومية ذكية تعتمد على تقدمك الفعلي.
-                        </p>
-                        <p class="about-paragraph">
-                            <span class="highlight">🔧 التقنيات المستخدمة:</span> HTML5، CSS3، JavaScript، 
-                            LocalStorage، GitHub Pages.
-                        </p>
-                        <p class="about-paragraph">
-                            <span class="highlight">⚖️ حقوق النشر:</span> جميع الفيديوهات منشورة أصلاً على 
-                            <strong>YouTube</strong>. المشروع <strong>غير ربحي</strong> ولا يحتوي على أي فيديو محفوظ، 
-                            فقط معرفات التضمين. كل مشاهدة تذهب إلى القناة الأصلية.
-                        </p>
-                        <p class="about-paragraph">
-                            <span class="highlight">🤝 مفتوح المصدر:</span> المشروع متاح بالكامل تحت رخصة MIT على GitHub، 
-                            ويمكن لأي شخص <strong>نسخه وتعديله وتطويره</strong>.
-                        </p>
-                        <div class="github-card">
-                            <i class="fab fa-github github-icon"></i>
-                            <div class="github-info">
-                                <span class="github-label">رابط المستودع:</span>
-                                <a href="https://github.com/HusseAldhb/bac-platform" target="_blank" class="github-link">
-                                    https://github.com/HusseAldhb/bac-platform
-                                </a>
-                            </div>
-                        </div>
-                        <a href="https://github.com/HusseAldhb/bac-platform" target="_blank" class="github-action-btn">
-                            <i class="fab fa-github"></i>
-                            <span>استكشف المشروع على GitHub</span>
+                <div class="nature-text">
+                    <h3>عن المنصة</h3>
+                    <p><strong>منصة البكالوريا الذكية</strong> مشروع مفتوح المصدر لتنظيم المحتوى التعليمي على YouTube لمنهاج البكالوريا السوري، مع أدوات تفاعلية لتتبع التقدم وتحفيز الطالب.</p>
+                    <p><strong>✨ الفكرة:</strong> تنظيم أكثر من <strong>1000 فيديو تعليمي</strong> في 8 مواد دراسية.</p>
+                    <p><strong>⚖️ حقوق النشر:</strong> جميع الفيديوهات منشورة أصلاً على <strong>YouTube</strong>، والمشروع غير ربحي ولا يحتوي على أي فيديو محفوظ.</p>
+                    
+                    <div class="github-soft">
+                        <i class="fab fa-github"></i>
+                        <a href="https://github.com/HusseAldhb/bac-platform" target="_blank" class="github-link">
+                            https://github.com/HusseAldhb/bac-platform
                         </a>
                     </div>
+                    
+                    <a href="https://github.com/HusseAldhb/bac-platform" target="_blank" class="btn-soft">
+                        <i class="fab fa-github"></i>
+                        استكشف المشروع على GitHub
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- تذييل الصفحة -->
+        <!-- تذييل -->
         <footer class="footer">
-            <div class="footer-content">
-                <p class="footer-copyright">© 2026 حسين الدهب – جميع الحقوق محفوظة للمدرسين أصحاب المحتوى الأصلي</p>
-                <div class="footer-links">
-                    <a href="https://github.com/HusseAldhb/bac-platform" target="_blank" class="footer-link">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <span class="footer-separator">|</span>
-                    <span class="footer-heart">
-                        <i class="fas fa-heart" style="color: #ff4d4d;"></i> مفتوح المصدر
-                    </span>
-                </div>
-            </div>
+            <p>© 2026 حسين الدهب – جميع الحقوق محفوظة للمدرسين أصحاب المحتوى الأصلي</p>
+            <p>
+                <i class="fab fa-github"></i> <a href="https://github.com/HusseAldhb/bac-platform" target="_blank">GitHub</a> 
+                | <i class="fas fa-heart footer-heart"></i> مفتوح المصدر
+            </p>
         </footer>
     </div>
 
     <!-- زر العودة للأعلى -->
-    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <button class="scroll-soft" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- ملفات JavaScript -->
-    <script src="js/subjects-data.js"></script>
-    <script src="js/progress-tracker.js"></script>
-    <script src="js/home.js"></script>
-    <script src="js/main.js"></script>
-    
-    <!-- كود PWA والتثبيت المحسن -->
     <script>
-        let deferredPrompt;
+        // ==================== بيانات المواد ====================
+        const SUBJECTS = [
+            { id: 'chem', name: 'الكيمياء', icon: 'fas fa-flask', file: 'pages/che.html', totalVideos: 57, color: '#3c6e71', storageKey: 'chem_watched' },
+            { id: 'phy', name: 'الفيزياء', icon: 'fas fa-bolt', file: 'pages/phy.html', totalVideos: 129, color: '#3c6e71', storageKey: 'phys_watched' },
+            { id: 'ar', name: 'العربية', icon: 'fas fa-pen-fancy', file: 'pages/ar.html', totalVideos: 75, color: '#3c6e71', storageKey: 'arabic_watched' },
+            { id: 'sci', name: 'العلوم', icon: 'fas fa-dna', file: 'pages/sci.html', totalVideos: 133, color: '#3c6e71', storageKey: 'sci_watched' },
+            { id: 'isl', name: 'الديانة', icon: 'fas fa-mosque', file: 'pages/isl.html', totalVideos: 100, color: '#3c6e71', storageKey: 'deen_watched' },
+            { id: 'en', name: 'الإنجليزية', icon: 'fas fa-globe', file: 'pages/en.html', totalVideos: 62, color: '#3c6e71', storageKey: 'engWatched' },
+            { id: 'fr', name: 'الفرنسية', icon: 'fas fa-language', file: 'pages/fr.html', totalVideos: 150, color: '#3c6e71', storageKey: 'french_ultime_progress' },
+            { id: 'math', name: 'الرياضيات', icon: 'fas fa-square-root-alt', file: 'pages/ma.html', totalVideos: 339, color: '#3c6e71', storageKey: 'mathWatched' }
+        ];
 
+        // ==================== دوال التقدم ====================
+        function getWatchedCount(subject) {
+            try {
+                const stored = localStorage.getItem(subject.storageKey);
+                if (!stored) return 0;
+                if (subject.id === 'fr') {
+                    const data = JSON.parse(stored);
+                    return data.watched ? data.watched.length : 0;
+                }
+                const arr = JSON.parse(stored);
+                return Array.isArray(arr) ? arr.length : 0;
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        function updateStats() {
+            let total = 0, watched = 0;
+            SUBJECTS.forEach(s => {
+                total += s.totalVideos;
+                watched += getWatchedCount(s);
+            });
+            const percent = total ? Math.round((watched / total) * 100) : 0;
+            document.getElementById('totalLessons').textContent = total;
+            document.getElementById('watchedLessons').textContent = watched;
+            document.getElementById('overallProgress').textContent = percent + '%';
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = '';
+            SUBJECTS.forEach(sub => {
+                const watched = getWatchedCount(sub);
+                const percent = sub.totalVideos ? Math.round((watched / sub.totalVideos) * 100) : 0;
+                const card = document.createElement('a');
+                card.className = 'subject-card';
+                card.href = sub.file;
+                card.innerHTML = `
+                    <div class="card-icon"><i class="${sub.icon}"></i></div>
+                    <div class="card-title">${sub.name}</div>
+                    <div class="card-stats">
+                        <span><i class="fas fa-video"></i> ${sub.totalVideos}</span>
+                        <span><i class="fas fa-check-circle"></i> ${watched}</span>
+                    </div>
+                    <div class="progress-soft">
+                        <div class="progress-fill-soft" style="width: ${percent}%; background: ${sub.color};"></div>
+                    </div>
+                    <div class="card-percent">${percent}% مكتمل</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ==================== حبات الثلج الممزوجة بنجوم ذهبية ====================
+        function createSnowflakes() {
+            const snowContainer = document.getElementById('snowflakes');
+            for (let i = 0; i < 40; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                if (i % 5 === 0) snowflake.classList.add('golden');
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
+                snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
+                snowflake.style.opacity = Math.random() * 0.4 + 0.2;
+                snowContainer.appendChild(snowflake);
+            }
+        }
+
+        // ==================== PWA Installation ====================
+        let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             document.getElementById('installBtn').style.display = 'flex';
-            console.log('✅ الموقع قابل للتثبيت!');
         });
 
         function installApp() {
             if (!deferredPrompt) return;
             deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('✅ تم التثبيت');
-                }
+            deferredPrompt.userChoice.then(() => {
                 deferredPrompt = null;
                 document.getElementById('installBtn').style.display = 'none';
             });
         }
 
         window.addEventListener('appinstalled', () => {
-            console.log('✅ تم تثبيت التطبيق');
             document.getElementById('installBtn').style.display = 'none';
-            deferredPrompt = null;
         });
 
+        // Service Worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').then(reg => {
-                    console.log('✅ Service Worker registered:', reg.scope);
-                }).catch(err => {
-                    console.log('❌ Service Worker error:', err);
-                });
-            });
+            navigator.serviceWorker.register('sw.js');
         }
+
+        // ==================== زر العودة للأعلى ====================
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollTop');
+            if (window.scrollY > 400) btn.classList.add('visible');
+            else btn.classList.remove('visible');
+        });
+
+        // ==================== بدء التشغيل ====================
+        window.onload = function() {
+            updateStats();
+            renderCards();
+            createSnowflakes();
+        };
     </script>
 </body>
 </html>
