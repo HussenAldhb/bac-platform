@@ -1,9 +1,8 @@
-// بيانات المواد الثمانية
 const SUBJECTS = [
     { 
         id: 'chem', 
         name: 'الكيمياء', 
-        icon: '🧪', 
+        icon: 'fas fa-flask', 
         file: 'pages/che.html', 
         totalVideos: 57, 
         color: '#6b21a5',
@@ -12,7 +11,7 @@ const SUBJECTS = [
     { 
         id: 'phy', 
         name: 'الفيزياء', 
-        icon: '⚛️', 
+        icon: 'fas fa-bolt', 
         file: 'pages/phy.html', 
         totalVideos: 129, 
         color: '#0b4f6c',
@@ -21,7 +20,7 @@ const SUBJECTS = [
     { 
         id: 'ar', 
         name: 'العربية', 
-        icon: '📚', 
+        icon: 'fas fa-pen-fancy', 
         file: 'pages/ar.html', 
         totalVideos: 75, 
         color: '#2e7d32',
@@ -30,7 +29,7 @@ const SUBJECTS = [
     { 
         id: 'sci', 
         name: 'العلوم', 
-        icon: '🔬', 
+        icon: 'fas fa-dna', 
         file: 'pages/sci.html', 
         totalVideos: 133, 
         color: '#b45309',
@@ -39,7 +38,7 @@ const SUBJECTS = [
     { 
         id: 'isl', 
         name: 'الديانة', 
-        icon: '🕌', 
+        icon: 'fas fa-mosque', 
         file: 'pages/isl.html', 
         totalVideos: 100, 
         color: '#7b2c2c',
@@ -48,7 +47,7 @@ const SUBJECTS = [
     { 
         id: 'en', 
         name: 'الإنجليزية', 
-        icon: '🇬🇧', 
+        icon: 'fas fa-globe', 
         file: 'pages/en.html', 
         totalVideos: 62, 
         color: '#7e22ce',
@@ -57,7 +56,7 @@ const SUBJECTS = [
     { 
         id: 'fr', 
         name: 'الفرنسية', 
-        icon: '🇫🇷', 
+        icon: 'fas fa-language', 
         file: 'pages/fr.html', 
         totalVideos: 150, 
         color: '#1e3a8a',
@@ -66,7 +65,7 @@ const SUBJECTS = [
     { 
         id: 'math', 
         name: 'الرياضيات', 
-        icon: '📐', 
+        icon: 'fas fa-square-root-alt', 
         file: 'pages/ma.html', 
         totalVideos: 339, 
         color: '#854d0e',
