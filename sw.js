@@ -3,6 +3,9 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/404.html',
+  '/manifest.json',
+  '/assets/icons/icon-192.png',
+  '/assets/icons/icon-512.png',
   '/css/main.css',
   '/css/home.css',
   '/css/pages.css',
@@ -23,18 +26,25 @@ const urlsToCache = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      .then(cache => {
+        console.log('✅ تم فتح الكاش وإضافة الملفات');
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => response || fetch(event.request))
-      .catch(() => {
-        if (event.request.mode === 'navigate') {
-          return caches.match('/404.html');
+      .then(response => {
+        if (response) {
+          return response;
         }
+        return fetch(event.request).catch(() => {
+          if (event.request.mode === 'navigate') {
+            return caches.match('/404.html');
+          }
+        });
       })
   );
 });
