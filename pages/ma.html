@@ -486,7 +486,7 @@
     <a href="../index.html" class="glass-home-btn" title="العودة للرئيسية">
         <i class="fas fa-home"></i>
     </a>
-<body>
+
     <div class="container">
         <!-- الهيدر الثابت -->
         <div class="header-card">
@@ -593,11 +593,9 @@
             <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
         </div>
     </div>
-        (function() {
-            // ========== بيانات الفيديوهات كاملة (339 فيديو) مرتبة حسب المنهاج السوري ==========
-            // تم استخراج الروابط والعناوين من التقرير المقدم
-            // الفيديوهات مقسمة حسب الأقسام التالية: تأسيس، متتاليات، نهايات، اشتقاق، لوغاريتمي، أسي، تكامل، أشعة، عقدية، تطبيقات عقدية، تحليل توافقي، احتمالات، قراءة خط بياني، دورات.
 
+    <script>
+        (function() {
             // دالة مساعدة لتحويل الدقائق إلى صيغة hh:mm:ss
             function formatDuration(min) {
                 let hours = Math.floor(min / 60);
@@ -605,7 +603,7 @@
                 return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
             }
 
-            // ========== متتاليات (42 فيديو) من قائمة التشغيل ==========
+            // ========== متتاليات (42 فيديو) ==========
             const sequencesVideos = [
                 { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 1: تعريف المتتاليات وأشكالها', videoId: 'obRDP8UwVVQ', duration: 15 },
                 { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 2: تعريف المتتالية الحسابية', videoId: 'jiIx516YyDc', duration: 10 },
@@ -786,7 +784,6 @@
 
             // ========== الأشعة (56 فيديو) ==========
             const vectorsVideos = [
-                // الوحدة الأولى - أساسيات
                 { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 1: العمليات على الأشعة', videoId: '1u-NPPiCQug', duration: 16 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 2: حل التمارين صفحة 16', videoId: '0Um1JzpcZY4', duration: 17 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 3: تكملة حل التمارين صفحة 16', videoId: 'UqvslFGGfSo', duration: 13 },
@@ -808,8 +805,6 @@
                 { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 19: حل السؤال 11 صفحة 41', videoId: '2LTU0IwV3IQ', duration: 16 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 20: حل السؤال 12 صفحة 41', videoId: 'Xv5S9Y1W-_o', duration: 13 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 21: حل السؤال 19 صفحة 42', videoId: 'OU-mXLkTTII', duration: 20 },
-
-                // الوحدة الثانية - الجداء السلمي
                 { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 22: الجداء السلمي - الدرس الأول', videoId: '6G1YF4TOSbU', duration: 28 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 23: حل السؤال 4 صفحة 53', videoId: 'kFbSiOP68aE', duration: 19 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 24: حل س3 ص53 و 4 ص56', videoId: 'EVZsxhM0mmo', duration: 19 },
@@ -826,8 +821,6 @@
                 { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 35: مجموعات النقاط - حل س25 ص71', videoId: 'fJu5c89YINY', duration: 11 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 36: مجموعات النقاط - حل س24 ص71', videoId: 'yLRz5dxBX3w', duration: 9 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مسائل', title: 'الدرس 37: حل السؤال 5 ص66', videoId: '_nqOK9YxV-w', duration: 16 },
-
-                // الوحدة الثالثة - مستقيمات ومستويات
                 { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 38: المستقيم في الفراغ', videoId: 'zfqPF9T79gA', duration: 15 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 39: تكملة التمثيلات الوسيطية', videoId: '-6HJmHMq5ZU', duration: 16 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 40: وضع نسبي لمستقيم ومستوي', videoId: 'rAsXtMYknlo', duration: 18 },
@@ -838,8 +831,6 @@
                 { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 45: وضع نسبي لثلاثة مستويات', videoId: 'mRebhhDrLyc', duration: 27 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 46: تتمة الوضع النسبي لثلاثة مستويات', videoId: 'vIrTZxRy-ms', duration: 11 },
                 { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 47: حل مسألة شاملة 11ص98', videoId: 'r-kO0ehybyA', duration: 22 },
-
-                // مركز الأبعاد المتناسبة
                 { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 48: مركز الأبعاد المتناسبة', videoId: 'w_Fy9TZCqwc', duration: 23 },
                 { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 49: حل السؤال 21 صفحة 43', videoId: 'INdy0waAZ8w', duration: 14 },
                 { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 50: حل السؤال 25 صفحة 44', videoId: 'cQnZR_E0ETI', duration: 11 },
@@ -967,12 +958,10 @@
                 { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2024 أولى', videoId: 'zSKQA64AUP4', duration: 13 },
                 { unit: 'دورات وحلول', subUnit: 'متتاليات', title: 'حل دورة 2017 متتاليات', videoId: 'obRDP8UwVVQ', duration: 15 },
                 { unit: 'دورات وحلول', subUnit: 'نهايات', title: 'حل دورة 2018 نهايات', videoId: 'zpSEzQt0gjM', duration: 17 },
-                // أضف المزيد حسب الحاجة...
             ];
 
-            // دمج جميع الفيديوهات مع إضافة id تلقائي
+            // دمج جميع الفيديوهات مع إضافة id تلقائي (تم حذف foundationVideos)
             let allVideos = [
-                ...foundationVideos,
                 ...sequencesVideos,
                 ...limitsVideos,
                 ...derivativeVideos,
@@ -1005,9 +994,8 @@
                 };
             });
 
-            // ترتيب الوحدات للعرض (يمكن تعديلها)
+            // ترتيب الوحدات للعرض (تم حذف تأسيس)
             const unitsList = [
-                { id: 'تأسيس', name: '🔰 تأسيس', icon: 'seedling' },
                 { id: 'المتتاليات', name: '📈 المتتاليات', icon: 'chart-line' },
                 { id: 'النهايات والاستمرار', name: '∞ النهايات والاستمرار', icon: 'infinity' },
                 { id: 'الاشتقاق', name: '📐 الاشتقاق', icon: 'chart-line' },
@@ -1050,7 +1038,7 @@
                 document.getElementById('current-video-title').innerText = v.title;
                 document.getElementById('current-unit').innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
                 document.getElementById('current-duration').innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
-                buildUnits(); // تحديث التمييز البصري للدرس النشط
+                buildUnits();
             }
 
             function calcStats() {
@@ -1090,7 +1078,6 @@
                 if (badge100) badge100.classList.toggle('achieved', watchedCount >= 100);
                 if (badge339) badge339.classList.toggle('achieved', watchedCount >= total);
 
-                // تقدم الوحدات في صفحة التقدم
                 const unitProgressDiv = document.getElementById('unit-progress-list');
                 if (unitProgressDiv) {
                     let html = '';
@@ -1151,7 +1138,6 @@
                 });
                 container.innerHTML = htmlAll;
 
-                // event listeners للدوائر
                 document.querySelectorAll('.lesson-watch').forEach(el => {
                     el.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -1167,7 +1153,6 @@
                         }
                         saveWatched();
                         updateAllStats();
-                        // تحديث عداد الوحدة
                         const unitCard = el.closest('.unit-card');
                         if (unitCard) {
                             const unitName = unitCard.querySelector('.unit-title').innerText;
@@ -1181,7 +1166,6 @@
                     });
                 });
 
-                // event listeners للدروس (تشغيل الفيديو)
                 document.querySelectorAll('.lesson-info').forEach(el => {
                     el.addEventListener('click', (e) => {
                         const id = parseInt(el.dataset.id);
@@ -1269,7 +1253,4 @@
         })();
     </script>
 </body>
-
 </html>
-
-
