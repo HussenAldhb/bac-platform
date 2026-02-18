@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة البكالوريا </title>
+    <title>منصة البكالوريا الذكية</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffd700">
     <style>
         /* ===== المتغيرات العامة ===== */
         :root {
@@ -115,6 +118,7 @@
         .header-controls {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .control-btn {
@@ -128,6 +132,9 @@
             cursor: pointer;
             transition: 0.3s;
             backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .control-btn:hover {
@@ -137,7 +144,12 @@
             box-shadow: 0 10px 25px var(--primary-glow);
         }
 
-        /* ===== إحصائيات سريعة (كروت زجاجية) ===== */
+        /* زر التثبيت يظهر فقط عندما يكون متاحًا */
+        #installBtn {
+            display: none;
+        }
+
+        /* ===== إحصائيات سريعة ===== */
         .stats-row {
             display: flex;
             justify-content: center;
@@ -205,7 +217,6 @@
             display: block;
         }
 
-        /* تأثير التوهج الخلفي */
         .subject-card::before {
             content: '';
             position: absolute;
@@ -268,7 +279,7 @@
             font-size: 1rem;
         }
 
-        /* ===== قسم عن المنصة (في الأسفل) ===== */
+        /* ===== قسم عن المنصة ===== */
         .about-section {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -393,7 +404,6 @@
             transform: scale(1.1);
         }
 
-        /* ===== متجاوب ===== */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -418,17 +428,18 @@
     <div class="overlay-glow"></div>
 
     <div class="app-container">
-        <!-- الهيدر مع الصورة الشخصية -->
+        <!-- الهيدر مع الصورة الشخصية وزر التثبيت -->
         <header class="header">
             <div class="logo">
-                <!-- صورتك الشخصية -->
                 <img src="assets/images/profile.png" alt="حسين الدهب" class="profile-img" onerror="this.style.display='none'">
                 <div class="logo-text">منصة<span>البكالوريا</span></div>
             </div>
             <div class="header-controls">
                 <button class="control-btn" onclick="toggleDarkMode()" id="darkBtn"><i class="fas fa-moon"></i></button>
                 <button class="control-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-home"></i></button>
-                <button class="control-btn" onclick="window.open('https://github.com/HussenAldhb/bac-platform', '_blank')"><i class="fab fa-github"></i></button>
+                <button class="control-btn" onclick="window.open('https://github.com/HusseAldhb/bac-platform', '_blank')"><i class="fab fa-github"></i></button>
+                <!-- زر تثبيت التطبيق (يظهر فقط عندما يكون قابلاً للتثبيت) -->
+                <button class="control-btn" onclick="installApp()" id="installBtn"><i class="fas fa-download"></i></button>
             </div>
         </header>
 
@@ -451,7 +462,7 @@
         <!-- شبكة المواد (روابط مباشرة) -->
         <div class="cards-grid" id="cardsGrid"></div>
 
-        <!-- قسم عن المنصة (في الأسفل) -->
+        <!-- قسم عن المنصة -->
         <section class="about-section">
             <div class="about-content">
                 <div class="about-img">
@@ -468,9 +479,9 @@
                     
                     <p><strong>🤝 مفتوح المصدر:</strong> المشروع متاح بالكامل تحت رخصة MIT على GitHub، ويمكن لأي شخص <strong>نسخه وتعديله وتطويره</strong>.</p>
                     
-                    <p><strong>📌 GitHub:</strong> <a href="https://github.com/HussenAldhb/bac-platform" target="_blank">https://github.com/HussenAldhb/bac-platform</a></p>
+                    <p><strong>📌 GitHub:</strong> <a href="https://github.com/HusseAldhb/bac-platform" target="_blank">https://github.com/HusseAldhb/bac-platform</a></p>
                     
-                    <a href="https://github.com/HussenAldhb/bac-platform" target="_blank" class="github-link">
+                    <a href="https://github.com/HusseAldhb/bac-platform" target="_blank" class="github-link">
                         <i class="fab fa-github"></i> استكشف المشروع على GitHub
                     </a>
                 </div>
@@ -481,7 +492,7 @@
         <footer class="footer">
             <p>© 2026 حسين الدهب – جميع الحقوق محفوظة للمدرسين أصحاب المحتوى الأصلي</p>
             <p>
-                <i class="fab fa-github"></i> <a href="https://github.com/HussenAldhb/bac-platform" target="_blank">GitHub</a> 
+                <i class="fab fa-github"></i> <a href="https://github.com/HusseAldhb/bac-platform" target="_blank">GitHub</a> 
                 | <i class="fas fa-heart" style="color: #ef4444;"></i> مفتوح المصدر
             </p>
         </footer>
@@ -492,233 +503,60 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
+    <!-- ملفات JavaScript -->
+    <script src="js/subjects-data.js"></script>
+    <script src="js/progress-tracker.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/main.js"></script>
+    <!-- كود PWA والتثبيت -->
     <script>
-        // ==================== بيانات المواد الثمانية ====================
-        const SUBJECTS = [
-            { 
-                id: 'chem', name: 'الكيمياء', icon: 'fas fa-flask', 
-                file: 'pages/che.html', totalVideos: 57, color: '#6b21a5',
-                storageKey: 'chem_watched'
-            },
-            { 
-                id: 'phy', name: 'الفيزياء', icon: 'fas fa-bolt', 
-                file: 'pages/phy.html', totalVideos: 129, color: '#0b4f6c',
-                storageKey: 'phys_watched'
-            },
-            { 
-                id: 'ar', name: 'العربية', icon: 'fas fa-pen-fancy', 
-                file: 'pages/ar.html', totalVideos: 75, color: '#2e7d32',
-                storageKey: 'arabic_watched'
-            },
-            { 
-                id: 'sci', name: 'العلوم', icon: 'fas fa-dna', 
-                file: 'pages/sci.html', totalVideos: 133, color: '#b45309',
-                storageKey: 'sci_watched'
-            },
-            { 
-                id: 'isl', name: 'الديانة', icon: 'fas fa-mosque', 
-                file: 'pages/isl.html', totalVideos: 100, color: '#7b2c2c',
-                storageKey: 'deen_watched'
-            },
-            { 
-                id: 'en', name: 'الإنجليزية', icon: 'fas fa-globe', 
-                file: 'pages/en.html', totalVideos: 62, color: '#7e22ce',
-                storageKey: 'engWatched'
-            },
-            { 
-                id: 'fr', name: 'الفرنسية', icon: 'fas fa-language', 
-                file: 'pages/fr.html', totalVideos: 150, color: '#1e3a8a',
-                storageKey: 'french_ultime_progress'
-            },
-            { 
-                id: 'math', name: 'الرياضيات', icon: 'fas fa-square-root-alt', 
-                file: 'pages/ma.html', totalVideos: 339, color: '#854d0e',
-                storageKey: 'mathWatched'
-            }
-        ];
+        // ==================== متغيرات وأحداث PWA ====================
+        let deferredPrompt;
 
-        // ==================== دوال قراءة التقدم من localStorage ====================
-        function getWatchedCount(subject) {
-            try {
-                const stored = localStorage.getItem(subject.storageKey);
-                if (!stored) return 0;
-                if (subject.id === 'fr') {
-                    const data = JSON.parse(stored);
-                    return data.watched ? data.watched.length : 0;
-                }
-                const arr = JSON.parse(stored);
-                return Array.isArray(arr) ? arr.length : 0;
-            } catch (e) {
-                return 0;
-            }
-        }
-
-        function getOverallStats() {
-            let total = 0, watched = 0;
-            SUBJECTS.forEach(s => {
-                total += s.totalVideos;
-                watched += getWatchedCount(s);
-            });
-            const percent = total ? Math.round((watched / total) * 100) : 0;
-            return { total, watched, percent };
-        }
-
-        // ==================== عرض الإحصائيات ====================
-        function updateStats() {
-            const stats = getOverallStats();
-            document.getElementById('totalLessons').textContent = stats.total;
-            document.getElementById('watchedLessons').textContent = stats.watched;
-            document.getElementById('overallProgress').textContent = stats.percent + '%';
-        }
-
-        // ==================== توليد بطاقات المواد (كروابط مباشرة) ====================
-        function renderCards() {
-            const grid = document.getElementById('cardsGrid');
-            grid.innerHTML = '';
-            SUBJECTS.forEach(sub => {
-                const watched = getWatchedCount(sub);
-                const percent = sub.totalVideos ? Math.round((watched / sub.totalVideos) * 100) : 0;
-                
-                const card = document.createElement('a');
-                card.className = 'subject-card';
-                card.href = sub.file;
-                card.setAttribute('data-subject', sub.name);
-                
-                // تأثير حركة الماوس للتوهج
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--x', `${x}px`);
-                    card.style.setProperty('--y', `${y}px`);
-                });
-
-                card.innerHTML = `
-                    <div class="card-icon"><i class="${sub.icon}" style="color: ${sub.color};"></i></div>
-                    <div class="card-title">${sub.name}</div>
-                    <div class="card-stats">
-                        <span><i class="fas fa-video"></i> ${sub.totalVideos}</span>
-                        <span><i class="fas fa-check-circle"></i> ${watched}</span>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-fill" style="width: ${percent}%; background: ${sub.color};"></div>
-                    </div>
-                    <div class="card-percent" style="color: ${sub.color};">${percent}% مكتمل</div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // ==================== الوضع الليلي (عكس الألوان) ====================
-        function toggleDarkMode() {
-            document.body.classList.toggle('light-mode');
-            const btn = document.getElementById('darkBtn');
-            if (document.body.classList.contains('light-mode')) {
-                document.body.style.background = '#f0f2f5';
-                document.body.style.color = '#1a1a2e';
-                btn.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                document.body.style.background = '#0a0a1f';
-                document.body.style.color = '#ffffff';
-                btn.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        }
-
-        // ==================== إظهار زر العودة للأعلى ====================
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('scrollTop');
-            if (window.scrollY > 400) btn.classList.add('visible');
-            else btn.classList.remove('visible');
+        // الاستماع لحدث beforeinstallprompt (يُطلق عندما يكون الموقع قابلاً للتثبيت)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // إظهار زر التثبيت
+            const installBtn = document.getElementById('installBtn');
+            if (installBtn) installBtn.style.display = 'flex';
+            console.log('✅ الموقع قابل للتثبيت!');
         });
 
-        // ==================== خلفية متحركة بالجزيئات ====================
-        function initParticles() {
-            const canvas = document.getElementById('bg-canvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let particles = [];
-
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
-            }
-
-            function createParticles() {
-                const count = 100;
-                for (let i = 0; i < count; i++) {
-                    particles.push({
-                        x: Math.random() * width,
-                        y: Math.random() * height,
-                        radius: Math.random() * 2 + 1,
-                        speedX: (Math.random() - 0.5) * 0.5,
-                        speedY: (Math.random() - 0.5) * 0.5,
-                        color: `rgba(255,215,0,${Math.random() * 0.3})`
-                    });
+        // دالة التثبيت (تُستدعى عند النقر على الزر)
+        function installApp() {
+            if (!deferredPrompt) return;
+            
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('✅ المستخدم وافق على التثبيت');
+                } else {
+                    console.log('❌ المستخدم رفض التثبيت');
                 }
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-
-                    if (p.x < 0 || p.x > width) p.speedX *= -1;
-                    if (p.y < 0 || p.y > height) p.speedY *= -1;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color;
-                    ctx.fill();
-                });
-                requestAnimationFrame(animate);
-            }
-
-            resize();
-            createParticles();
-            animate();
-
-            window.addEventListener('resize', () => {
-                resize();
-                particles = [];
-                createParticles();
+                deferredPrompt = null;
+                // إخفاء الزر بعد التثبيت أو الرفض
+                document.getElementById('installBtn').style.display = 'none';
             });
         }
 
-        // ==================== بدء التشغيل ====================
-        window.onload = function() {
-            updateStats();
-            renderCards();
-            initParticles();
-        };
+        // عند تثبيت التطبيق بنجاح، نخفي الزر
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ تم تثبيت التطبيق');
+            document.getElementById('installBtn').style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').then(function(registration) {
+                    console.log('✅ Service Worker سجل بنجاح:', registration.scope);
+                }, function(err) {
+                    console.log('❌ فشل تسجيل Service Worker:', err);
+                });
+            });
+        }
     </script>
-    <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js').then(function(registration) {
-      console.log('✅ Service Worker سجل بنجاح:', registration.scope);
-    }, function(err) {
-      console.log('❌ فشل تسجيل Service Worker:', err);
-    });
-  });
-}
-
-// محاولة إظهار زر التثبيت يدوياً (اختياري)
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // يمكنك هنا إظهار زر مخصص للتثبيت إذا أردت
-  console.log('✅ الموقع قابل للتثبيت!');
-});
-</script>
 </body>
-
 </html>
-
-
-
-
-
