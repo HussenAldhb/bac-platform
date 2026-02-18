@@ -446,37 +446,36 @@
     </style>
 <!-- بداية: إضافة الزر الزجاجي العصري -->
     <style>
-        .glass-back-btn {
+        .glass-home-btn {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             background: rgba(139, 92, 246, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(139, 92, 246, 0.3);
             color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
             text-decoration: none;
-            font-weight: bold;
             z-index: 9999;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            font-size: 16px;
-            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            font-size: 22px;
         }
 
-        .glass-back-btn:hover {
-            background: rgba(139, 92, 246, 0.35);
-            border: 1px solid rgba(139, 92, 246, 0.5);
+        .glass-home-btn:hover {
+            background: rgba(139, 92, 246, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.6);
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
 
-        .glass-back-btn:active {
+        .glass-home-btn:active {
             transform: translateY(0);
         }
     </style>
@@ -484,9 +483,9 @@
 </head>
 <body>
     <!-- الزر الزجاجي -->
-    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
-
-</head>
+    <a href="../index.html" class="glass-home-btn" title="العودة للرئيسية">
+        <i class="fas fa-home"></i>
+    </a>
 <body>
     <div class="container">
         <!-- الهيدر الثابت -->
@@ -1069,4 +1068,5 @@
         })();
     </script>
 </body>
+
 </html>
