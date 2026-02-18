@@ -72,3 +72,9 @@ const SUBJECTS = [
         storageKey: 'mathWatched'
     }
 ];
+
+// في حال احتجت دالة تحميل إضافية
+async function loadSubjectsData() {
+    // يمكن تركها فارغة إذا لم تستخدم fetch
+    return SUBJECTS;
+}
