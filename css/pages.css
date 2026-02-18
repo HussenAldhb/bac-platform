@@ -1,4 +1,3 @@
-/* ========== رأس الصفحة ========== */
 .page-header {
     display: flex;
     align-items: center;
@@ -9,10 +8,8 @@
 
 .page-header h1 {
     font-size: 2.2rem;
-    color: #1e293b;
 }
 
-/* ========== مشغل الفيديو ========== */
 .video-player {
     background: white;
     border-radius: 20px;
@@ -49,7 +46,6 @@
     font-size: 0.95rem;
 }
 
-/* ========== الوحدات ========== */
 .units-container {
     background: white;
     border-radius: 20px;
