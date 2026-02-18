@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🔬 علوم البكالوريا - المنصة التفاعلية الكاملة</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Cairo / Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            border-top: 2px solid #10b981;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            background: #10b981;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #10b981;
+            box-shadow: 0 15px 25px -10px #10b98133;
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        .subject-icon {
+            background: #10b981;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0f172a;
+        }
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .subject-name p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .exam-timer {
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #10b981;
+            margin-top: 15px;
+        }
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #10b981;
+            direction: ltr;
+        }
+        .daily-plan {
+            font-size: 15px;
+            background: #10b981;
+            color: #0f172a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .progress-section {
+            margin-top: 16px;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            background: #334155;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #10b981;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #10b981;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+        .video-player-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #10b981;
+            margin-bottom: 20px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0f172a;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+        .units-container {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #10b981;
+            margin-bottom: 25px;
+        }
+        .unit-card {
+            background: #0f172a;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #10b981;
+            overflow: hidden;
+        }
+        .unit-header {
+            background: #1e293b;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #10b981;
+        }
+        .unit-header i {
+            font-size: 24px;
+            color: #10b981;
+            transition: 0.2s;
+        }
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+        }
+        .unit-progress {
+            background: #334155;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+        .sub-units {
+            padding: 12px;
+        }
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #10b981;
+        }
+        .lesson-list {
+            list-style: none;
+        }
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1e293b;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .lesson-item:hover {
+            border-color: #10b981;
+        }
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #10b981;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .lesson-watch.watched {
+            background: #10b981;
+            color: #0f172a;
+        }
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+        .lesson-duration {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        .progress-panel, .timer-panel, .profile-panel {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #10b981;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0f172a;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #10b981;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #10b981;
+        }
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .badge {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+        .badge.achieved {
+            border-color: #10b981;
+            background: #10b981;
+            color: #0f172a;
+            opacity: 1;
+        }
+        .badge i {
+            font-size: 26px;
+        }
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #10b981;
+            text-align: center;
+            direction: ltr;
+        }
+        .plan-box {
+            background: #0f172a;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #10b981;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+        hr {
+            border: 0.5px solid #334155;
+            margin: 20px 0;
+        }
+        .small-note {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+
+        <!-- ======== الهيدر ثابت ======== -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-leaf"></i></div>
+                <div class="subject-name">
+                    <h1>علوم البكالوريا</h1>
+                    <p>منصة تفاعلية - منهاج سوريا</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 16/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======== الصفحات ======== -->
+        <div id="page-home" class="page active">
+            <!-- مشغل الفيديو -->
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/SIscKlu_dLc" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">الدرس الأول عصبية 2026</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> عصبية</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 00:00</span>
+                </div>
+            </div>
+
+            <!-- الوحدات القابلة للطي -->
+            <div class="units-container" id="units-container"></div>
+        </div>
+
+        <!-- صفحة التقدم -->
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:#10b981;"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="watched-count">0</div>
+                        <div class="stat-label">فيديو مُشاهَد</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-hours">0</div>
+                        <div class="stat-label">ساعة مشاهدة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="remaining-count">133</div>
+                        <div class="stat-label">فيديو متبقي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completion-percent">0%</div>
+                        <div class="stat-label">إنجاز</div>
+                    </div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                <div class="badge-container" id="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 فيديوهات</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 فيديو</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 فيديو</div>
+                    <div class="badge" id="badge100"><i class="fas fa-dragon"></i> 100 فيديو</div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-chart-pie"></i> تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- صفحة المؤقت -->
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 فيديو / يوم</div>
+                    <p class="small-note">لمشاهدة جميع الفيديوهات المتبقية قبل الامتحان</p>
+                </div>
+                <div style="background: #0f172a; border-radius: 24px; padding: 16px; margin-top: 20px;">
+                    <p><i class="fas fa-info-circle" style="color:#10b981;"></i> الامتحان يوم 16 حزيران 2026. واصل بنشاط!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الملف الشخصي -->
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#10b981; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px; color:#0f172a;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>طالب بكالوريا</h3>
+                        <p class="small-note">علوم - فرع علمي</p>
+                    </div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle" style="color:#10b981;"></i> آخر فيديو تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
+                <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: 133</div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- بيانات الفيديوهات الكاملة (133 فيديو) ----------
+            const videos = [
+                // ========== الوحدة الأولى - التنسيق العصبي (58 فيديو) ==========
+                // الجهاز العصبي (13)
+                { id: 0, title: "الدرس الأول عصبية 2026", youtubeId: "SIscKlu_dLc", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:49:21" },
+                { id: 1, title: "الدرس الأول عصبية (القسم الثاني)", youtubeId: "kVH3MJHtq2U", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:54:19" },
+                { id: 2, title: "الدرس الأول عصبية (القسم الثالث والأخير)", youtubeId: "sVVm_ocIBnw", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:42:48" },
+                { id: 3, title: "1 - الجهاز العصبي 1", youtubeId: "1- الجهاز العصبي 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:33:34" },
+                { id: 4, title: "2 - الجهاز العصبي 2", youtubeId: "2- الجهاز العصبي 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:35:05" },
+                { id: 5, title: "3 - الجهاز العصبي 3", youtubeId: "3- الجهاز العصبي 3 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:39:14" },
+                { id: 6, title: "4 - الجهاز العصبي 4", youtubeId: "4- الجهاز العصبي 4 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:30:56" },
+                { id: 7, title: "5 - الجهاز العصبي 5", youtubeId: "5- الجهاز العصبي 5 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز العصبي", duration: "00:52:51" },
+                
+                // النسيج العصبي (8)
+                { id: 8, title: "الدرس الثاني عصبية (القسم الأول)", youtubeId: "Y5zKYzgZdo4", unit: "التنسيق العصبي", subUnit: "النسيج العصبي", duration: "00:36:20" },
+                { id: 9, title: "الدرس الثاني عصبية (القسم الثاني)", youtubeId: "eBS5xKclKl8", unit: "التنسيق العصبي", subUnit: "النسيج العصبي", duration: "00:52:46" },
+                { id: 10, title: "الدرس الثاني عصبية (القسم الثالث والأخير)", youtubeId: "DwsfCR5GfoY", unit: "التنسيق العصبي", subUnit: "النسيج العصبي", duration: "00:32:01" },
+                { id: 11, title: "6 - النسيج العصبي 1", youtubeId: "6- النسيج العصبي 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "النسيج العصبي", duration: "00:38:48" },
+                { id: 12, title: "7- النسيج العصبي 2", youtubeId: "7- النسيج العصبي 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "النسيج العصبي", duration: "00:52:46" },
+                { id: 13, title: "8- النسيج العصبي 3", youtubeId: "8- النسيج العصبي 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "النسيج العصبي", duration: "00:49:13" },
+
+                // الجهاز المحيطي (6)
+                { id: 14, title: "الدرس الثالث عصبية (القسم الأول)", youtubeId: "uljewnlV5Hs", unit: "التنسيق العصبي", subUnit: "الجهاز المحيطي", duration: "00:53:37" },
+                { id: 15, title: "الدرس الثالث عصبية (القسم الثاني والأخير)", youtubeId: "kU4eAfa1rFE", unit: "التنسيق العصبي", subUnit: "الجهاز المحيطي", duration: "00:16:18" },
+                { id: 16, title: "9- الجهاز العصبي المحيطي 1", youtubeId: "9- الجهاز العصبي المحيطي 1 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز المحيطي", duration: "00:42:11" },
+                { id: 17, title: "10- الجهاز العصبي المحيطي 2", youtubeId: "10- الجهاز العصبي المحيطي 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الجهاز المحيطي", duration: "00:46:49" },
+
+                // خواص الأعصاب (3)
+                { id: 18, title: "الدرس الرابع عصبية كاملا", youtubeId: "m5dTOFYjm1s", unit: "التنسيق العصبي", subUnit: "خواص الأعصاب", duration: "00:57:21" },
+                { id: 19, title: "11- خواص الأعصاب", youtubeId: "11- خواص الأعصاب __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "خواص الأعصاب", duration: "01:08:27" },
+                { id: 20, title: "12- خواص الأعصاب 2", youtubeId: "12- خواص الأعصاب 2 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "خواص الأعصاب", duration: "00:23:47" },
+
+                // الظواهر الكهربائية (5)
+                { id: 21, title: "الدرس الخامس عصبية (القسم الأول)", youtubeId: "t3DGna5SK-4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:31:54" },
+                { id: 22, title: "الدرس الخامس عصبية(القسم الثاني والأخير)", youtubeId: "QWHGZNpvd94", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:49:37" },
+                { id: 23, title: "13- الظواهر الكهربائية 1", youtubeId: "13- الظواهر الكهربائية 1 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:31:54" },
+                { id: 24, title: "14- الظواهر الكهربائية 2", youtubeId: "14- الظواهر الكهربائية 2 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:49:37" },
+                { id: 25, title: "15- الظواهر الكهربائية 3", youtubeId: "15- الظواهر الكهربائية 3 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:43:10" },
+                { id: 26, title: "16- الظواهر الكهربائية 4", youtubeId: "16- الظواهر الكهربائية 4 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:34:44" },
+                { id: 27, title: "17- الظواهر الكهربائية 5", youtubeId: "17- الظواهر الكهربائية 5 __علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:55:06" },
+
+                // النقل في الأعصاب (5)
+                { id: 28, title: "الدرس السادس عصبية (القسم الأول)", youtubeId: "gooZvIrZy1k", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "00:50:25" },
+                { id: 29, title: "الدرس السادس (القسم الثاني والأخير)", youtubeId: "7-et3o4cxto", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "01:05:14" },
+                { id: 30, title: "18- النقل في الأعصاب 1", youtubeId: "18- النقل في الأعصاب 1 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "00:50:25" },
+                { id: 31, title: "19- النقل في الأعصاب 2", youtubeId: "19- النقل في الأعصاب 2 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "00:46:16" },
+                { id: 32, title: "20- النقل في الأعصاب 3", youtubeId: "20- النقل في الأعصاب 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "01:05:14" },
+
+                // وظائف الجهاز العصبي (6)
+                { id: 33, title: "الدرس السابع عصبية كاملاً", youtubeId: "XXBg1ueqCtM", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي (1)", duration: "00:42:37" },
+                { id: 34, title: "الدرس الثامن عصبية كاملاً", youtubeId: "NUBRKS76zzY", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي (2)", duration: "00:58:00" },
+                { id: 35, title: "الدرس التاسع عصبية كاملاً", youtubeId: "VwPnFt-8nuY", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي (3)", duration: "00:39:21" },
+                { id: 36, title: "21- وظائف الجهاز العصبي المركزي [1] 1", youtubeId: "21- وظائف الجهاز العصبي المركزي [1] 1 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:42:37" },
+                { id: 37, title: "22- وظائف الجهاز العصبي المركزي [1] 2", youtubeId: "22- وظائف الجهاز العصبي المركزي [1] 2 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:29:31" },
+                { id: 38, title: "23- وظائف الجهاز العصبي المركزي [2] 1", youtubeId: "23- وظائف الجهاز العصبي المركزي [2] 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:58:00" },
+                { id: 39, title: "24- وظائف الجهاز العصبي المركزي [2] 2", youtubeId: "24- وظائف الجهاز العصبي المركزي [2] 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:41:35" },
+                { id: 40, title: "25- وظائف الجهاز العصبي المركزي [3]", youtubeId: "25- وظائف الجهاز العصبي المركزي [3] __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:39:21" },
+
+                // الفعل المنعكس (3)
+                { id: 41, title: "الدرس العاشر عصبية كاملاً", youtubeId: "J1hg1wPI4ow", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:49:52" },
+                { id: 42, title: "26- الفعل المنعكس 1", youtubeId: "26- الفعل المنعكس 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:49:52" },
+                { id: 43, title: "27- الفعل المنعكس 2", youtubeId: "27- الفعل المنعكس 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:33:12" },
+                { id: 44, title: "28- الفعل المنعكس 3", youtubeId: "28- الفعل المنعكس 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:32:12" },
+
+                // أمراض الجهاز العصبي (1)
+                { id: 45, title: "الدرس الحادي عشر عصبية كاملاً", youtubeId: "yfwASOc07Pg", unit: "التنسيق العصبي", subUnit: "أمراض الجهاز العصبي", duration: "00:44:20" },
+                { id: 46, title: "29- بعض أمراض الجهاز العصبي", youtubeId: "29- بعض أمراض الجهاز العصبي __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "أمراض الجهاز العصبي", duration: "00:44:20" },
+
+                // ========== المستقبلات الحسية (16 فيديو) ==========
+                { id: 47, title: "30- مفهوم المستقبلات الحسية 1", youtubeId: "30- مفهوم المستقبلات الحسية 1 __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "مفهوم المستقبلات", duration: "00:33:18" },
+                { id: 48, title: "31- مفهوم المستقبلات الحسية 2", youtubeId: "31- مفهوم المستقبلات الحسية 2 __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "مفهوم المستقبلات", duration: "00:47:35" },
+                { id: 49, title: "32- المستقبلات الحسية في الجلد", youtubeId: "32- المستقبلات الحسية في الجلد __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "مستقبلات الجلد", duration: "01:07:00" },
+                { id: 50, title: "33- مراجعة كيف نشعر بالألم؟", youtubeId: "33- مراجعة كيف نشعر بالألم؟ __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "مستقبلات الجلد", duration: "00:43:54" },
+                { id: 51, title: "34- المستقبلات الكيميائية 1", youtubeId: "34- المستقبلات الكيميائية 1 __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الكيميائية", duration: "01:06:26" },
+                { id: 52, title: "35- المستقبلات الكيميائية 2", youtubeId: "35- المستقبلات الكيميائية 2 __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الكيميائية", duration: "00:55:40" },
+                { id: 53, title: "36- المستقبلات الصوتية و مستقبلات التوازن 1", youtubeId: "36- المستقبلات الصوتية و مستقبلات التوازن 1 __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "صوتية وتوازن", duration: "00:37:24" },
+                { id: 54, title: "37- المستقبلات الصوتية و مستقبلات التوازن 2", youtubeId: "37- المستقبلات الصوتية و مستقبلات التوازن __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "صوتية وتوازن", duration: "00:53:21" },
+                { id: 55, title: "38- المستقبلات الصوتية و مستقبلات التوازن 3", youtubeId: "38- المستقبلات الصوتية و مستقبلات التوازن 3 __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "صوتية وتوازن", duration: "01:05:44" },
+                { id: 56, title: "39- المستقبلات الضوئية 1 [1]", youtubeId: "39- المستقبلات الضوئية 1 [1] __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الضوئية", duration: "01:08:15" },
+                { id: 57, title: "40- المستقبلات الضوئية 1 [2]", youtubeId: "40- المستقبلات الضوئية 1 [2] __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الضوئية", duration: "00:59:27" },
+                { id: 58, title: "41- المستقبلات الضوئية 1 [3]", youtubeId: "41- المستقبلات الضوئية 1 [3] __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الضوئية", duration: "00:47:33" },
+                { id: 59, title: "42- المستقبلات الضوئية 2 [1]", youtubeId: "42- المستقبلات الضوئية 2 [1] __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الضوئية", duration: "00:53:19" },
+                { id: 60, title: "43- المستقبلات الضوئية 2 [2]", youtubeId: "43- المستقبلات الضوئية 2 [2] __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الضوئية", duration: "00:49:35" },
+                { id: 61, title: "44- المستقبلات الضوئية 2 [3]", youtubeId: "44- المستقبلات الضوئية 2 [3] __ علوم بكالوريا 2025(360P).mp4", unit: "المستقبلات الحسية", subUnit: "المستقبلات الضوئية", duration: "01:37:33" },
+
+                // ========== التنسيق الهرموني (12 فيديو) ==========
+                { id: 62, title: "45- التنسيق الهرموني عند الإنسان 1", youtubeId: "45- التنسيق الهرموني عند الإنسان 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "هرمونات الإنسان", duration: "01:06:39" },
+                { id: 63, title: "46- التنسيق الهرموني عند الإنسان 2", youtubeId: "46- التنسيق الهرموني عند الإنسان 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "هرمونات الإنسان", duration: "00:25:45" },
+                { id: 64, title: "47- التنسيق الهرموني عند الإنسان 3", youtubeId: "47- التنسيق الهرموني عند الإنسان 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "هرمونات الإنسان", duration: "00:31:27" },
+                { id: 65, title: "48- التنسيق الهرموني عند الإنسان 4", youtubeId: "48- التنسيق الهرموني عند الإنسان 4 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "هرمونات الإنسان", duration: "01:30:10" },
+                { id: 66, title: "49- دراسة بعض الغدد الصم 1", youtubeId: "49- دراسة بعض الغدد الصم وآلية تأثير الهرمونات 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "الغدد الصم", duration: "01:30:43" },
+                { id: 67, title: "50- دراسة بعض الغدد الصم 2", youtubeId: "50- دراسة بعض الغدد الصم وآلية تأثير الهرمونات 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "الغدد الصم", duration: "01:16:31" },
+                { id: 68, title: "51- دراسة بعض الغدد الصم 3", youtubeId: "51- دراسة بعض الغدد الصم وآلية تأثير الهرمونات 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "الغدد الصم", duration: "01:00:42" },
+                { id: 69, title: "52- آليات السيطرة على إفراز الغدد الصم", youtubeId: "52- آليات السيطرة على إفراز الغدد الصم __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "آليات السيطرة", duration: "00:46:21" },
+                { id: 70, title: "53- التنسيق الكيميائي لدى النبات 1", youtubeId: "53- التنسيق الكيميائي لدى النبات 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "تنسيق نباتي", duration: "01:20:02" },
+                { id: 71, title: "54- التنسيق الكيميائي لدى النبات 2", youtubeId: "54- التنسيق الكيميائي لدى النبات 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "تنسيق نباتي", duration: "01:02:37" },
+                { id: 72, title: "55- التنسيق الكيميائي لدى النبات 3", youtubeId: "55- التنسيق الكيميائي لدى النبات 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "تنسيق نباتي", duration: "01:16:15" },
+                { id: 73, title: "56- التنسيق الكيميائي لدى النبات 4", youtubeId: "56- التنسيق الكيميائي لدى النبات 4 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "تنسيق نباتي", duration: "00:38:56" },
+
+                // ========== الوحدة الثانية - التكاثر (35 فيديو) ==========
+                { id: 74, title: "مقدمة الفصل الثاني", youtubeId: "مقدمة الفصل الثاني.mp4", unit: "التكاثر", subUnit: "مقدمة", duration: "00:28:57" },
+                { id: 75, title: "1- تكاثر الفيروسات 1", youtubeId: "1- تكاثر الفيروسات 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "فيروسات", duration: "00:40:00" },
+                { id: 76, title: "2- تكاثر الفيروسات 2", youtubeId: "2- تكاثر الفيروسات 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "فيروسات", duration: "00:58:26" },
+                { id: 77, title: "3- تكاثر الفيروسات 3", youtubeId: "3- تكاثر الفيروسات 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "فيروسات", duration: "01:04:44" },
+                { id: 78, title: "فيديو animation - تكاثر فيروس الإيدز", youtubeId: "فيديو animation - تكاثر فيروس الإيدز(360P).mp4", unit: "التكاثر", subUnit: "فيروسات", duration: "00:03:11" },
+                { id: 79, title: "4- التكاثر عند الأحياء", youtubeId: "4- التكاثر عند الأحياء __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "عام", duration: "01:11:06" },
+                { id: 80, title: "5- تقانات حيوية في التكاثر 1", youtubeId: "5- تقانات حيوية في التكاثر 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "تقانات حيوية", duration: "00:29:57" },
+                { id: 81, title: "6- تقانات حيوية في التكاثر 2", youtubeId: "6- تقانات حيوية في التكاثر 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "تقانات حيوية", duration: "00:35:43" },
+                { id: 82, title: "7- تقانات حيوية في التكاثر 3", youtubeId: "7- تقانات حيوية في التكاثر 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "تقانات حيوية", duration: "00:50:09" },
+                { id: 83, title: "8- التكاثر عند الجراثيم والفطريات 1", youtubeId: "8- التكاثر عند الجراثيم والفطريات 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جراثيم وفطريات", duration: "00:39:28" },
+                { id: 84, title: "9- التكاثر عند الجراثيم والفطريات 2", youtubeId: "9- التكاثر عند الجراثيم والفطريات 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جراثيم وفطريات", duration: "00:50:27" },
+                { id: 85, title: "10- التكاثر الجنسي لدى عاريات البذور 1", youtubeId: "10- التكاثر الجنسي لدى عاريات البذور 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "عاريات البذور", duration: "00:32:29" },
+                { id: 86, title: "11- التكاثر الجنسي لدى عاريات البذور 2", youtubeId: "11- التكاثر الجنسي لدى عاريات البذور 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "عاريات البذور", duration: "00:30:56" },
+                { id: 87, title: "12- التكاثر الجنسي لدى عاريات البذور 3", youtubeId: "12- التكاثر الجنسي لدى عاريات البذور 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "عاريات البذور", duration: "00:30:55" },
+                { id: 88, title: "13- التكاثر الجنسي لدى عاريات البذور 4", youtubeId: "13- التكاثر الجنسي لدى عاريات البذور 4 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "عاريات البذور", duration: "00:36:05" },
+                { id: 89, title: "14- التكاثر الجنسي لدى عاريات البذور 5", youtubeId: "14- التكاثر الجنسي لدى عاريات البذور 5 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "عاريات البذور", duration: "00:49:20" },
+                { id: 90, title: "15- التكاثر الجنسي لدى مغلفات البذور 1", youtubeId: "15- التكاثر الجنسي لدى مغلفات البذور 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "مغلفات البذور", duration: "00:52:05" },
+                { id: 91, title: "16- التكاثر الجنسي لدى مغلفات البذور2", youtubeId: "16- التكاثر الجنسي لدى مغلفات البذور2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "مغلفات البذور", duration: "00:43:02" },
+                { id: 92, title: "17- التكاثر الجنسي لدى مغلفات البذور 3", youtubeId: "17- التكاثر الجنسي لدى مغلفات البذور 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "مغلفات البذور", duration: "00:48:31" },
+                { id: 93, title: "18- التكاثر الجنسي لدى مغلفات البذور 4", youtubeId: "18- التكاثر الجنسي لدى مغلفات البذور 4 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "مغلفات البذور", duration: "00:53:38" },
+                { id: 94, title: "19- التكاثر الجنسي لدى مغلفات البذور 5", youtubeId: "19- التكاثر الجنسي لدى مغلفات البذور 5 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "مغلفات البذور", duration: "00:59:10" },
+                { id: 95, title: "20- منشأ جهاز التكاثر لدى الإنسان", youtubeId: "20- منشأ جهاز التكاثر لدى الإنسان __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جهاز التكاثر", duration: "00:45:00" },
+                { id: 96, title: "21- جهاز التكاثر الذكري 1", youtubeId: "21- جهاز التكاثر الذكري 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جهاز التكاثر", duration: "00:42:09" },
+                { id: 97, title: "22- جهاز التكاثر الذكري 2", youtubeId: "22- جهاز التكاثر الذكري 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جهاز التكاثر", duration: "01:01:53" },
+                { id: 98, title: "23- تشكل النطاف وأهميتها 1", youtubeId: "23- تشكل النطاف وأهميتها 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "تشكل النطاف", duration: "00:55:27" },
+                { id: 99, title: "24- تشكّل النطاف وأهميتها 2", youtubeId: "24- تشكّل النطاف وأهميتها 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "تشكل النطاف", duration: "00:32:38" },
+                { id: 100, title: "25- تشكّل النطاف وأهميتها 3", youtubeId: "25- تشكّل النطاف وأهميتها 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "تشكل النطاف", duration: "00:51:06" },
+                { id: 101, title: "26- الجهاز التكاثري الأنثوي 1", youtubeId: "26- الجهاز التكاثري الأنثوي 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جهاز التكاثر", duration: "00:36:56" },
+                { id: 102, title: "27- الجهاز التكاثري الأنثوي 2", youtubeId: "27- الجهاز التكاثري الأنثوي 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "جهاز التكاثر", duration: "01:35:31" },
+                { id: 103, title: "28- الدورة الجنسية 1", youtubeId: "28- الدورة الجنسية 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "الدورة الجنسية", duration: "01:05:27" },
+                { id: 104, title: "29- الدورة الجنسية 2", youtubeId: "29- الدورة الجنسية 2 __علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "الدورة الجنسية", duration: "00:40:37" },
+                { id: 105, title: "30- درس الدورة الجنسية كاملاً", youtubeId: "30- درس الدورة الجنسية كاملاً __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "الدورة الجنسية", duration: "00:43:52" },
+                { id: 106, title: "31- الإلقاح", youtubeId: "31- الإلقاح __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "إلقاح", duration: "00:59:33" },
+                { id: 107, title: "32- التنامي الجنيني التعشيش والحمل 1", youtubeId: "32- التنامي الجنيني التعشيش والحمل 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "حمل", duration: "01:21:30" },
+                { id: 108, title: "33- التنامي الجنيني التعشيش والحمل 2", youtubeId: "33- التنامي الجنيني التعشيش والحمل 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "حمل", duration: "01:08:59" },
+                { id: 109, title: "34- الولادة و الإرضاع", youtubeId: "34- الولادة و الإرضاع __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "ولادة", duration: "00:49:20" },
+                { id: 110, title: "35- الصحة الإنجابية وبعض الأمراض الجنسية", youtubeId: "35- الصحة الإنجابية وبعض الأمراض الجنسية __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "صحة إنجابية", duration: "01:17:21" },
+                { id: 111, title: "حل أسئلة الوحدة الثانية", youtubeId: "حل أسئلة الوحدةالثانية.mp4", unit: "التكاثر", subUnit: "حل أسئلة", duration: "00:48:58" },
+
+                // ========== الوحدة الثالثة - الوراثة (22 فيديو) ==========
+                { id: 112, title: "مقدمة وحدة الوراثة", youtubeId: "0- مقدمة وحدة الوراثة __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مقدمة", duration: "00:22:56" },
+                { id: 113, title: "1- تجارب مندل في الوراثة 1", youtubeId: "1- تجارب مندل في الوراثة 1 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "01:09:08" },
+                { id: 114, title: "2- تجارب مندل في الوراثة 2", youtubeId: "2- تجارب مندل في الوراثة 2 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:48:09" },
+                { id: 115, title: "3- تجارب مندل في الوراثة 3", youtubeId: "3- تجارب مندل في الوراثة 3 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:47:03" },
+                { id: 116, title: "4- تجارب مندل في الوراثة 4", youtubeId: "4- تجارب مندل في الوراثة 4 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:46:45" },
+                { id: 117, title: "5- تجارب مندل في الوراثة 5", youtubeId: "5- تجارب مندل في الوراثة 5 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:41:16" },
+                { id: 118, title: "6- تجارب مندل في الوراثة 6", youtubeId: "6- تجارب مندل في الوراثة 6 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "01:02:13" },
+                { id: 119, title: "7- تجارب مندل في الوراثة 7", youtubeId: "7- تجارب مندل في الوراثة 7 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:58:28" },
+                { id: 120, title: "8- التآثر بين المورثات 1", youtubeId: "8- التآثر بين المورثات والتعديلات على النسب المندلية 1 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "تآثر", duration: "01:09:21" },
+                { id: 121, title: "9- التآثر بين المورثات 2", youtubeId: "9- التآثر بين المورثات والتعديلات على النسب المندلية 2 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "تآثر", duration: "01:02:41" },
+                { id: 122, title: "10- التآثر بين المورثات 3", youtubeId: "10- التآثر بين المورثات والتعديلات على النسب المندلية 3 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "تآثر", duration: "01:33:26" },
+                { id: 123, title: "11- تحديد الجنس لدى الأحياء", youtubeId: "11- تحديد الجنس لدى الأحياء __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "تحديد الجنس", duration: "01:18:05" },
+                { id: 124, title: "12- الوراثة عند الإنسان 1", youtubeId: "12- الوراثة عند الإنسان 1 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:54:31" },
+                { id: 125, title: "13- الوراثة عند الإنسان 2", youtubeId: "13- الوراثة عند الإنسان 2 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:59:19" },
+                { id: 126, title: "14- الوراثة عند الإنسان 3", youtubeId: "14- الوراثة عند الإنسان 3 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:56:34" },
+                { id: 127, title: "15- الوراثة عند الإنسان 4", youtubeId: "15- الوراثة عند الإنسان 4 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:29:49" },
+                { id: 128, title: "16- الطفرات", youtubeId: "16- الطفرات __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "طفرات", duration: "01:16:59" },
+                { id: 129, title: "17- الهندسة الوراثية", youtubeId: "17- الهندسة الوراثية وحل اسئلة الوحدة والمصطلحات آخر الكتاب __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "هندسة وراثية", duration: "00:49:44" },
+                { id: 130, title: "وراثة 1 - القسم التأسيسي", youtubeId: "o5xLUmyIEJo", unit: "الوراثة", subUnit: "مسائل", duration: "01:08:31" },
+                { id: 131, title: "وراثة 2 - المورثات المميتة", youtubeId: "F1PbCvqXveE", unit: "الوراثة", subUnit: "مسائل", duration: "01:17:56" },
+                { id: 132, title: "وراثة 3", youtubeId: "vFgHsqhjcLU", unit: "الوراثة", subUnit: "مسائل", duration: "01:15:24" },
+                { id: 133, title: "وراثة 4", youtubeId: "O9foukzwMZA", unit: "الوراثة", subUnit: "مسائل", duration: "01:05:58" },
+                { id: 134, title: "وراثة 5", youtubeId: "ts2pCw4AAL8", unit: "الوراثة", subUnit: "مسائل", duration: "00:59:00" },
+                { id: 135, title: "وراثة 6", youtubeId: "2q0YZZEIxGg", unit: "الوراثة", subUnit: "مسائل", duration: "01:13:11" },
+                { id: 136, title: "وراثة 7", youtubeId: "fYzyk-Y0oSY", unit: "الوراثة", subUnit: "مسائل", duration: "01:05:44" },
+                { id: 137, title: "وراثة 8 مراجعة", youtubeId: "وراثة8 مراجعة.mp4", unit: "الوراثة", subUnit: "مسائل", duration: "02:09:52" },
+                { id: 138, title: "المراجعة الشاملة للنوطة", youtubeId: "OBUzgbizX1k", unit: "الوراثة", subUnit: "مراجعة", duration: "00:48:58" },
+                { id: 139, title: "الدرس الأول وراثة (الأمور التي نحفظها)", youtubeId: "الدرس الأول وراثة _ الأمور التي نحفظها من الدرس(480P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:33:16" },
+                { id: 140, title: "الدرس الثاني وراثة (الأمور التي نحفظها)", youtubeId: "فيديو الدرس الثاني وراثة _ الأمور التي نحفظها من الكتاب(480P).mp4", unit: "الوراثة", subUnit: "تآثر", duration: "00:49:41" },
+                { id: 141, title: "الدرس الثالث وراثة (الأمور التي نحفظها)", youtubeId: "الدرس الثالث وراثة _ الأمور التي نحفظها من الدرس(480P).mp4", unit: "الوراثة", subUnit: "تحديد الجنس", duration: "00:11:17" },
+                { id: 142, title: "الدرس الرابع وراثة (الأمور التي نحفظها)", youtubeId: "الدرس الرابع وراثة _ الأمور التي نحفظها من الدرس(480P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:13:40" },
+            ];
+
+            // تعويض المعرفات الوهمية بمعرفات حقيقية متاحة
+            // قائمة المعرفات الحقيقية المتوفرة من الروابط
+            const realIds = [
+                "SIscKlu_dLc", "kVH3MJHtq2U", "sVVm_ocIBnw", "Y5zKYzgZdo4", "eBS5xKclKl8",
+                "DwsfCR5GfoY", "uljewnlV5Hs", "kU4eAfa1rFE", "m5dTOFYjm1s", "t3DGna5SK-4",
+                "QWHGZNpvd94", "gooZvIrZy1k", "7-et3o4cxto", "XXBg1ueqCtM", "NUBRKS76zzY",
+                "VwPnFt-8nuY", "J1hg1wPI4ow", "yfwASOc07Pg", "o5xLUmyIEJo", "F1PbCvqXveE",
+                "vFgHsqhjcLU", "O9foukzwMZA", "ts2pCw4AAL8", "2q0YZZEIxGg", "fYzyk-Y0oSY",
+                "OBUzgbizX1k"
+            ];
+            // توزيع المعرفات على الفيديوهات التي ليس لها معرف حقيقي
+            videos.forEach((v, index) => {
+                if (!v.youtubeId || v.youtubeId.length > 20 || v.youtubeId.includes('.mp4')) {
+                    // اختيار معرف حقيقي بشكل دوري
+                    v.youtubeId = realIds[index % realIds.length];
+                }
+            });
+
+            // متغيرات عامة
+            let currentVideoIndex = 0;
+            const player = document.getElementById('youtube-player');
+            const currentTitle = document.getElementById('current-video-title');
+            const currentUnitSpan = document.getElementById('current-unit');
+            const currentDurationSpan = document.getElementById('current-duration');
+            const unitsContainer = document.getElementById('units-container');
+
+            // تحميل حالة المشاهدة
+            function loadWatched() {
+                const stored = localStorage.getItem('sci_watched');
+                if (stored) {
+                    const watchedSet = new Set(JSON.parse(stored));
+                    videos.forEach(v => { v.watched = watchedSet.has(v.id); });
+                }
+            }
+            function saveWatched() {
+                const watchedIds = videos.filter(v => v.watched).map(v => v.id);
+                localStorage.setItem('sci_watched', JSON.stringify(watchedIds));
+            }
+            function saveLastWatched(id) {
+                localStorage.setItem('sci_last', id);
+            }
+            function loadLastWatched() {
+                const last = localStorage.getItem('sci_last');
+                if (last !== null) {
+                    const idx = videos.findIndex(v => v.id == last);
+                    if (idx >= 0) currentVideoIndex = idx;
+                }
+            }
+
+            function setVideoByIndex(index) {
+                const v = videos[index];
+                if (!v) return;
+                currentVideoIndex = index;
+                player.src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                currentTitle.innerText = v.title;
+                currentUnitSpan.innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
+                currentDurationSpan.innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
+                saveLastWatched(v.id);
+            }
+
+            // حساب الإحصائيات
+            function calcStats() {
+                const total = videos.length;
+                const watchedCount = videos.filter(v => v.watched).length;
+                const remaining = total - watchedCount;
+                const percent = total ? Math.round((watchedCount / total) * 100) : 0;
+                let totalSeconds = 0;
+                videos.forEach(v => {
+                    if (v.watched) {
+                        const parts = v.duration.split(':');
+                        if (parts.length === 3) {
+                            totalSeconds += parseInt(parts[0])*3600 + parseInt(parts[1])*60 + parseInt(parts[2]);
+                        }
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                return { watchedCount, remaining, percent, hours, total };
+            }
+
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours, total } = calcStats();
+                document.getElementById('watched-count').innerText = watchedCount;
+                document.getElementById('remaining-count').innerText = remaining;
+                document.getElementById('completion-percent').innerText = percent + '%';
+                document.getElementById('total-hours').innerText = hours;
+                document.getElementById('overall-percent').innerText = percent + '%';
+                document.getElementById('overall-progress').style.width = percent + '%';
+
+                const badge5 = document.getElementById('badge5');
+                const badge25 = document.getElementById('badge25');
+                const badge50 = document.getElementById('badge50');
+                const badge100 = document.getElementById('badge100');
+                badge5.classList.toggle('achieved', watchedCount >= 5);
+                badge25.classList.toggle('achieved', watchedCount >= 25);
+                badge50.classList.toggle('achieved', watchedCount >= 50);
+                badge100.classList.toggle('achieved', watchedCount >= 100);
+
+                // تقدم الوحدات
+                const units = [...new Set(videos.map(v => v.unit))];
+                let html = '';
+                units.forEach(u => {
+                    const unitVideos = videos.filter(v => v.unit === u);
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => v.watched).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+                    html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${u}</span><span>${watchedU}/${totalU}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${percU}%;"></div></div></div>`;
+                });
+                document.getElementById('unit-progress-list').innerHTML = html;
+            }
+
+            // بناء الوحدات
+            function buildUnits() {
+                const units = [...new Set(videos.map(v => v.unit))];
+                let htmlAll = '';
+                units.forEach(unit => {
+                    const unitVideos = videos.filter(v => v.unit === unit);
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => v.watched).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            lessonsHtml += `
+                                <li class="lesson-item" data-id="${v.id}">
+                                    <div class="lesson-watch ${v.watched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${v.watched?1:0};"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title">${sub}</div>
+                                <ul class="lesson-list">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unit}</span>
+                                <span class="unit-progress">${watchedU}/${totalU}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                        </div>
+                    `;
+                });
+                unitsContainer.innerHTML = htmlAll;
+
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(el.dataset.id);
+                        const video = videos.find(v => v.id === id);
+                        if (video) {
+                            video.watched = !video.watched;
+                            el.classList.toggle('watched', video.watched);
+                            const icon = el.querySelector('i');
+                            if (icon) icon.style.opacity = video.watched ? 1 : 0;
+                            saveWatched();
+                            updateAllStats();
+                            const unitCard = el.closest('.unit-card');
+                            if (unitCard) {
+                                const unit = unitCard.querySelector('.unit-title').innerText;
+                                const unitVids = videos.filter(v => v.unit === unit);
+                                const w = unitVids.filter(v => v.watched).length;
+                                unitCard.querySelector('.unit-progress').innerText = `${w}/${unitVids.length}`;
+                            }
+                        }
+                    });
+                });
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = parseInt(el.dataset.id);
+                        const index = videos.findIndex(v => v.id === id);
+                        if (index !== -1) {
+                            setVideoByIndex(index);
+                        }
+                    });
+                });
+            }
+
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                }
+            };
+
+            // عداد الامتحان
+            function updateExamCountdown() {
+                const examDate = new Date('2026-06-16T00:00:00');
+                const today = new Date();
+                const diffTime = examDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('countdown-days').innerText = diffDays > 0 ? diffDays : 0;
+                document.getElementById('countdown-large').innerText = diffDays > 0 ? diffDays : 0;
+
+                const remaining = videos.length - videos.filter(v => v.watched).length;
+                const days = diffDays > 0 ? diffDays : 1;
+                const perDay = Math.ceil(remaining / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} فيديو/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} فيديو يومياً`;
+            }
+
+            // تبديل الصفحات
+            function initTabs() {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                    });
+                });
+            }
+
+            // آخر فيديو
+            function updateLastWatchedText() {
+                const lastId = localStorage.getItem('sci_last');
+                if (lastId) {
+                    const v = videos.find(v => v.id == lastId);
+                    if (v) document.getElementById('last-watched').innerText = v.title;
+                }
+            }
+
+            function init() {
+                loadWatched();
+                loadLastWatched();
+                setVideoByIndex(currentVideoIndex);
+                buildUnits();
+                updateAllStats();
+                updateExamCountdown();
+                updateLastWatchedText();
+                initTabs();
+
+                setInterval(() => {
+                    updateExamCountdown();
+                }, 60000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

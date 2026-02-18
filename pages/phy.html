@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>⚛️ فيزياء البكالوريا - المنصة التفاعلية</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Cairo / Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            border-top: 2px solid #0ea5e9;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            background: #0ea5e9;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #0ea5e9;
+            box-shadow: 0 15px 25px -10px #0ea5e933;
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        .subject-icon {
+            background: #0ea5e9;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0f172a;
+        }
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .subject-name p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .exam-timer {
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #0ea5e9;
+            margin-top: 15px;
+        }
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0ea5e9;
+            direction: ltr;
+        }
+        .daily-plan {
+            font-size: 15px;
+            background: #0ea5e9;
+            color: #0f172a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .progress-section {
+            margin-top: 16px;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            background: #334155;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #0ea5e9;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #0ea5e9;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+        .video-player-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 20px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0f172a;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+        .units-container {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 25px;
+        }
+        .unit-card {
+            background: #0f172a;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #0ea5e9;
+            overflow: hidden;
+        }
+        .unit-header {
+            background: #1e293b;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #0ea5e9;
+        }
+        .unit-header i {
+            font-size: 24px;
+            color: #0ea5e9;
+            transition: 0.2s;
+        }
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+        }
+        .unit-progress {
+            background: #334155;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+        .sub-units {
+            padding: 12px;
+        }
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0ea5e9;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #0ea5e9;
+        }
+        .lesson-list {
+            list-style: none;
+        }
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1e293b;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .lesson-item:hover {
+            border-color: #0ea5e9;
+        }
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #0ea5e9;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0ea5e9;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .lesson-watch.watched {
+            background: #0ea5e9;
+            color: #0f172a;
+        }
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+        .lesson-duration {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        .progress-panel, .timer-panel, .profile-panel {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0f172a;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #0ea5e9;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0ea5e9;
+        }
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .badge {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+        .badge.achieved {
+            border-color: #0ea5e9;
+            background: #0ea5e9;
+            color: #0f172a;
+            opacity: 1;
+        }
+        .badge i {
+            font-size: 26px;
+        }
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #0ea5e9;
+            text-align: center;
+            direction: ltr;
+        }
+        .plan-box {
+            background: #0f172a;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #0ea5e9;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+        hr {
+            border: 0.5px solid #334155;
+            margin: 20px 0;
+        }
+        .small-note {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(92, 246, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(92, 223, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(92, 246, 213, 0.35);
+            border: 1px solid rgba(92, 246, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+        <!-- ======== الهيدر ثابت في كل الصفحات ======== -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-atom"></i></div>
+                <div class="subject-name">
+                    <h1>فيزياء البكالوريا</h1>
+                    <p>منصة تفاعلية - منهاج سوريا</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 6/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======== الصفحات ======== -->
+        <!-- الصفحة الرئيسية (المشغل + الوحدات) -->
+        <div id="page-home" class="page active">
+            <!-- مشغل الفيديو -->
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/UnZX_FTgiJE" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">1- ما تحتاجه من الرياضيات للدخول في الفيزياء</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> أساسيات / أساسيات</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 00:35:00</span>
+                </div>
+            </div>
+
+            <!-- الوحدات القابلة للطي -->
+            <div class="units-container" id="units-container"></div>
+        </div>
+
+        <!-- صفحة التقدم والإنجازات -->
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:#0ea5e9;"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="watched-count">0</div>
+                        <div class="stat-label">فيديو مُشاهَد</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-hours">0</div>
+                        <div class="stat-label">ساعة مشاهدة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="remaining-count">129</div>
+                        <div class="stat-label">فيديو متبقي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completion-percent">0%</div>
+                        <div class="stat-label">إنجاز</div>
+                    </div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                <div class="badge-container" id="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 فيديوهات</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 فيديو</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 فيديو</div>
+                    <div class="badge" id="badge100"><i class="fas fa-dragon"></i> 100 فيديو</div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-chart-pie"></i> تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- صفحة المؤقت والخطة اليومية -->
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 فيديو / يوم</div>
+                    <p class="small-note">لمشاهدة جميع الفيديوهات المتبقية قبل الامتحان</p>
+                </div>
+                <div style="background: #0f172a; border-radius: 24px; padding: 16px; margin-top: 20px;">
+                    <p><i class="fas fa-info-circle" style="color:#0ea5e9;"></i> الامتحان يوم 6 حزيران 2026. واصل بنشاط!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الملف الشخصي -->
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#0ea5e9; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px; color:#0f172a;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>طالب بكالوريا</h3>
+                        <p class="small-note">فيزياء - علمي</p>
+                    </div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle" style="color:#0ea5e9;"></i> آخر فيديو تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
+                <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: 129</div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ========== بيانات الفيديوهات (129 فيديو) محولة إلى الصيغة المطلوبة ==========
+            const rawVideos = [
+                // أساسيات فيزياء (5)
+                { unit: 'أساسيات فيزياء', subUnit: 'أساسيات', title: '1- ما تحتاجه من الرياضيات للدخول في الفيزياء', videoId: 'UnZX_FTgiJE', duration: 35 },
+                { unit: 'أساسيات فيزياء', subUnit: 'أساسيات', title: '2- مايجب معرفته من الفيزياء قبل الدخول في البكالوريا', videoId: 'gjZ18KWrX58', duration: 32 },
+                { unit: 'أساسيات فيزياء', subUnit: 'أساسيات', title: '3- مدخل إلى النواس المرن والحركة التوافقية', videoId: 'UK8e9gm6mYs', duration: 46 },
+                { unit: 'أساسيات فيزياء', subUnit: 'حركة دائرية', title: '24- الحركة الدائرية المنتظمة', videoId: 'e5HlgOEMzg4', duration: 34 },
+                { unit: 'أساسيات فيزياء', subUnit: 'إسقاط أشعة', title: '25- كيفية إسقاط الأشعة في الفيزياء', videoId: 'FG9cwL6mt20', duration: 14 },
+
+                // الوحدة الأولى - الحركة التوافقية البسيطة (نواس مرن)
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '4- نظري النواس المرن الجزء 1', videoId: '61S1l_6MhjI', duration: 47 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '5- نظري النواس المرن الجزء 2', videoId: 'Sz3gZAQiDxM', duration: 60 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '6- ست ملاحظات لحل أي مسألة في النواس المرن', videoId: 'xf0GFEdQRas', duration: 66 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '7- اختبر نفسي - نواس مرن', videoId: 'npkhfhwOkmw', duration: 52 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '8- حل المسألة الأولى والثانية', videoId: '-3KLvC321f8', duration: 30 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '9- حل المسألة الثالثة', videoId: 'xs6WBay315w', duration: 29 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '10- حل المسألة الرابعة', videoId: 'wagqlGYmE48', duration: 25 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس مرن', title: '11- حل المسائل العامة (الأولى والثانية)', videoId: '6QKetXiyrbY', duration: 43 },
+
+                // نواس فتل
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس فتل', title: '12- نظري وملاحظات النواس الفتل', videoId: 'X0jCMwrQrLY', duration: 33 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس فتل', title: '13- أربع طرق لحساب عزم العطالة', videoId: '-s6uM1LVWS4', duration: 54 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس فتل', title: '14- اختبر نفسي في النواس الفتل', videoId: 'TUe24Xn2-fU', duration: 33 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس فتل', title: '15- حل المسائل 1-2', videoId: 'jw52yas5MU8', duration: 43 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس فتل', title: '16- حل المسألة الثالثة', videoId: 'KauIXpZboWA', duration: 41 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس فتل', title: '17- حل المسألة الثالثة عامة', videoId: '4q98EpfaDWE', duration: 26 },
+
+                // نواس ثقلي مركب
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '18- نظري النواس الثقلي المركب', videoId: '1bOH50DPdGU', duration: 30 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '19- الملاحظات الشاملة', videoId: 'WqwmbaIFUko', duration: 79 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '20- تطبيقات على الملاحظات', videoId: '802EiE615I8', duration: 68 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '21- حل المسألة الأولى (ساق مع كتلة)', videoId: 'k78c5CzQCZ8', duration: 25 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '22- حل المسألة الرابعة والخامسة', videoId: 'txiUXyHPUFo', duration: 42 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '23- حل المسألة 4 و5 عامة', videoId: 'tD5b05IGakE', duration: 35 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي مركب', title: '24- حل المسألة السادسة عامة', videoId: 'Cbb85mG2QHo', duration: 29 },
+
+                // نواس ثقلي بسيط
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي بسيط', title: '25- نظري النواس الثقلي البسيط', videoId: 'cHkVZlZ5DE0', duration: 24 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي بسيط', title: '26- سرعة كرة النواس وتوتر الخيط', videoId: 'W_w2kSnp6a4', duration: 48 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'نواس ثقلي بسيط', title: '27- حل المسائل الثانية والثالثة', videoId: 'MgU5GtwYD-I', duration: 29 },
+
+                // ميكانيك الموائع
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'ميكانيك الموائع', title: '28- شرح نظري ميكانيك الموائع', videoId: 'u_sLrGHLeFY', duration: 60 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'ميكانيك الموائع', title: '29- خمسة أسئلة نظرية محلولة', videoId: 'xkjA_BFrA8w', duration: 36 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'ميكانيك الموائع', title: '30- أبسط ملاحظات لحل مسائل الموائع', videoId: 'QyYJEML-YWk', duration: 35 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'ميكانيك الموائع', title: '31- حل المسائل 1و2', videoId: 'WSeSMAsxs0w', duration: 28 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'ميكانيك الموائع', title: '32- حل المسائل 3-4-5', videoId: 'Qd9d0tETG3A', duration: 19 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'ميكانيك الموائع', title: '33- حل المسألة 7 عامة', videoId: 'UmAmcRm-dVs', duration: 11 },
+
+                // النسبية الخاصة
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'النسبية الخاصة', title: '34- شرح مبسط للنسبية الخاصة', videoId: 'nbdWtYcdppk', duration: 23 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'النسبية الخاصة', title: '35- تمدد الزمن', videoId: 'neJ1lwDBvnk', duration: 44 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'النسبية الخاصة', title: '36- انكماش الأطوال', videoId: '3Tm1OsX--3U', duration: 23 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'النسبية الخاصة', title: '37- زيادة الكتلة وتكافؤ الطاقة', videoId: 'vRjTWHDjT-Y', duration: 33 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'النسبية الخاصة', title: '38- حل المسائل الأربعة', videoId: 'xAoQxBPzQeE', duration: 56 },
+                { unit: 'الوحدة الأولى: الحركة والتحريك', subUnit: 'النسبية الخاصة', title: '39- حل المسائل 8 و9 عامة', videoId: 'KJxr73oL9II', duration: 43 },
+
+                // الوحدة الثانية - المغناطيسية
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المغناطيسية', title: '1- المغناطيسية الجزء 1', videoId: '18ivnqzzaDc', duration: 59 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المغناطيسية', title: '2- المغناطيسية الجزء 2', videoId: 'Y28yBL3giHM', duration: 88 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المغناطيسية', title: '3- كيفية حل مسائل المغناطيسية', videoId: 'oxA8vQn2YZY', duration: 70 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المغناطيسية', title: '4- حل المسائل 1-2', videoId: 'VJdYFflUEDE', duration: 30 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المغناطيسية', title: '5- حل المسائل 3-4-5', videoId: 'eh0yuOJTW_A', duration: 40 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المغناطيسية', title: '6- حل المسائل 10-11-12 عامة', videoId: 'xywivVbEp2o', duration: 34 },
+
+                // فعل الحقل المغناطيسي في التيار
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '7- خمس أسئلة عن القوة المغناطيسية', videoId: 'iMn3liTP9v8', duration: 80 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '8- سبع أسئلة عن القوة الكهرطيسية', videoId: '6OL8a0_hTZg', duration: 59 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '9- أربعة أسئلة عن المقياس الغلفاني', videoId: 'jFsShbGS770', duration: 64 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '10- ملخص قوانين الكهرطيسية', videoId: 'IF-s7Fh61_o', duration: 54 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '11- حل المسألة الأولى (السكتين)', videoId: 'CS49P_k47N8', duration: 33 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '12- حل المسألة الثانية (انحراف سلك)', videoId: '9gwPp2KLVGk', duration: 28 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '13- حل المسألة الثالثة (إطار مستطيل)', videoId: 'ngOpQz_LwPY', duration: 21 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '14- حل المسألة الرابعة (دولاب بارلو)', videoId: '9ivEjsSO7mU', duration: 22 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '15- حل المسائل العامة 13-14', videoId: 'w4cDmoXgB_4', duration: 20 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '16- حل المسألة 15 عامة', videoId: 'ZikFb8LIOGI', duration: 20 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'فعل الحقل المغناطيسي', title: '17- حل المسألة 16-17 عامة', videoId: 'LW_YWIGJOJQ', duration: 16 },
+
+                // التحريض الكهرطيسي
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '18- ملخص التحريض', videoId: 'TrA0xDEK-vM', duration: 42 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '19- طريقتين لتعيين جهة التيار', videoId: 'bF025Zp3eIY', duration: 47 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '20- تجربة السكتين التحريضية', videoId: 'vB_pk6KZKFg', duration: 44 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '21- مولد التيار المتناوب', videoId: 'UPyy6nGBvzo', duration: 41 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '22- مبدأ المحرك الكهربائي', videoId: 'okXFDfvnk_o', duration: 50 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '23- التحريض الذاتي', videoId: '0unXc7d4poQ', duration: 53 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '24- ملاحظات وقوانين', videoId: 'pyVSjv30L9A', duration: 45 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '25- اختبر نفسي', videoId: '-B7dL8lnEUU', duration: 44 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '26- حل المسألة الأولى (ملف دائري)', videoId: 'X64k57LHotg', duration: 17 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '27- حل المسألة الثانية', videoId: 'M12_Zgy-NOA', duration: 13 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '28- حل المسألة الثالثة', videoId: 'LVNuqKkP4Q4', duration: 19 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '29- حل المسألة الرابعة', videoId: 'ovwtKoicYCY', duration: 29 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '30- حل المسألة الخامسة', videoId: 'jrR1n6LVDno', duration: 15 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '31- حل المسألة 18 عامة', videoId: 'L6rBDi4b50I', duration: 20 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '32- حل المسألة 19 عامة', videoId: '9PKEGzqrRuE', duration: 20 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '33- حل المسألة 20 عامة', videoId: 'bzxHlA7povo', duration: 40 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '34- حل المسألة 21 عامة', videoId: 'MN3Qb76s4KE', duration: 19 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التحريض الكهرطيسي', title: '35- حل المسألة 22 عامة', videoId: 'd2yqS49HILs', duration: 18 },
+
+                // الدارات المهتزة
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'الدارات المهتزة', title: '36- نظري الدارة المهتزة', videoId: 'eqDYAmWJ3d4', duration: 55 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'الدارات المهتزة', title: '37- استنتاجات الدارة المهتزة', videoId: 'SK--3-4teQA', duration: 22 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'الدارات المهتزة', title: '38- التيارات عالية التواتر', videoId: '6et9-ei4HSk', duration: 34 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'الدارات المهتزة', title: '39- حل المسائل الخمسة', videoId: 'OejP6JRpwgE', duration: 47 },
+
+                // التيار المتناوب الجيبي
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '40- مدخل إلى التيار المتناوب', videoId: 'jsXg-eT983Q', duration: 50 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '41- استنتاج قوانين أوم', videoId: 'ITwfv96I8uw', duration: 52 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '42- شرح دارة التسلسل وفرينل', videoId: 'Q1M3jVk8ppM', duration: 56 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '43- التيارات الفرعية', videoId: 'P8BPvj_5X1w', duration: 41 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '44- ملاحظات وقوانين', videoId: '7YONrGZq2js', duration: 48 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '45- اختبر نفسي', videoId: 'XQ6lYS7qgzg', duration: 59 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '46- حل المسألة الأولى والثانية', videoId: 'ZBd1dJa7Hds', duration: 36 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '47- حل المسألة الثالثة', videoId: '2kvIqEOwE3c', duration: 17 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '48- حل المسألة الرابعة', videoId: 'hNSG1xKryKk', duration: 35 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '49- حل المسألة الخامسة', videoId: 'goSBvHHDsUQ', duration: 26 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '50- حل المسألة السادسة', videoId: 'rZvlpSWGt8o', duration: 43 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '51- حل المسألة 23 عامة', videoId: 'zxfnXEBTYME', duration: 44 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '52- حل المسألة 24 عامة', videoId: 'BSlAU3nPJnQ', duration: 22 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '53- حل المسألة 25 عامة', videoId: 'rgidACmuaxc', duration: 30 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'التيار المتناوب', title: '54- حل المسألة 26-27 عامة', videoId: 'ENOHzL6Q5Rk', duration: 48 },
+
+                // المحولات الكهربائية
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المحولات', title: '55- المحولات الكهربائية نظري', videoId: 'LKISV2GgCwQ', duration: 48 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المحولات', title: '56- حل المسألة الأولى والثانية', videoId: 'EiJlT0AhI7M', duration: 34 },
+                { unit: 'الوحدة الثانية: الكهرباء والمغناطيسية', subUnit: 'المحولات', title: '57- حل المسألة الثالثة والرابعة', videoId: 'sY7iuJRHi5o', duration: 35 },
+
+                // الوحدة الثالثة - الأمواج المستقرة
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'أمواج عرضية', title: '1- مدخل إلى الأمواج المستقرة العرضية', videoId: 'WrIGMI-0Uso', duration: 50 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'أمواج عرضية', title: '2- شرح تجربة ملد', videoId: 'o-ZOn-aUAMQ', duration: 26 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'أمواج طولية', title: '3- الأمواج الكهرطيسية والطولية', videoId: 'FDMdTiYfv-g', duration: 21 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'أمواج عرضية', title: '4- ملاحظات وقوانين', videoId: 'xuDM6kZLfSs', duration: 20 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'مزامير', title: '5- المزامير والأعمدة الهوائية', videoId: 'TGtuCzZFU1I', duration: 20 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'مسائل', title: '6- اختبر نفسي', videoId: '-357P5aDc4k', duration: 43 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'مسائل', title: '7- حل المسائل من 1 إلى 11', videoId: 'w2no-23o18M', duration: 40 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'مسائل عامة', title: '8- حل المسائل 28-29', videoId: 'jo7FOhZWdlo', duration: 17 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'مسائل عامة', title: '9- حل المسائل 30-31', videoId: 'wMxG4ZVYcKU', duration: 40 },
+                { unit: 'الوحدة الثالثة: الأمواج المستقرة', subUnit: 'مسائل عامة', title: '10- حل المسائل 32-36', videoId: 'TxsH907nXJA', duration: 35 },
+
+                // الوحدة الرابعة - الإلكترونيات
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'نظرية الكم', title: '1- نظرية الكم - مدخل', videoId: '7dD5WYgWplE', duration: 43 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'النماذج الذرية', title: '2- النماذج الذرية والأطياف', videoId: 'yW6PFO9D1dE', duration: 42 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'انتزاع الإلكترونات', title: '4- انتزاع الإلكترونات وتسريعها نظري', videoId: 'QF0r_G0i-3M', duration: 52 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'انتزاع الإلكترونات', title: '5- انتزاع الإلكترونات - ملاحظات ومسائل', videoId: 'd_X9C4L_0Hg', duration: 25 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'انتزاع الإلكترونات', title: '6- حل المسائل 39-40 عامة', videoId: 'NMyJ3D4k3gA', duration: 22 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'الأشعة المهبطية', title: '7- الأشعة المهبطية', videoId: 'B0y9UljC1Eo', duration: 20 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'الفعل الكهرحراري', title: '8- الفعل الكهرحراري', videoId: '6xHyU4fzM3Q', duration: 18 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'الفعل الكهرضوئي', title: '9- الفعل الكهرضوئي - نظري', videoId: '9_5VnLt33v8', duration: 34 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'الفعل الكهرضوئي', title: '10- الفعل الكهرضوئي - مسائل', videoId: 'J5GXgJq-PoQ', duration: 28 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'الأشعة السينية', title: '11- الأشعة السينية', videoId: 'zZ02nC4V49k', duration: 42 },
+                { unit: 'الوحدة الرابعة: الإلكترونيات', subUnit: 'الليزر', title: '12- أشعة الليزر', videoId: 'bC41rLmOM9M', duration: 26 },
+
+                // الوحدة الخامسة - الفيزياء الفلكية
+                { unit: 'الوحدة الخامسة: الفيزياء الفلكية', subUnit: 'أساسيات', title: '1- مدخل إلى الفيزياء الفلكية', videoId: 'ugQOuO03UtI', duration: 35 },
+                { unit: 'الوحدة الخامسة: الفيزياء الفلكية', subUnit: 'نظريات', title: '2- نظرية الانفجار العظيم', videoId: '5P9jUt_mtMo', duration: 60 },
+                { unit: 'الوحدة الخامسة: الفيزياء الفلكية', subUnit: 'ملاحظات', title: '3- ست ملاحظات لحل مسائل الفلك', videoId: 'CjBNOYpsByY', duration: 38 },
+                { unit: 'الوحدة الخامسة: الفيزياء الفلكية', subUnit: 'مسائل', title: '4- حل مسائل الدرس والمسائل العامة', videoId: 'ghx_NbNzd0U', duration: 30 },
+            ];
+
+            // تحويل البيانات إلى الصيغة المطلوبة مع إضافة id و watched وتحويل المدة إلى نص hh:mm:ss
+            const videos = rawVideos.map((v, index) => {
+                // تحويل الدقائق إلى نص hh:mm:ss
+                const mins = v.duration;
+                const hours = Math.floor(mins / 60);
+                const minutes = mins % 60;
+                const timeString = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
+                return {
+                    id: index,
+                    title: v.title,
+                    youtubeId: v.videoId,
+                    unit: v.unit,
+                    subUnit: v.subUnit,
+                    duration: timeString,
+                    watched: false
+                };
+            });
+
+            // ---------- متغيرات عامة ----------
+            let currentVideoIndex = 0;  // آخر فيديو تم اختياره
+            const player = document.getElementById('youtube-player');
+            const currentTitle = document.getElementById('current-video-title');
+            const currentUnitSpan = document.getElementById('current-unit');
+            const currentDurationSpan = document.getElementById('current-duration');
+            const unitsContainer = document.getElementById('units-container');
+
+            // تحميل حالة المشاهدة من localStorage
+            function loadWatched() {
+                const stored = localStorage.getItem('phys_watched');
+                if (stored) {
+                    const watchedSet = new Set(JSON.parse(stored));
+                    videos.forEach(v => { v.watched = watchedSet.has(v.id); });
+                }
+            }
+            function saveWatched() {
+                const watchedIds = videos.filter(v => v.watched).map(v => v.id);
+                localStorage.setItem('phys_watched', JSON.stringify(watchedIds));
+            }
+            // آخر فيديو
+            function saveLastWatched(id) {
+                localStorage.setItem('phys_last', id);
+            }
+            function loadLastWatched() {
+                const last = localStorage.getItem('phys_last');
+                if (last !== null) {
+                    const idx = videos.findIndex(v => v.id == last);
+                    if (idx >= 0) currentVideoIndex = idx;
+                }
+            }
+
+            // تحديث مشغل الفيديو
+            function setVideoByIndex(index) {
+                const v = videos[index];
+                if (!v) return;
+                currentVideoIndex = index;
+                player.src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                currentTitle.innerText = v.title;
+                currentUnitSpan.innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
+                currentDurationSpan.innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
+                saveLastWatched(v.id);
+            }
+
+            // حساب الإحصائيات
+            function calcStats() {
+                const total = videos.length;
+                const watchedCount = videos.filter(v => v.watched).length;
+                const remaining = total - watchedCount;
+                const percent = total ? Math.round((watchedCount / total) * 100) : 0;
+                // حساب الساعات (تقريبي: نحول مدة hh:mm:ss إلى ساعات)
+                let totalSeconds = 0;
+                videos.forEach(v => {
+                    if (v.watched) {
+                        const parts = v.duration.split(':');
+                        if (parts.length === 3) {
+                            totalSeconds += parseInt(parts[0])*3600 + parseInt(parts[1])*60 + parseInt(parts[2]);
+                        }
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                return { watchedCount, remaining, percent, hours };
+            }
+
+            // تحديث واجهة التقدم والشارات
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours } = calcStats();
+                document.getElementById('watched-count').innerText = watchedCount;
+                document.getElementById('remaining-count').innerText = remaining;
+                document.getElementById('completion-percent').innerText = percent + '%';
+                document.getElementById('total-hours').innerText = hours;
+                document.getElementById('overall-percent').innerText = percent + '%';
+                document.getElementById('overall-progress').style.width = percent + '%';
+
+                // الشارات
+                const badge5 = document.getElementById('badge5');
+                const badge25 = document.getElementById('badge25');
+                const badge50 = document.getElementById('badge50');
+                const badge100 = document.getElementById('badge100');
+                badge5.classList.toggle('achieved', watchedCount >= 5);
+                badge25.classList.toggle('achieved', watchedCount >= 25);
+                badge50.classList.toggle('achieved', watchedCount >= 50);
+                badge100.classList.toggle('achieved', watchedCount >= 100);
+
+                // تقدم الوحدات (لصفحة التقدم)
+                const units = [...new Set(videos.map(v => v.unit))];
+                let html = '';
+                units.forEach(u => {
+                    const unitVideos = videos.filter(v => v.unit === u);
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => v.watched).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+                    html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${u}</span><span>${watchedU}/${totalU}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${percU}%;"></div></div></div>`;
+                });
+                document.getElementById('unit-progress-list').innerHTML = html;
+            }
+
+            // بناء الوحدات في الصفحة الرئيسية
+            function buildUnits() {
+                const units = [...new Set(videos.map(v => v.unit))];
+                let htmlAll = '';
+                units.forEach(unit => {
+                    const unitVideos = videos.filter(v => v.unit === unit);
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => v.watched).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            lessonsHtml += `
+                                <li class="lesson-item" data-id="${v.id}">
+                                    <div class="lesson-watch ${v.watched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${v.watched?1:0};"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title">${sub}</div>
+                                <ul class="lesson-list">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unit}</span>
+                                <span class="unit-progress">${watchedU}/${totalU}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                        </div>
+                    `;
+                });
+                unitsContainer.innerHTML = htmlAll;
+
+                // إضافة event listeners للدوائر وعناصر الدروس
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(el.dataset.id);
+                        const video = videos.find(v => v.id === id);
+                        if (video) {
+                            video.watched = !video.watched;
+                            el.classList.toggle('watched', video.watched);
+                            const icon = el.querySelector('i');
+                            if (icon) icon.style.opacity = video.watched ? 1 : 0;
+                            saveWatched();
+                            updateAllStats();
+                            // تحديث عداد الوحدة
+                            const unitCard = el.closest('.unit-card');
+                            if (unitCard) {
+                                const unit = unitCard.querySelector('.unit-title').innerText;
+                                const unitVids = videos.filter(v => v.unit === unit);
+                                const w = unitVids.filter(v => v.watched).length;
+                                unitCard.querySelector('.unit-progress').innerText = `${w}/${unitVids.length}`;
+                            }
+                        }
+                    });
+                });
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = parseInt(el.dataset.id);
+                        const index = videos.findIndex(v => v.id === id);
+                        if (index !== -1) {
+                            setVideoByIndex(index);
+                        }
+                    });
+                });
+            }
+
+            // دالة طي الوحدة (تُستدعى من onclick)
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                }
+            };
+
+            // تحديث عداد الامتحان والخطة اليومية
+            function updateExamCountdown() {
+                const examDate = new Date('2026-06-06T00:00:00');
+                const today = new Date();
+                const diffTime = examDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('countdown-days').innerText = diffDays > 0 ? diffDays : 0;
+                document.getElementById('countdown-large').innerText = diffDays > 0 ? diffDays : 0;
+
+                const remaining = videos.length - videos.filter(v => v.watched).length;
+                const days = diffDays > 0 ? diffDays : 1;
+                const perDay = Math.ceil(remaining / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} فيديو/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} فيديو يومياً`;
+            }
+
+            // التبديل بين الصفحات
+            function initTabs() {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                    });
+                });
+            }
+
+            // آخر فيديو مشاهَد
+            function updateLastWatchedText() {
+                const lastId = localStorage.getItem('phys_last');
+                if (lastId) {
+                    const v = videos.find(v => v.id == lastId);
+                    if (v) document.getElementById('last-watched').innerText = v.title;
+                }
+            }
+
+            // تهيئة كاملة
+            function init() {
+                loadWatched();
+                loadLastWatched();
+                setVideoByIndex(currentVideoIndex);
+                buildUnits();
+                updateAllStats();
+                updateExamCountdown();
+                updateLastWatchedText();
+                initTabs();
+
+                // تحديث كل دقيقة للعد التنازلي
+                setInterval(() => {
+                    updateExamCountdown();
+                }, 60000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

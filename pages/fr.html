@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🇫🇷 الفرنسية – البكالوريا (الدليل الكامل)</title>
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #0a0c12 0%, #1a1e26 100%);
+            color: #e9edf2;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 34, 40, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid #5f6b7a;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.6);
+            z-index: 1000;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9aa7b9;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            background: #5f6b7a;
+            color: #0f1217;
+            font-weight: 600;
+            box-shadow: 0 0 12px #9aa7b9;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header-card {
+            background: rgba(30, 34, 40, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #5f6b7a;
+            box-shadow: 0 15px 25px -10px rgba(90, 100, 114, 0.5);
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        .subject-icon {
+            background: #5f6b7a;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0f1217;
+            box-shadow: 0 0 12px #9aa7b9;
+        }
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #f0f4fa, #b9c4d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subject-name p {
+            color: #9aa7b9;
+            font-size: 14px;
+        }
+        .exam-timer {
+            background: #0f1217;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #5f6b7a;
+            margin-top: 15px;
+        }
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #e9edf2;
+            direction: ltr;
+        }
+        .daily-plan {
+            font-size: 15px;
+            background: #5f6b7a;
+            color: #0f1217;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .progress-section {
+            margin-top: 16px;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            background: #2a2f38;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #5f6b7a;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6d7c8f, #8f9eb2);
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+        .video-player-card {
+            background: rgba(30, 34, 40, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #5f6b7a;
+            margin-bottom: 20px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0f1217;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #9aa7b9;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+        .units-container {
+            background: rgba(30, 34, 40, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #5f6b7a;
+            margin-bottom: 25px;
+        }
+        .unit-card {
+            background: #0f1217;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #5f6b7a;
+            overflow: hidden;
+        }
+        .unit-header {
+            background: #1e2228;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #5f6b7a;
+        }
+        .unit-header i {
+            font-size: 24px;
+            color: #9aa7b9;
+            transition: 0.2s;
+        }
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+        }
+        .unit-progress {
+            background: #2a2f38;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+        .sub-units {
+            padding: 12px;
+        }
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #b9c4d4;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #6d7c8f;
+        }
+        .lesson-list {
+            list-style: none;
+        }
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1e2228;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .lesson-item:hover {
+            border-color: #8f9eb2;
+        }
+        .lesson-item.active {
+            border-color: #8f9eb2;
+            background: #262c35;
+            box-shadow: 0 0 10px #9aa7b9;
+        }
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #6d7c8f;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e9edf2;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .lesson-watch.watched {
+            background: #6d7c8f;
+            color: #0f1217;
+        }
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+        .lesson-duration {
+            font-size: 13px;
+            color: #9aa7b9;
+            white-space: nowrap;
+        }
+        .lesson-drive {
+            color: #8f9eb2;
+            font-size: 13px;
+            background: #2a2f38;
+            padding: 4px 8px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .progress-panel, .timer-panel, .profile-panel {
+            background: rgba(30, 34, 40, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #5f6b7a;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0f1217;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #5f6b7a;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #e9edf2;
+        }
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .badge {
+            background: #0f1217;
+            border: 2px solid #3f4855;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+        .badge.achieved {
+            border-color: #8f9eb2;
+            background: #5f6b7a;
+            color: #0f1217;
+            opacity: 1;
+        }
+        .badge i {
+            font-size: 26px;
+        }
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #e9edf2;
+            text-align: center;
+            direction: ltr;
+        }
+        .plan-box {
+            background: #0f1217;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #5f6b7a;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        hr {
+            border: 0.5px solid #3f4855;
+            margin: 20px 0;
+        }
+        .small-note {
+            color: #9aa7b9;
+            font-size: 13px;
+        }
+        .reset-btn {
+            background: #3f4855;
+            border: none;
+            color: #e9edf2;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+        <!-- الهيدر -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-language"></i></div>
+                <div class="subject-name">
+                    <h1>Français – Baccalauréat</h1>
+                    <p>المنهاج السوري الحديث – أكثر من 150 درساً مترجماً</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 18/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحات -->
+        <div id="page-home" class="page active">
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/t2qx5uOeg0Y" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">Le nom féminin (الاسم المؤنث)</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> الوحدة 1 / قواعد</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 00:08:00</span>
+                </div>
+            </div>
+            <div class="units-container" id="units-container"></div>
+        </div>
+
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px;"><i class="fas fa-chart-line"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number" id="watched-count">0</div><div class="stat-label">فيديو مُشاهَد</div></div>
+                    <div class="stat-card"><div class="stat-number" id="total-hours">0</div><div class="stat-label">ساعة مشاهدة</div></div>
+                    <div class="stat-card"><div class="stat-number" id="remaining-count">0</div><div class="stat-label">فيديو متبقي</div></div>
+                    <div class="stat-card"><div class="stat-number" id="completion-percent">0%</div><div class="stat-label">إنجاز</div></div>
+                </div>
+                <hr>
+                <h3>🏅 شارات الإنجاز</h3>
+                <div class="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 دروس</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 درس</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 درس</div>
+                    <div class="badge" id="badge100"><i class="fas fa-dragon"></i> 100 درس</div>
+                </div>
+                <hr>
+                <h3>📊 تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+                <button class="reset-btn" id="reset-progress"><i class="fas fa-trash-alt"></i> إعادة تعيين التقدم</button>
+            </div>
+        </div>
+
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 درس / يوم</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#5f6b7a; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div><h3>طالب بكالوريا</h3><p class="small-note">الفرنسية – علمي / أدبي</p></div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle"></i> آخر درس: <span id="last-watched">لا يوجد</span></div>
+                <div><i class="fas fa-save"></i> يتم الحفظ تلقائياً</div>
+                <div class="small-note">عدد الدروس الكلي: <span id="total-lessons">0</span></div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // -------------------- جميع الدروس (أكثر من 150 درساً) --------------------
+            const lessons = [
+                // UNITÉ 1 – Grammaire
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Le nom masculin', titleAr: 'الاسم المذكر', url: 'https://www.youtube.com/embed/t2qx5uOeg0Y', duration: 8 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Le nom féminin', titleAr: 'الاسم المؤنث', url: 'https://www.youtube.com/embed/t2qx5uOeg0Y', duration: 7 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les articles indéfinis', titleAr: 'أدوات النكرة', url: 'https://www.youtube.com/embed/grV74QOJ9jM', duration: 6 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les articles définis', titleAr: 'أدوات المعرفة', url: 'https://www.youtube.com/embed/5PVWN1l3eFM', duration: 7 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les articles contractés', titleAr: 'أدوات الاندماج', url: 'https://www.youtube.com/embed/zOB1xeujwWc', duration: 5 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les adjectifs possessifs', titleAr: 'صفات الملكية', url: 'https://www.youtube.com/embed/s83RQaJxIbI', duration: 9 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les adjectifs démonstratifs', titleAr: 'صفات الإشارة', url: 'https://www.youtube.com/embed/EtyMCEHE41s', duration: 7 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les pronoms relatifs simples', titleAr: 'ضمائر الوصل البسيطة', url: 'https://www.youtube.com/embed/VRJ4IKcnyUA', duration: 10 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les pronoms relatifs composés', titleAr: 'ضمائر الوصل المركبة', url: 'https://www.youtube.com/embed/sCsgndNPXRs', duration: 11 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Verbe avoir & être', titleAr: 'فعلي الملك والكون', url: 'https://www.youtube.com/embed/4Imb0kealQs', duration: 8 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Présent verbes (-er/-ir)', titleAr: 'المضارع (er/ir)', url: 'https://www.youtube.com/embed/19E_AO4MXrk', duration: 12 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Le mode subjonctif', titleAr: 'صيغة الشرط', url: 'https://www.youtube.com/embed/bRSUeMgKQ0A', duration: 15 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Le conditionnel présent et passé', titleAr: 'الشرط الحاضر والماضي', url: 'https://www.youtube.com/embed/sd58y_w-H-Q', duration: 14 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'L’expression de but 1', titleAr: 'التعبير عن الهدف 1', url: 'https://www.youtube.com/embed/q2I-VQfhdgE', duration: 9 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'L’expression de but 2', titleAr: 'التعبير عن الهدف 2', url: 'https://www.youtube.com/embed/q2I-VQfhdgE', duration: 8 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Les conjonctions d’opposition', titleAr: 'روابط التضاد', url: 'https://www.youtube.com/embed/For_bnaazZ4', duration: 10 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Discours direct/indirect', titleAr: 'الكلام المباشر/غير المباشر', url: 'https://www.youtube.com/embed/_4jNvnrvIqw', duration: 14 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Le comparatif et le superlatif', titleAr: 'المقارنة والتفضيل', url: 'https://www.youtube.com/embed/qX4T5pMMENY', duration: 12 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Adjectifs et pronoms indéfinis', titleAr: 'الصفات والضمائر غير المحددة', url: 'https://www.youtube.com/embed/dLEN7YrWMrw', duration: 13 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Grammaire', sectionAr: 'قواعد', title: 'Pronoms possessifs/démonstratifs', titleAr: 'ضمائر الملكية والإشارة', url: 'https://www.youtube.com/embed/TeaOWn7s6CY', duration: 11 },
+                // Compréhension orale (الوحدة 1)
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO1 – Observez p.7', titleAr: 'نشاط استماع 1 – لاحظ ص7', url: 'https://www.youtube.com/embed/8765ZmQkJG8', duration: 15 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO2 – Écoutez p.7', titleAr: 'نشاط استماع 2 – استمع ص7', url: 'https://www.youtube.com/embed/QnwGR8ZId0U', duration: 14 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO1', titleAr: 'ترجمة النص الشفهي الأول', url: 'https://www.youtube.com/embed/hR7FqQMLnQc', duration: 10 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO2', titleAr: 'ترجمة النص الشفهي الثاني', url: 'https://www.youtube.com/embed/us9A88glloA', duration: 11 },
+                // Compréhension écrite
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE1 – Lisez p.11-12', titleAr: 'نشاط قراءة 1 ص11-12', url: 'https://www.youtube.com/embed/yEYdyE3Ji0Q', duration: 18 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE2 – Rapport p.12', titleAr: 'نشاط قراءة 2 – تقرير ص12', url: 'https://www.youtube.com/embed/fq-HlyieK4Q', duration: 16 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE1', titleAr: 'ترجمة النص الكتابي الأول', url: 'https://www.youtube.com/embed/dJ0GP8boUxY', duration: 11 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE2', titleAr: 'ترجمة النص الكتابي الثاني', url: 'https://www.youtube.com/embed/rGswBrtWpDM', duration: 12 },
+                // Expression orale
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO1 – Présentez p.8', titleAr: 'نشاط شفهي 1 ص8', url: 'https://www.youtube.com/embed/a67DQTrlKIs', duration: 13 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO2 – Choisissez p.10', titleAr: 'نشاط شفهي 2 ص10', url: 'https://www.youtube.com/embed/Fzhp_s378JE', duration: 12 },
+                // Expression écrite
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE1 – Tableau p.15', titleAr: 'تعبير كتابي 1 ص15', url: 'https://www.youtube.com/embed/5bYzX8lWnnA', duration: 17 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE2 – Forum p.16', titleAr: 'تعبير كتابي 2 ص16', url: 'https://www.youtube.com/embed/zaT_Bx6M0lI', duration: 19 },
+                // Projet + Je m'entraîne
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Projet', sectionAr: 'مشروع', title: 'Organiser un événement', titleAr: 'تنظيم حدث اجتماعي', url: 'https://www.youtube.com/embed/9okRe6I6K1Y', duration: 20 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.20', titleAr: 'تمارين ص20', url: 'https://www.youtube.com/embed/PKWRA9pRGUQ', duration: 10 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.21', titleAr: 'تمارين ص21', url: 'https://www.youtube.com/embed/y4r1q6nTWQw', duration: 12 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.22', titleAr: 'تمارين ص22', url: 'https://www.youtube.com/embed/RXMhzudTcn0', duration: 9 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.23', titleAr: 'تمارين ص23', url: 'https://www.youtube.com/embed/dHuTVseqLLI', duration: 11 },
+                { unit: 'Unité 1 – On fête ensemble', unitAr: 'الوحدة 1 – نحتفل معاً', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.24-25', titleAr: 'تمارين ص24-25', url: 'https://www.youtube.com/embed/9iMpHU2d9dg', duration: 14 },
+
+                // UNITÉ 2 – Chacun pour tous
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO – p.26-28', titleAr: 'نشاط استماع ص26-28', url: 'https://www.youtube.com/embed/hPvAz_s5HP0', duration: 20 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO suite – p.29', titleAr: 'تكملة استماع ص29', url: 'https://www.youtube.com/embed/TS7yE4Jme_U', duration: 18 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO', titleAr: 'ترجمة نصوص الاستماع', url: 'https://www.youtube.com/embed/a-81Pn1RSqw', duration: 12 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE – p.32', titleAr: 'نشاط قراءة ص32', url: 'https://www.youtube.com/embed/l3aL0plCF0M', duration: 22 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE suite – p.33', titleAr: 'تكملة قراءة ص33', url: 'https://www.youtube.com/embed/QbwE3tUiHbU', duration: 15 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE fin – p.33', titleAr: 'إتمام القراءة ص33', url: 'https://www.youtube.com/embed/zQ03vmkGIJk', duration: 14 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE1', titleAr: 'ترجمة النص الكتابي الأول', url: 'https://www.youtube.com/embed/e4LwaCzVHHc', duration: 13 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE2', titleAr: 'ترجمة النص الكتابي الثاني', url: 'https://www.youtube.com/embed/KrNqcmJHWCI', duration: 13 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO – p.30', titleAr: 'تعبير شفهي ص30', url: 'https://www.youtube.com/embed/LvKF6dlv5gM', duration: 16 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO suite – p.31', titleAr: 'تكملة تعبير شفهي ص31', url: 'https://www.youtube.com/embed/m-5cCn8YQ5A', duration: 15 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE – p.36', titleAr: 'تعبير كتابي ص36', url: 'https://www.youtube.com/embed/nru8GKjaSig', duration: 18 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE suite – p.37-38', titleAr: 'تكملة تعبير كتابي ص37-38', url: 'https://www.youtube.com/embed/22zs5a68YIs', duration: 20 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Grammaire', sectionAr: 'قواعد', title: 'L’opposition p.34', titleAr: 'التضاد ص34', url: 'https://www.youtube.com/embed/For_bnaazZ4', duration: 12 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Grammaire', sectionAr: 'قواعد', title: 'L’opposition p.35', titleAr: 'التضاد ص35', url: 'https://www.youtube.com/embed/m5GLYR33YBQ', duration: 11 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.40', titleAr: 'تمارين ص40', url: 'https://www.youtube.com/embed/Q9zjsJyCPjw', duration: 10 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.40 suite', titleAr: 'تكملة تمارين ص40', url: 'https://www.youtube.com/embed/tQcpVvjYd10', duration: 9 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.41', titleAr: 'تمارين ص41', url: 'https://www.youtube.com/embed/egpU6BUOelg', duration: 8 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.42', titleAr: 'تمارين ص42', url: 'https://www.youtube.com/embed/yEk1CGViMWc', duration: 10 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.43', titleAr: 'تمارين ص43', url: 'https://www.youtube.com/embed/Lw6tk1cv-6c', duration: 11 },
+                { unit: 'Unité 2 – Chacun pour tous', unitAr: 'الوحدة 2 – كل من أجل الجميع', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.44-45', titleAr: 'تمارين ص44-45', url: 'https://www.youtube.com/embed/1aN7yzumEOE', duration: 13 },
+
+                // UNITÉ 3 – Le salon
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO – p.46-48', titleAr: 'نشاط استماع ص46-48', url: 'https://www.youtube.com/embed/Verjml0ExkA', duration: 25 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO suite – p.49', titleAr: 'تكملة استماع ص49', url: 'https://www.youtube.com/embed/75CxUFuioPw', duration: 20 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO1', titleAr: 'ترجمة النص الشفهي الأول', url: 'https://www.youtube.com/embed/_JpZQTcTeX4', duration: 14 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO2', titleAr: 'ترجمة النص الشفهي الثاني', url: 'https://www.youtube.com/embed/2ySUwkA3zNc', duration: 13 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE – p.52', titleAr: 'نشاط قراءة ص52', url: 'https://www.youtube.com/embed/XXPx1c5dugU', duration: 21 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE suite – p.53', titleAr: 'تكملة قراءة ص53', url: 'https://www.youtube.com/embed/_kja7RmwTLM', duration: 19 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE1', titleAr: 'ترجمة النص الكتابي الأول', url: 'https://www.youtube.com/embed/TPzR75k-XR0', duration: 15 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE2', titleAr: 'ترجمة النص الكتابي الثاني', url: 'https://www.youtube.com/embed/qSPOmwmEmlU', duration: 16 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO – p.50', titleAr: 'تعبير شفهي ص50', url: 'https://www.youtube.com/embed/sck-UPYxDv8', duration: 17 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO suite – p.51', titleAr: 'تكملة تعبير شفهي ص51', url: 'https://www.youtube.com/embed/BuQwJhuldFY', duration: 16 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE – p.56-58', titleAr: 'تعبير كتابي ص56-58', url: 'https://www.youtube.com/embed/QWJfd9Q75BI', duration: 22 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Grammaire', sectionAr: 'قواعد', title: 'Discours indirect p.54', titleAr: 'الكلام غير المباشر ص54', url: 'https://www.youtube.com/embed/_4jNvnrvIqw', duration: 13 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Grammaire', sectionAr: 'قواعد', title: 'Discours indirect p.55', titleAr: 'الكلام غير المباشر ص55', url: 'https://www.youtube.com/embed/abmoGFCNFR8', duration: 12 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.59-60', titleAr: 'تمارين ص59-60', url: 'https://www.youtube.com/embed/K_JOCkG5j5s', duration: 14 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.61', titleAr: 'تمارين ص61', url: 'https://www.youtube.com/embed/ZYq1MNsw7KQ', duration: 10 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.62-63', titleAr: 'تمارين ص62-63', url: 'https://www.youtube.com/embed/1FeYvwbLf6c', duration: 12 },
+                { unit: 'Unité 3 – Le salon, un espace culturel', unitAr: 'الوحدة 3 – الصالون فضاء ثقافي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.64-65', titleAr: 'تمارين ص64-65', url: 'https://www.youtube.com/embed/wGh5cbwcpUs', duration: 15 },
+
+                // UNITÉ 4 – La femme
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO – p.66-68', titleAr: 'نشاط استماع ص66-68', url: 'https://www.youtube.com/embed/spsVWfmCHas', duration: 24 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO suite – p.69', titleAr: 'تكملة استماع ص69', url: 'https://www.youtube.com/embed/gxpeToYdy7s', duration: 18 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO1', titleAr: 'ترجمة النص الشفهي الأول', url: 'https://www.youtube.com/embed/w6-YR9GBK4o', duration: 12 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'Traduction CO2', titleAr: 'ترجمة النص الشفهي الثاني', url: 'https://www.youtube.com/embed/IFVOIyixyBk', duration: 13 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE – p.72', titleAr: 'نشاط قراءة ص72', url: 'https://www.youtube.com/embed/9A5BvedrSqM', duration: 20 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE suite – p.73', titleAr: 'تكملة قراءة ص73', url: 'https://www.youtube.com/embed/E3ExD3ghbu0', duration: 19 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE1', titleAr: 'ترجمة النص الكتابي الأول', url: 'https://www.youtube.com/embed/7DCbN_-S90c', duration: 14 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'Traduction CE2', titleAr: 'ترجمة النص الكتابي الثاني', url: 'https://www.youtube.com/embed/ZPFJRFoI4Jc', duration: 15 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO – p.70-71', titleAr: 'تعبير شفهي ص70-71', url: 'https://www.youtube.com/embed/9ay39QlkPBg', duration: 21 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE – p.76-78', titleAr: 'تعبير كتابي ص76-78', url: 'https://www.youtube.com/embed/uAAvlFjmGfQ', duration: 23 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Grammaire', sectionAr: 'قواعد', title: 'Comparatif/Superlatif p.74', titleAr: 'المقارنة والتفضيل ص74', url: 'https://www.youtube.com/embed/w22fGswcnIo', duration: 14 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Grammaire', sectionAr: 'قواعد', title: 'Comparatif/Superlatif p.75', titleAr: 'المقارنة والتفضيل ص75', url: 'https://www.youtube.com/embed/7_PE6YwJup8', duration: 13 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.79-80', titleAr: 'تمارين ص79-80', url: 'https://www.youtube.com/embed/EL5XuueguTk', duration: 16 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.81-82', titleAr: 'تمارين ص81-82', url: 'https://www.youtube.com/embed/pAqfEvv2AZQ', duration: 15 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.83-84', titleAr: 'تمارين ص83-84', url: 'https://www.youtube.com/embed/7WV6N2xsMOU', duration: 14 },
+                { unit: 'Unité 4 – La femme dans la littérature', unitAr: 'الوحدة 4 – المرأة في الأدب', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.84-85', titleAr: 'تمارين ص84-85', url: 'https://www.youtube.com/embed/873u2Cozhs0', duration: 13 },
+
+                // UNITÉ 5 – IA
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO – p.86-88', titleAr: 'نشاط استماع ص86-88', url: 'https://www.youtube.com/embed/csXKAjXne_o', duration: 22 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO suite – p.89', titleAr: 'تكملة استماع ص89', url: 'https://www.youtube.com/embed/7kvaM9XHlYo', duration: 18 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE – p.92', titleAr: 'نشاط قراءة ص92', url: 'https://www.youtube.com/embed/ajbSKLhajlA', duration: 20 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE suite – p.93', titleAr: 'تكملة قراءة ص93', url: 'https://www.youtube.com/embed/ZfRyIPfzD3Y', duration: 19 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO – p.90-91', titleAr: 'تعبير شفهي ص90-91', url: 'https://www.youtube.com/embed/oKejTFMUVII', duration: 20 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE – p.96', titleAr: 'تعبير كتابي ص96', url: 'https://www.youtube.com/embed/a8W99saemy0', duration: 18 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE suite – p.97', titleAr: 'تكملة تعبير كتابي ص97', url: 'https://www.youtube.com/embed/hiWcQZEqu2Y', duration: 17 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Grammaire', sectionAr: 'قواعد', title: 'Adjectifs indéfinis p.94', titleAr: 'الصفات غير المحددة ص94', url: 'https://www.youtube.com/embed/dLEN7YrWMrw', duration: 15 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Grammaire', sectionAr: 'قواعد', title: 'Pronoms indéfinis p.95', titleAr: 'الضمائر غير المحددة ص95', url: 'https://www.youtube.com/embed/9bnY8_viMsY', duration: 14 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.99-100', titleAr: 'تمارين ص99-100', url: 'https://www.youtube.com/embed/fyi_CYWi9oE', duration: 12 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.101-102', titleAr: 'تمارين ص101-102', url: 'https://www.youtube.com/embed/PoBpEeKIrpM', duration: 13 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.103', titleAr: 'تمارين ص103', url: 'https://www.youtube.com/embed/DrqzA8D-kWc', duration: 10 },
+                { unit: 'Unité 5 – L’intelligence artificielle', unitAr: 'الوحدة 5 – الذكاء الاصطناعي', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.104-105', titleAr: 'تمارين ص104-105', url: 'https://www.youtube.com/embed/yvL6qpSlApM', duration: 14 },
+
+                // UNITÉ 6 – Espace
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO – p.106-108', titleAr: 'نشاط استماع ص106-108', url: 'https://www.youtube.com/embed/QYQBNp0cKGM', duration: 24 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Compréhension orale', sectionAr: 'فهم شفهي', title: 'CO suite – p.109', titleAr: 'تكملة استماع ص109', url: 'https://www.youtube.com/embed/81Ga2tEfiFU', duration: 19 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE – p.112', titleAr: 'نشاط قراءة ص112', url: 'https://www.youtube.com/embed/1ET02oA8e98', duration: 20 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Compréhension écrite', sectionAr: 'فهم كتابي', title: 'CE suite – p.113', titleAr: 'تكملة قراءة ص113', url: 'https://www.youtube.com/embed/queFTPt3gig', duration: 18 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Expression orale', sectionAr: 'تعبير شفهي', title: 'EO – p.110-111', titleAr: 'تعبير شفهي ص110-111', url: 'https://www.youtube.com/embed/9yFrRoI5u-o', duration: 21 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Expression écrite', sectionAr: 'تعبير كتابي', title: 'EE – p.116-118', titleAr: 'تعبير كتابي ص116-118', url: 'https://www.youtube.com/embed/SKLvowonXuI', duration: 22 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Grammaire', sectionAr: 'قواعد', title: 'Pronoms possessifs p.114', titleAr: 'ضمائر الملكية ص114', url: 'https://www.youtube.com/embed/ibt--ux-1iY', duration: 13 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Grammaire', sectionAr: 'قواعد', title: 'Pronoms démonstratifs p.115', titleAr: 'ضمائر الإشارة ص115', url: 'https://www.youtube.com/embed/iwfiOX-JkfM', duration: 12 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Grammaire', sectionAr: 'قواعد', title: 'Révision pronoms p.122-123', titleAr: 'مراجعة الضمائر ص122-123', url: 'https://www.youtube.com/embed/hfR0RW3JXKU', duration: 15 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.119-120', titleAr: 'تمارين ص119-120', url: 'https://www.youtube.com/embed/QqTLMd_fJGo', duration: 14 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.121-122', titleAr: 'تمارين ص121-122', url: 'https://www.youtube.com/embed/_KTVRrdVtJg', duration: 13 },
+                { unit: 'Unité 6 – La conquête de l’espace', unitAr: 'الوحدة 6 – غزو الفضاء', section: 'Je m’entraîne', sectionAr: 'أتدرب', title: 'Exercices p.124-125', titleAr: 'تمارين ص124-125', url: 'https://www.youtube.com/embed/1lcI3JXAZOY', duration: 16 },
+
+                // Révisions
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Révision générale', sectionAr: 'مراجعة عامة', title: 'تدريب على حوارات 1', titleAr: 'تدريب على حوارات 1', url: 'https://www.youtube.com/embed/ToOuINoBz6w', duration: 18 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Révision générale', sectionAr: 'مراجعة عامة', title: 'تدريب على حوارات 2', titleAr: 'تدريب على حوارات 2', url: 'https://www.youtube.com/embed/tPoY-9ulTr4', duration: 17 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Révision générale', sectionAr: 'مراجعة عامة', title: 'أنواع النصوص 1', titleAr: 'أنواع النصوص 1', url: 'https://www.youtube.com/embed/O-wPQEeCAsQ', duration: 20 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Révision générale', sectionAr: 'مراجعة عامة', title: 'أنواع النصوص 2', titleAr: 'أنواع النصوص 2', url: 'https://www.youtube.com/embed/BhyaqjJtvJ8', duration: 19 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Examens corrigés', sectionAr: 'امتحانات محلولة', title: 'امتحان 2022 د1', titleAr: 'امتحان 2022 د1', url: 'https://www.youtube.com/embed/VUdXyxY12Ro', duration: 30 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Examens corrigés', sectionAr: 'امتحانات محلولة', title: 'امتحان 2022 د1 (تكملة)', titleAr: 'امتحان 2022 د1 (تكملة)', url: 'https://www.youtube.com/embed/cLf0WSZnLM8', duration: 28 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Examens corrigés', sectionAr: 'امتحانات محلولة', title: 'امتحان 2022 د2', titleAr: 'امتحان 2022 د2', url: 'https://www.youtube.com/embed/QMRW8mAJAQg', duration: 26 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Examens corrigés', sectionAr: 'امتحانات محلولة', title: 'امتحان 2023 د2 ص1', titleAr: 'امتحان 2023 د2 ص1', url: 'https://www.youtube.com/embed/CaCwKGhzuks', duration: 25 },
+                { unit: 'Révisions et examens', unitAr: 'مراجعات وامتحانات', section: 'Examens corrigés', sectionAr: 'امتحانات محلولة', title: 'امتحان 2023 د2 ص2', titleAr: 'امتحان 2023 د2 ص2', url: 'https://www.youtube.com/embed/FpK76zQFYbA', duration: 24 },
+
+                // Fichiers audio Drive
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'C.O. Unité 1 (1)', titleAr: 'الاستماع الوحدة 1 (1)', url: 'https://drive.google.com/file/d/1fciBaB6kIFDlZ8iskSR5dESefW25mXpM/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'C.O. Unité 2 (1)', titleAr: 'الاستماع الوحدة 2 (1)', url: 'https://drive.google.com/file/d/1clUPHla66I2FNyliH0ekdQqbYN3rogB0/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'C.O. Unité 3 (1)', titleAr: 'الاستماع الوحدة 3 (1)', url: 'https://drive.google.com/file/d/1mt5wOzQhbwLCdF3lLsvZjBrkUjotQ8no/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'C.O. Unité 4 (1)', titleAr: 'الاستماع الوحدة 4 (1)', url: 'https://drive.google.com/file/d/1u3Pn8dgg5E3zwsyouRSRufbVWqwCCjZ1/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'C.O. Unité 5 (1)', titleAr: 'الاستماع الوحدة 5 (1)', url: 'https://drive.google.com/file/d/1UhxHTioErsX__99XdfoxxADpT65F7zAB/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'C.O. Unité 6 (1)', titleAr: 'الاستماع الوحدة 6 (1)', url: 'https://drive.google.com/file/d/1x2UQMaIB2qeWYGycvm7EKVURydvHTTmE/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'Unité 1 (2e piste)', titleAr: 'الوحدة 1 المسار الثاني', url: 'https://drive.google.com/file/d/1_Z544E2ljBlyzwMHLLRrDAf4tOmlXM4m/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'Unité 2 (2e piste)', titleAr: 'الوحدة 2 المسار الثاني', url: 'https://drive.google.com/file/d/1SpNwVOGMrHstjnqobuf6EkTWfAnmlmWL/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'Unité 3 (2e piste)', titleAr: 'الوحدة 3 المسار الثاني', url: 'https://drive.google.com/file/d/1wuti0u2XGbzKkHuGX0v8LlMzZ674OYwn/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'Unité 4 (2e piste)', titleAr: 'الوحدة 4 المسار الثاني', url: 'https://drive.google.com/file/d/1e2l1xZLW4mag4H1M4ud7B-WX-bPTgwhK/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'Unité 5 (2e piste)', titleAr: 'الوحدة 5 المسار الثاني', url: 'https://drive.google.com/file/d/1wAr8jLBTz7PXrk5IqW1c0_Zj7S_ceo8J/view?usp=drivesdk', duration: 0, external: true },
+                { unit: 'Fichiers audio (Drive)', unitAr: 'ملفات الاستماع (Drive)', section: 'Enregistrements', sectionAr: 'تسجيلات', title: 'Unité 6 (2e piste)', titleAr: 'الوحدة 6 المسار الثاني', url: 'https://drive.google.com/file/d/11mRdXd2WLcVqfkiSRm4kaVvs0zKle2Uj/view?usp=drivesdk', duration: 0, external: true }
+            ];
+
+            // إضافة id فريد
+            lessons.forEach((l, i) => l.id = `l${i}`);
+
+            // ترتيب الوحدات للعرض
+            const unitOrder = [
+                'Unité 1 – On fête ensemble',
+                'Unité 2 – Chacun pour tous',
+                'Unité 3 – Le salon, un espace culturel',
+                'Unité 4 – La femme dans la littérature',
+                'Unité 5 – L’intelligence artificielle',
+                'Unité 6 – La conquête de l’espace',
+                'Révisions et examens',
+                'Fichiers audio (Drive)'
+            ];
+
+            // ========== منطق التطبيق ==========
+            let watchedLessons = new Set();
+            let lastWatchedId = null;
+
+            function loadProgress() {
+                try {
+                    const saved = localStorage.getItem('french_ultime_progress');
+                    if (saved) {
+                        const data = JSON.parse(saved);
+                        watchedLessons = new Set(data.watched || []);
+                        lastWatchedId = data.last || null;
+                    }
+                } catch (e) {}
+            }
+            function saveProgress() {
+                const data = { watched: Array.from(watchedLessons), last: lastWatchedId };
+                localStorage.setItem('french_ultime_progress', JSON.stringify(data));
+                updateAllStats();
+            }
+            function resetProgress() {
+                if (confirm('إعادة تعيين كل التقدم؟')) {
+                    watchedLessons.clear();
+                    lastWatchedId = lessons[0]?.id || null;
+                    saveProgress();
+                    renderUnits();
+                }
+            }
+
+            const totalLessons = lessons.length;
+            document.getElementById('total-lessons').innerText = totalLessons;
+
+            function getWatchedCount() { return watchedLessons.size; }
+            function getRemainingCount() { return totalLessons - watchedLessons.size; }
+            function getPercent() { return totalLessons ? Math.round((watchedLessons.size / totalLessons) * 100) : 0; }
+            function getTotalHours() {
+                let minutes = 0;
+                watchedLessons.forEach(id => {
+                    const l = lessons.find(l => l.id === id);
+                    if (l) minutes += l.duration || 0;
+                });
+                return Math.round(minutes / 60);
+            }
+            function getBadges() {
+                const w = watchedLessons.size;
+                return { b5: w >= 5, b25: w >= 25, b50: w >= 50, b100: w >= 100 };
+            }
+
+            function updateAllStats() {
+                const w = getWatchedCount(), r = getRemainingCount(), p = getPercent(), h = getTotalHours();
+                const badges = getBadges();
+                document.getElementById('watched-count').innerText = w;
+                document.getElementById('remaining-count').innerText = r;
+                document.getElementById('completion-percent').innerText = p + '%';
+                document.getElementById('total-hours').innerText = h;
+                document.getElementById('overall-percent').innerText = p + '%';
+                document.getElementById('overall-progress').style.width = p + '%';
+
+                document.getElementById('badge5').classList.toggle('achieved', badges.b5);
+                document.getElementById('badge25').classList.toggle('achieved', badges.b25);
+                document.getElementById('badge50').classList.toggle('achieved', badges.b50);
+                document.getElementById('badge100').classList.toggle('achieved', badges.b100);
+
+                const unitProgressDiv = document.getElementById('unit-progress-list');
+                if (unitProgressDiv) {
+                    let html = '';
+                    unitOrder.forEach(unit => {
+                        const ul = lessons.filter(l => l.unit === unit);
+                        if (!ul.length) return;
+                        const wu = ul.filter(l => watchedLessons.has(l.id)).length;
+                        const perc = Math.round((wu / ul.length) * 100) || 0;
+                        const ua = ul[0].unitAr;
+                        html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${ua}</span><span>${wu}/${ul.length}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${perc}%;"></div></div></div>`;
+                    });
+                    unitProgressDiv.innerHTML = html;
+                }
+
+                const last = lessons.find(l => l.id === lastWatchedId);
+                document.getElementById('last-watched').innerText = last ? last.titleAr : 'لا يوجد';
+            }
+
+            function updateCountdown() {
+                const exam = new Date('2026-06-18T09:00:00');
+                const now = new Date();
+                const diff = exam - now;
+                if (diff <= 0) {
+                    document.getElementById('countdown-days').innerText = '0';
+                    document.getElementById('countdown-large').innerText = '0';
+                    document.getElementById('daily-plan-text').innerText = 'انتهى';
+                    document.getElementById('daily-plan-detail').innerText = 'انتهى';
+                    return;
+                }
+                const days = Math.floor(diff / (1000*60*60*24));
+                document.getElementById('countdown-days').innerText = days;
+                document.getElementById('countdown-large').innerText = days;
+                const perDay = Math.ceil(getRemainingCount() / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} درس/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} درس يومياً`;
+            }
+
+            function playVideo(lessonId, url, titleAr, unitAr, sectionAr) {
+                const player = document.getElementById('youtube-player');
+                const currentTitle = document.getElementById('current-video-title');
+                const currentUnit = document.getElementById('current-unit');
+                const currentDuration = document.getElementById('current-duration');
+
+                if (url.includes('drive.google.com')) {
+                    window.open(url, '_blank');
+                    return;
+                }
+
+                if (player) player.src = url;
+                currentTitle.innerText = titleAr;
+                currentUnit.innerHTML = `<i class="fas fa-folder-open"></i> ${unitAr} / ${sectionAr}`;
+
+                const lesson = lessons.find(l => l.id === lessonId);
+                if (lesson && lesson.duration) {
+                    const mins = lesson.duration;
+                    const hours = Math.floor(mins / 60);
+                    const minutes = mins % 60;
+                    currentDuration.innerHTML = `<i class="far fa-clock"></i> ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
+                }
+
+                lastWatchedId = lessonId;
+                saveProgress();
+                renderUnits();
+            }
+
+            function renderUnits() {
+                const container = document.getElementById('units-container');
+                if (!container) return;
+                let htmlAll = '';
+
+                unitOrder.forEach(unit => {
+                    const unitLessons = lessons.filter(l => l.unit === unit);
+                    if (!unitLessons.length) return;
+                    const sections = [...new Set(unitLessons.map(l => l.section))];
+                    const watchedU = unitLessons.filter(l => watchedLessons.has(l.id)).length;
+                    const unitAr = unitLessons[0].unitAr;
+
+                    let sectionsHtml = '';
+                    sections.forEach(section => {
+                        const secLessons = unitLessons.filter(l => l.section === section);
+                        const sectionAr = secLessons[0].sectionAr;
+                        let lessonsHtml = '';
+                        secLessons.forEach(lesson => {
+                            const isWatched = watchedLessons.has(lesson.id);
+                            const isActive = lastWatchedId === lesson.id;
+                            const isExternal = lesson.external || lesson.url.includes('drive.google.com');
+                            lessonsHtml += `
+                                <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${lesson.id}" data-url="${lesson.url}" data-title="${lesson.titleAr}" data-unit="${lesson.unitAr}" data-section="${lesson.sectionAr}">
+                                    <div class="lesson-watch ${isWatched ? 'watched' : ''}" data-id="${lesson.id}"><i class="fas fa-check" style="opacity:${isWatched ? 1 : 0};"></i></div>
+                                    <div class="lesson-info" data-id="${lesson.id}">${lesson.titleAr}</div>
+                                    <div class="lesson-duration">${lesson.duration ? lesson.duration + ' د' : ''}</div>
+                                    ${isExternal ? '<a href="' + lesson.url + '" target="_blank" class="lesson-drive"><i class="fas fa-external-link-alt"></i> خارجي</a>' : ''}
+                                </li>
+                            `;
+                        });
+                        sectionsHtml += `<div class="sub-unit"><div class="sub-unit-title">${sectionAr}</div><ul class="lesson-list">${lessonsHtml}</ul></div>`;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unitAr}</span>
+                                <span class="unit-progress">${watchedU}/${unitLessons.length}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${sectionsHtml}</div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = htmlAll;
+
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = el.dataset.id;
+                        if (watchedLessons.has(id)) {
+                            watchedLessons.delete(id);
+                            el.classList.remove('watched');
+                            el.querySelector('i').style.opacity = 0;
+                        } else {
+                            watchedLessons.add(id);
+                            el.classList.add('watched');
+                            el.querySelector('i').style.opacity = 1;
+                        }
+                        saveProgress();
+                        const unitCard = el.closest('.unit-card');
+                        if (unitCard) {
+                            const unitTitle = unitCard.querySelector('.unit-title').innerText;
+                            const unit = lessons.find(l => l.unitAr === unitTitle)?.unit;
+                            if (unit) {
+                                const uv = lessons.filter(l => l.unit === unit);
+                                const w = uv.filter(l => watchedLessons.has(l.id)).length;
+                                unitCard.querySelector('.unit-progress').innerText = `${w}/${uv.length}`;
+                            }
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', () => {
+                        const item = el.closest('.lesson-item');
+                        playVideo(item.dataset.id, item.dataset.url, item.dataset.title, item.dataset.unit, item.dataset.section);
+                    });
+                });
+            }
+
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i').classList = 'fas fa-chevron-down';
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i').classList = 'fas fa-chevron-left';
+                }
+            };
+
+            function initTabs() {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                        if (page === 'progress' || page === 'profile') updateAllStats();
+                    });
+                });
+            }
+
+            function init() {
+                loadProgress();
+                if (!lastWatchedId && lessons.length) lastWatchedId = lessons[0].id;
+                renderUnits();
+                updateAllStats();
+                updateCountdown();
+                initTabs();
+                document.getElementById('reset-progress')?.addEventListener('click', resetProgress);
+                setInterval(updateCountdown, 60000);
+                setInterval(() => { if (lastWatchedId) saveProgress(); }, 3000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

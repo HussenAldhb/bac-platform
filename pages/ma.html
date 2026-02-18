@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>📐 منصة الرياضيات - البكالوريا العلمية</title>
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1f1a 0%, #1a3a32 100%);
+            color: #e0f2e9;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+
+        /* شريط التنقل السفلي - زجاجي أخضر فسفوري */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 60, 50, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 2px solid #84cc16;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(132, 204, 22, 0.3);
+            z-index: 1000;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #a3c9b7;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            background: #84cc16;
+            color: #0b1f1a;
+            font-weight: 600;
+            box-shadow: 0 0 15px #84cc16;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* الهيدر - زجاجي أخضر فسفوري */
+        .header-card {
+            background: rgba(20, 60, 50, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #84cc16;
+            box-shadow: 0 15px 25px -10px #84cc1666;
+            margin-bottom: 20px;
+        }
+
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .subject-icon {
+            background: #84cc16;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0b1f1a;
+            box-shadow: 0 0 15px #84cc16;
+        }
+
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff, #b8e0a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subject-name p {
+            color: #a3c9b7;
+            font-size: 14px;
+        }
+
+        .exam-timer {
+            background: #0b1f1a;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #84cc16;
+            margin-top: 15px;
+        }
+
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #84cc16;
+            direction: ltr;
+        }
+
+        .daily-plan {
+            font-size: 15px;
+            background: #84cc16;
+            color: #0b1f1a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .progress-section {
+            margin-top: 16px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+            background: #2a5042;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #84cc16;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #84cc16;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+
+        /* مشغل الفيديو - زجاجي أخضر فسفوري */
+        .video-player-card {
+            background: rgba(20, 60, 50, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #84cc16;
+            margin-bottom: 20px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0b1f1a;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #a3c9b7;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+
+        /* الوحدات - زجاجية خضراء فسفورية */
+        .units-container {
+            background: rgba(20, 60, 50, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #84cc16;
+            margin-bottom: 25px;
+        }
+
+        .unit-card {
+            background: #0b1f1a;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #84cc16;
+            overflow: hidden;
+        }
+
+        .unit-header {
+            background: #1a3a32;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #84cc16;
+        }
+
+        .unit-header i {
+            font-size: 24px;
+            color: #84cc16;
+            transition: 0.2s;
+        }
+
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .unit-progress {
+            background: #2a5042;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+
+        .sub-units {
+            padding: 12px;
+        }
+
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #84cc16;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #84cc16;
+        }
+
+        .lesson-list {
+            list-style: none;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1a3a32;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .lesson-item:hover {
+            border-color: #84cc16;
+        }
+
+        .lesson-item.active {
+            border-color: #84cc16;
+            background: #1f4a40;
+            box-shadow: 0 0 10px #84cc16;
+        }
+
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #84cc16;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #84cc16;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .lesson-watch.watched {
+            background: #84cc16;
+            color: #0b1f1a;
+        }
+
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .lesson-duration {
+            font-size: 13px;
+            color: #a3c9b7;
+            white-space: nowrap;
+        }
+
+        /* صفحات التقدم والمؤقت والملف - زجاجية خضراء */
+        .progress-panel, .timer-panel, .profile-panel {
+            background: rgba(20, 60, 50, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #84cc16;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #0b1f1a;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #84cc16;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #84cc16;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .badge {
+            background: #0b1f1a;
+            border: 2px solid #2a5042;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+
+        .badge.achieved {
+            border-color: #84cc16;
+            background: #84cc16;
+            color: #0b1f1a;
+            opacity: 1;
+        }
+
+        .badge i {
+            font-size: 26px;
+        }
+
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #84cc16;
+            text-align: center;
+            direction: ltr;
+        }
+
+        .plan-box {
+            background: #0b1f1a;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #84cc16;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        hr {
+            border: 0.5px solid #2a5042;
+            margin: 20px 0;
+        }
+
+        .small-note {
+            color: #a3c9b7;
+            font-size: 13px;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+        <!-- الهيدر الثابت -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-square-root-alt"></i></div>
+                <div class="subject-name">
+                    <h1>الرياضيات</h1>
+                    <p>منصة تفاعلية - بكالوريا علمي 2026</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 13/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحات -->
+        <div id="page-home" class="page active">
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/obRDP8UwVVQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">الدرس 1: تعريف المتتاليات وأشكالها</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> المتتاليات / تعاريف</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 00:15:00</span>
+                </div>
+            </div>
+            <div class="units-container" id="units-container"></div>
+        </div>
+
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:#84cc16;"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number" id="watched-count">0</div><div class="stat-label">فيديو مُشاهَد</div></div>
+                    <div class="stat-card"><div class="stat-number" id="total-hours">0</div><div class="stat-label">ساعة مشاهدة</div></div>
+                    <div class="stat-card"><div class="stat-number" id="remaining-count">339</div><div class="stat-label">فيديو متبقي</div></div>
+                    <div class="stat-card"><div class="stat-number" id="completion-percent">0%</div><div class="stat-label">إنجاز</div></div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                <div class="badge-container" id="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 فيديوهات</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 فيديو</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 فيديو</div>
+                    <div class="badge" id="badge100"><i class="fas fa-dragon"></i> 100 فيديو</div>
+                    <div class="badge" id="badge339"><i class="fas fa-robot"></i> 339 فيديو</div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-chart-pie"></i> تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 فيديو / يوم</div>
+                    <p class="small-note">لمشاهدة جميع الفيديوهات المتبقية قبل الامتحان</p>
+                </div>
+                <div style="background: #0b1f1a; border-radius: 24px; padding: 16px; margin-top: 20px;">
+                    <p><i class="fas fa-info-circle" style="color:#84cc16;"></i> الامتحان يوم 13 حزيران 2026. واصل بنشاط!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#84cc16; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px; color:#0b1f1a; box-shadow:0 0 15px #84cc16;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>طالب بكالوريا علمي</h3>
+                        <p class="small-note">الفرع العلمي - رياضيات</p>
+                    </div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle" style="color:#84cc16;"></i> آخر فيديو تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
+                <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: 339</div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ========== بيانات الفيديوهات كاملة (339 فيديو) مرتبة حسب المنهاج السوري ==========
+            // تم استخراج الروابط والعناوين من التقرير المقدم
+            // الفيديوهات مقسمة حسب الأقسام التالية: تأسيس، متتاليات، نهايات، اشتقاق، لوغاريتمي، أسي، تكامل، أشعة، عقدية، تطبيقات عقدية، تحليل توافقي، احتمالات، قراءة خط بياني، دورات.
+
+            // دالة مساعدة لتحويل الدقائق إلى صيغة hh:mm:ss
+            function formatDuration(min) {
+                let hours = Math.floor(min / 60);
+                let minutes = min % 60;
+                return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
+            }
+
+            // ========== تأسيس (14 فيديو) ==========
+            const foundationVideos = [
+                { unit: 'تأسيس', subUnit: 'أساسيات', title: 'مجموعات الأعداد', videoId: 'NHuB1x_GOVk', duration: 30 },
+                { unit: 'تأسيس', subUnit: 'أساسيات', title: 'قواعد الإشارات', videoId: 'a5PFrvNBdrQ', duration: 15 },
+                { unit: 'تأسيس', subUnit: 'أساسيات', title: 'عملية الجمع', videoId: 'XuZktcA4hKk', duration: 10 },
+                { unit: 'تأسيس', subUnit: 'أساسيات', title: 'عملية الطرح', videoId: 'dbrp3xrNgKw', duration: 12 },
+                { unit: 'تأسيس', subUnit: 'أساسيات', title: 'عملية الضرب', videoId: 'tt16M4mn9Q4', duration: 15 },
+                { unit: 'تأسيس', subUnit: 'أساسيات', title: 'عملية القسمة', videoId: 'FZsDPkOJuyQ', duration: 14 },
+                { unit: 'تأسيس', subUnit: 'الكسور', title: 'تبسيط الكسور', videoId: 'Rd9Ft43jeHI', duration: 18 },
+                { unit: 'تأسيس', subUnit: 'الأعداد النسبية', title: 'الأعداد النسبية ج1', videoId: '-BAo5z7SASc', duration: 20 },
+                { unit: 'تأسيس', subUnit: 'الأعداد النسبية', title: 'الأعداد النسبية ج2', videoId: 'CMNLU350DDU', duration: 22 },
+                { unit: 'تأسيس', subUnit: 'الجذور', title: 'الجذور التربيعية', videoId: 'sYX-NqLK3DE', duration: 16 },
+                { unit: 'تأسيس', subUnit: 'الجذور', title: 'إزالة الجذر من المقام', videoId: 'f1MKBa2AI5U', duration: 12 },
+                { unit: 'تأسيس', subUnit: 'القوى', title: 'خواص القوى', videoId: 'P-ryy__TG4o', duration: 25 },
+                { unit: 'تأسيس', subUnit: 'المتطابقات', title: 'المتطابقات التربيعية', videoId: 'CZ5MdQTc0f0', duration: 18 },
+                { unit: 'تأسيس', subUnit: 'المعادلات', title: 'حل معادلات من الدرجة الثالثة', videoId: 'UFxB8D7XGVE', duration: 22 },
+            ];
+
+            // ========== متتاليات (42 فيديو) من قائمة التشغيل ==========
+            const sequencesVideos = [
+                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 1: تعريف المتتاليات وأشكالها', videoId: 'obRDP8UwVVQ', duration: 15 },
+                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 2: تعريف المتتالية الحسابية', videoId: 'jiIx516YyDc', duration: 10 },
+                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 3: الحد العام للمتتالية الحسابية', videoId: '8RpanRA5bak', duration: 18 },
+                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 4: المتتالية الهندسية', videoId: 'PUMsBVwgXGs', duration: 13 },
+                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 5: الحد العام للمتتالية الهندسية', videoId: '_zK5zfElkho', duration: 15 },
+                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 6: مجموع حدود غير متعاقبة', videoId: 'b2nMTvUJiv4', duration: 12 },
+                { unit: 'المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 7: الإثبات بالتدريج', videoId: 'Tqes31LPWWQ', duration: 28 },
+                { unit: 'المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 8: إثبات مساواة بالتدريج', videoId: 'SRMsP3BcWZo', duration: 10 },
+                { unit: 'المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 9: الإثبات التدريجي لمتراجحة', videoId: 'QWOKJvVdt4I', duration: 14 },
+                { unit: 'المتتاليات', subUnit: 'اطراد', title: 'الدرس 10: اطراد متتالية', videoId: 'H2PqRKZUEU0', duration: 22 },
+                { unit: 'المتتاليات', subUnit: 'اطراد', title: 'الدرس 11: حل تمارين اطراد', videoId: 'zQp3CQKpmXY', duration: 24 },
+                { unit: 'المتتاليات', subUnit: 'محدودية', title: 'الدرس 12: محدودية متتالية', videoId: 'FDpuewqRoes', duration: 13 },
+                { unit: 'المتتاليات', subUnit: 'متجاورتان', title: 'الدرس 13: المتتاليتان المتجاورتان', videoId: 'dIQ4-IlxXmE', duration: 16 },
+                { unit: 'المتتاليات', subUnit: 'خواص', title: 'الدرس 14: الحد الأوسط لثلاث حدود', videoId: 'aIQpog7ylVg', duration: 17 },
+                { unit: 'المتتاليات', subUnit: 'عنصر راجح', title: 'الدرس 15: العنصر الراجح - س17 ص143', videoId: 'SG2NFejLo4A', duration: 23 },
+                { unit: 'المتتاليات', subUnit: 'عنصر راجح', title: 'الدرس 16: العنصر الراجح - س6 ص128', videoId: 'LLRW2KQg7yE', duration: 14 },
+                { unit: 'المتتاليات', subUnit: 'إحاطة', title: 'الدرس 17: إحاطة متتالية مجاميع', videoId: 'uZC8VgHOx5Y', duration: 17 },
+                { unit: 'المتتاليات', subUnit: 'إحاطة', title: 'الدرس 18: إحاطة المتتاليات', videoId: 'yeSDch6aesY', duration: 12 },
+                { unit: 'المتتاليات', subUnit: 'تخمين', title: 'الدرس 19: تخمين un بدلالة n', videoId: 'YSRlT5DVfFY', duration: 14 },
+                { unit: 'المتتاليات', subUnit: 'تمثيل', title: 'الدرس 20: تعيين حدود متتالية بالرسم', videoId: 'Mk1Zv285XHs', duration: 3 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 21: حل مسألة وزارية', videoId: 'wb619UAQolI', duration: 14 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 22: حل السؤال 4 ص22', videoId: 'PCjFiGm4tCM', duration: 12 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 23: حل المسألة 6 ص119', videoId: 'fsQGQqomaDQ', duration: 22 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 24: حل س3 ص18', videoId: '07Joe_boIdM', duration: 4 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 25: حل س12 ص25', videoId: 'AHU-1Q7Wh2Y', duration: 6 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 26: حل س13 ص140', videoId: 'ukKWwnpEFo0', duration: 13 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 27: حل س22 ص144', videoId: 'llUTEBNB5_A', duration: 12 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 28: حل س19 ص143', videoId: '-PgNiNJuZ08', duration: 15 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 29: حل س6 ص22', videoId: 'npnPEljOYPY', duration: 9 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 30: حل س10 ص24', videoId: 'JSv3LphYG5o', duration: 18 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 31: حل س13 ص25', videoId: '0JyjFezq3Yo', duration: 15 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 32: حل س9 ص24', videoId: 'aMkSoDuIEjY', duration: 10 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 33: حل س17 ص26', videoId: 'l7lbMq4GVzo', duration: 13 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 34: حل س15 ص25', videoId: 'Nv_LmZPepxk', duration: 18 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 35: حل س16 ص25', videoId: 'Ie9EjFCU7cE', duration: 19 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 36: حل س8+9 ص138', videoId: 'rFCSa36Lj10', duration: 11 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 37: حل س21 ص144', videoId: 'DOyvPcHmVDs', duration: 19 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 38: حل س5 ص119', videoId: 'UhnON4tm9Is', duration: 5 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 39: حل س28 ص145 (دورة 2020)', videoId: 'GKTjykSCytY', duration: 22 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 40: حل س23 ص144', videoId: 'NfTVszMd2Xo', duration: 21 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 41: حل س8 ص23 - المتتالية المتخفية', videoId: 'YojP7iMsODQ', duration: 18 },
+                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 42: مثال محلول ص130 دورة 2024', videoId: 'cadRVI1_X3g', duration: 14 },
+            ];
+
+            // ========== نهايات واستمرار (34 فيديو) ==========
+            const limitsVideos = [
+                { unit: 'النهايات والاستمرار', subUnit: 'تعاريف', title: 'الدرس 1: التابع - أنواعه ومجموعة تعريفه', videoId: 'zpSEzQt0gjM', duration: 33 },
+                { unit: 'النهايات والاستمرار', subUnit: 'نهايات', title: 'الدرس 2: نهاية تابع كسري عند اللانهاية', videoId: 'XytxFFymEok', duration: 15 },
+                { unit: 'النهايات والاستمرار', subUnit: 'نهايات', title: 'الدرس 3: نهاية تابع كسري عند a', videoId: 'F50fzQ5u6vQ', duration: 16 },
+                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 4: حالة لانهاية/لانهاية', videoId: 'SPACCDaB2pY', duration: 26 },
+                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 5: حالة لانهاية - لانهاية', videoId: 'pC1k5k2wCVo', duration: 27 },
+                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 6: حالة 0/0 دون مثلثي', videoId: 'SUL7Mk0x2P0', duration: 28 },
+                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 7: حالة 0/0 مع مثلثي', videoId: 'j5rES_aH5EI', duration: 30 },
+                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 8: حل تمرين مميز', videoId: 'VZJoUy62Fuk', duration: 9 },
+                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 9: حالة 0×∞', videoId: 'C52wzbs3Log', duration: 11 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مبرهنات', title: 'الدرس 10: مبرهنة الإحاطة (1)', videoId: 'lTOHPIChpAs', duration: 17 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مبرهنات', title: 'الدرس 11: مبرهنة الإحاطة (2 و3)', videoId: 'ISHQepRqhgw', duration: 11 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 12: حل س10 ص70', videoId: '7s4xVBm6mJM', duration: 14 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 13: حل س2 ص46 + دورة 2020', videoId: 'QgcXRstcJoc', duration: 19 },
+                { unit: 'النهايات والاستمرار', subUnit: 'تابع مركب', title: 'الدرس 14: نهاية تابع مركب', videoId: 'Mb7q_lCdHl8', duration: 13 },
+                { unit: 'النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 15: تعريف النهاية الحالة الأولى', videoId: 'w8TAiMPjhOc', duration: 16 },
+                { unit: 'النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 16: تعريف النهاية الحالة الثانية', videoId: 'ckVdw3qGjU0', duration: 16 },
+                { unit: 'النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 17: تعريف النهاية الحالة الثالثة', videoId: 'rtJYoaaWuFw', duration: 9 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقاربات', title: 'الدرس 18: المقاربات الشاقولية والأفقية', videoId: 'R_SvWgKMdao', duration: 29 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 19: إثبات أن مستقيم مقارب مائل', videoId: 'x2WYCxAwiYg', duration: 12 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 20: حل س20 ص72 + 8 ص51', videoId: 'wQLs9Zoc8xQ', duration: 26 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 21: حالات إيجاد معادلة مقارب مائل', videoId: 's6l8uUTz9HU', duration: 12 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 22: الحالة 2 - حل مثال 19', videoId: 'vZyzGy-oTps', duration: 9 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 23: تكملة الحالة 2 - حل س7', videoId: '3A7X0jvlgnk', duration: 19 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 24: الحالة 3 - حل س18', videoId: 'w1Sgd0js2rk', duration: 14 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 25: الحالة 4', videoId: 'ZPpEeazXpvI', duration: 14 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 26: حل تمرين ص51', videoId: 'SYenxk3JvTM', duration: 20 },
+                { unit: 'النهايات والاستمرار', subUnit: 'استمرار', title: 'الدرس 27: الاستمرار', videoId: '31W2cdoN50o', duration: 20 },
+                { unit: 'النهايات والاستمرار', subUnit: 'استمرار', title: 'الدرس 28: حل س28+29 ص73', videoId: 'WiAB3-Pc-8Q', duration: 16 },
+                { unit: 'النهايات والاستمرار', subUnit: 'جزء صحيح', title: 'الدرس 29: تابع الجزء الصحيح - س31 ص73', videoId: '9_sb41-CqQ8', duration: 24 },
+                { unit: 'النهايات والاستمرار', subUnit: 'جزء صحيح', title: 'الدرس 30: تكملة - س30 ص73', videoId: '2qWFekKS0s4', duration: 15 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 31: حل س21 ص72', videoId: 'GvHRXkXQkvs', duration: 27 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 32: ملاحظة خطيرة وحل س17 ص71', videoId: 'K0fOldLo70c', duration: 12 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 33: حل س34 ص74', videoId: 'RM8KLOQb-ZE', duration: 16 },
+                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 34: حل س33 ص74', videoId: 'zSKQA64AUP4', duration: 6 },
+            ];
+
+            // ========== اشتقاق (21 فيديو) ==========
+            const derivativeVideos = [
+                { unit: 'الاشتقاق', subUnit: 'قواعد', title: 'الدرس 1: قواعد الاشتقاق', videoId: 'RFrSkMTMn7s', duration: 25 },
+                { unit: 'الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس 2: مشتق التابع المركب', videoId: 'iy1nUR_vtPU', duration: 17 },
+                { unit: 'الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس 3: مشتق تابع مركب - حل س17', videoId: 'n2YtRqC8J80', duration: 9 },
+                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 4: مشتق مراتب عليا والمشتق النوني', videoId: 'SRm6Ot0Zyjw', duration: 17 },
+                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 5: المشتق النوني 2', videoId: 'eLl0kvHJZrE', duration: 18 },
+                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 6: المشتق النوني 3 - حل س34', videoId: 'R6yCP0F7YzQ', duration: 14 },
+                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 7: مشتقات مراتب عليا 4 - حل س33', videoId: 'CHGp_ojXWEs', duration: 18 },
+                { unit: 'الاشتقاق', subUnit: 'مماس', title: 'الدرس 8: معادلة المماس', videoId: 'RFhpJ2TuVYM', duration: 24 },
+                { unit: 'الاشتقاق', subUnit: 'مماس', title: 'الدرس 9: معادلة المماس 2 - حل س2', videoId: '1ZWq4euN8f8', duration: 17 },
+                { unit: 'الاشتقاق', subUnit: 'قابلية اشتقاق', title: 'الدرس 10: دراسة قابلية الاشتقاق 1', videoId: 'LntfyAnjvn8', duration: 16 },
+                { unit: 'الاشتقاق', subUnit: 'قابلية اشتقاق', title: 'الدرس 11: حل تمارين - س9+10', videoId: 'PUMpFbfKJjw', duration: 14 },
+                { unit: 'الاشتقاق', subUnit: 'تعيين ثوابت', title: 'الدرس 12: تعيين الثوابت - س19', videoId: 'FjLAogfxclc', duration: 8 },
+                { unit: 'الاشتقاق', subUnit: 'تغيرات', title: 'الدرس 13: دراسة تغيرات تابع', videoId: '_1Wb9d9JEkU', duration: 23 },
+                { unit: 'الاشتقاق', subUnit: 'نهايات', title: 'الدرس 14: إيجاد النهاية حسب تعريف المشتق', videoId: '3TKlnvBYV68', duration: 13 },
+                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 15: حل س25 ص109', videoId: 'cvE95PaJD08', duration: 11 },
+                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 16: حل س27 ص110', videoId: 'teqFQaZMHls', duration: 39 },
+                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 17: حل س29 ص110', videoId: 'XegbIO-dS3c', duration: 14 },
+                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 18: حل التمرين 24 ص109', videoId: 'FIizdraxjQg', duration: 18 },
+                { unit: 'الاشتقاق', subUnit: 'تعيين ثوابت', title: 'الدرس 19: تعيين ثوابت - س20 و4', videoId: '8om3kXD2zIc', duration: 10 },
+                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 20: حل س1+2', videoId: 'l0G4xxApqGI', duration: 11 },
+                { unit: 'الاشتقاق', subUnit: 'مثلثاتي', title: 'الدرس 21: دراسة تغيرات تابع مثلثاتي - س30', videoId: '3oSgDl1x-WM', duration: 27 },
+            ];
+
+            // ========== لوغاريتمي (26 فيديو) ==========
+            const logVideos = [
+                { unit: 'اللوغاريتمي', subUnit: 'أساسيات', title: 'الدرس 1: التابع اللوغاريتمي', videoId: '6jV2s96cGHM', duration: 19 },
+                { unit: 'اللوغاريتمي', subUnit: 'أساسيات', title: 'الدرس 2: حل تمارين خواص اللوغارتم', videoId: 'YaSaPxUOQlQ', duration: 10 },
+                { unit: 'اللوغاريتمي', subUnit: 'تعريف', title: 'الدرس 3: مجموعة تعريف اللوغاريتم', videoId: 'FkJweK_lj7g', duration: 14 },
+                { unit: 'اللوغاريتمي', subUnit: 'معادلات', title: 'الدرس 4: حل المعادلات اللوغارتمية', videoId: '2UDeZrCLpIo', duration: 23 },
+                { unit: 'اللوغاريتمي', subUnit: 'معادلات', title: 'الدرس 5: تكملة حل المعادلات', videoId: 't85y_W27FE0', duration: 27 },
+                { unit: 'اللوغاريتمي', subUnit: 'متراجحات', title: 'الدرس 6: حل متراجحات لوغارتمية', videoId: 'mBo-uvqkoew', duration: 17 },
+                { unit: 'اللوغاريتمي', subUnit: 'اشتقاق', title: 'الدرس 7: اشتقاق تابع لوغارتمي 1', videoId: 'nZUOB-S0yLQ', duration: 10 },
+                { unit: 'اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 8: النهايات في التابع اللوغارتمي 1', videoId: 'JSnoX1vqx8E', duration: 25 },
+                { unit: 'اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 9: النهايات 2', videoId: 'bC8LDg4JROg', duration: 20 },
+                { unit: 'اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 10: النهايات 3 - دورة 2017', videoId: 'GlQJxbI-y8Y', duration: 7 },
+                { unit: 'اللوغاريتمي', subUnit: 'تطبيقات', title: 'الدرس 11: تطبيقات على النهايات', videoId: 'kem1N3Xne1k', duration: 5 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 12: حل س7+6', videoId: 'pZ5RYvksnng', duration: 7 },
+                { unit: 'اللوغاريتمي', subUnit: 'دراسة تابع', title: 'الدرس 13: دراسة تغيرات - حل 21ص177', videoId: 'JenJkRwQT0Q', duration: 18 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 14: حل 19ص176', videoId: 'pswn7ZtQyYo', duration: 30 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 15: حل 26ص178', videoId: 'B4W0VbGjaJI', duration: 19 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 16: حل 27ص178', videoId: 'MW7K4wB-2Ww', duration: 27 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 17: حل س29ص178', videoId: 'jQ8udVlVdpI', duration: 23 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 18: حل 30ص179', videoId: '6KPNow7Qla4', duration: 23 },
+                { unit: 'اللوغاريتمي', subUnit: 'متراجحات', title: 'الدرس 19: إثبات متراجحة لوغاريتمية', videoId: 'oQMxDD_6xlk', duration: 12 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 20: حل 20ص176', videoId: 'bMRx33i-20c', duration: 20 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 21: حل 32ص179 (دورة 2017)', videoId: 'e8aGEzakeHE', duration: 30 },
+                { unit: 'اللوغاريتمي', subUnit: 'شامل', title: 'الدرس 22: مسألة شاملة', videoId: 'kSqignRgdeY', duration: 37 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 23: حل 33ص180', videoId: 'yPIrCkwAL8g', duration: 31 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 24: حل 10ص173', videoId: 'Up-OmChvXw8', duration: 8 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 25: حل س1+2 ص171', videoId: '2fHoKqCCIuE', duration: 15 },
+                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 26: حل س29ص178 (تكملة)', videoId: 'Gb6RYJmjO1M', duration: 19 },
+            ];
+
+            // ========== الأسي (21 فيديو) ==========
+            const expVideos = [
+                { unit: 'الأسي', subUnit: 'أساسيات', title: 'الدرس 1: تعريفه وخواصه', videoId: 'BWaedIHKPc8', duration: 21 },
+                { unit: 'الأسي', subUnit: 'معادلات', title: 'الدرس 2: حل معادلات ومتراجحات', videoId: 'GE0zWe2qwl8', duration: 22 },
+                { unit: 'الأسي', subUnit: 'معادلات', title: 'الدرس 3: حل معادلات أسية 2', videoId: 'Q6jEFs21SLw', duration: 14 },
+                { unit: 'الأسي', subUnit: 'تفاضلية', title: 'الدرس 4: المعادلات التفاضلية', videoId: 'pPZxwfUjXQc', duration: 18 },
+                { unit: 'الأسي', subUnit: 'جمل معادلات', title: 'الدرس 5: حل جملة معادلتين', videoId: 'Zi3SBJOQw3A', duration: 18 },
+                { unit: 'الأسي', subUnit: 'نهايات', title: 'الدرس 6: نهايات التابع الأسي', videoId: 'rSPvS40V13g', duration: 28 },
+                { unit: 'الأسي', subUnit: 'نهايات', title: 'الدرس 7: النهايات المميزة', videoId: 'AK_gQFoU9vE', duration: 21 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 8: التمرين 2 ص199', videoId: 'VR_XE-_yPa0', duration: 14 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 9: حل س10 ص210', videoId: 'FzWscLtBBzs', duration: 21 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 10: حل س11 ص210', videoId: 'KsxkDkSq9rU', duration: 17 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 11: حل 21ص214', videoId: 'qreg2OtIDlw', duration: 17 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 12: حل س9ص210', videoId: 'RS8Lg2g5GVM', duration: 16 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 13: حل 17ص213', videoId: '-UIJsGM5e1Q', duration: 24 },
+                { unit: 'الأسي', subUnit: 'أساس a', title: 'الدرس 14: تابع أسي أساسه a', videoId: 'cse7NuvQ7XQ', duration: 17 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 15: حل 16ص213', videoId: '-9lMNwsRSZA', duration: 23 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 16: حل 18ص213', videoId: 'hJuoM2ImCHA', duration: 18 },
+                { unit: 'الأسي', subUnit: 'مماس', title: 'الدرس 17: معادلة مماس يعامد مستقيم', videoId: 'lJ1xD3yDfnY', duration: 9 },
+                { unit: 'الأسي', subUnit: 'تعيين ثوابت', title: 'الدرس 18: تعيين ثوابت', videoId: '4yynougQF0k', duration: 11 },
+                { unit: 'الأسي', subUnit: 'دورة 2024', title: 'الدرس 19: سؤال الدورة الأولى 2024', videoId: 'H5SWl3kYRkQ', duration: 4 },
+                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 20: مسألة شاملة - دورة 2006', videoId: '4dBIrc1lfLs', duration: 14 },
+                { unit: 'الأسي', subUnit: 'رسم', title: 'الدرس 21: استنتاج رسم خط بياني', videoId: '5zd7YnI-8s0', duration: 16 },
+            ];
+
+            // ========== تكامل (11 فيديو) ==========
+            const integralVideos = [
+                { unit: 'التكامل', subUnit: 'أساسيات', title: 'الدرس 1: حل أسئلة ص222', videoId: '3m3t0akVJ2c', duration: 19 },
+                { unit: 'التكامل', subUnit: 'دساتير', title: 'الدرس 2: دساتير إيجاد تابع أصلي', videoId: 'jZfG2qU7H-o', duration: 20 },
+                { unit: 'التكامل', subUnit: 'توابع أصلية', title: 'الدرس 3: إيجاد التابع الأصلي', videoId: 'Ht0_uYOfIzo', duration: 12 },
+                { unit: 'التكامل', subUnit: 'مثلثات', title: 'الدرس 4: توابع مثلثية', videoId: '-vyt6rjQYCs', duration: 17 },
+                { unit: 'التكامل', subUnit: 'محدود', title: 'الدرس 5: التكامل المحدود - حل س14', videoId: 'kHY_VKmMO5w', duration: 14 },
+                { unit: 'التكامل', subUnit: 'محدود', title: 'الدرس 6: التكامل المحدود', videoId: '5j2FLH3A9cg', duration: 11 },
+                { unit: 'التكامل', subUnit: 'كسور جزئية', title: 'الدرس 7: تفرقة كسر لكسور جزئية', videoId: 'wE6uy0RwsMg', duration: 21 },
+                { unit: 'التكامل', subUnit: 'بالتجزئة', title: 'الدرس 8: التكامل بالتجزئة', videoId: 'rMRTVIxRRig', duration: 14 },
+                { unit: 'التكامل', subUnit: 'مساحة', title: 'الدرس 9: حساب مساحة وحجم', videoId: '5aElY4MrIoA', duration: 20 },
+                { unit: 'التكامل', subUnit: 'مسائل', title: 'الدرس 10: حل س4+22 - إثبات متراجحة', videoId: 'He44KKMXJpI', duration: 14 },
+                { unit: 'التكامل', subUnit: 'مسائل', title: 'الدرس 11: حل س9 ص21', videoId: '8NjuOrXYEJI', duration: 10 },
+            ];
+
+            // ========== الأشعة (56 فيديو) ==========
+            const vectorsVideos = [
+                // الوحدة الأولى - أساسيات
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 1: العمليات على الأشعة', videoId: '1u-NPPiCQug', duration: 16 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 2: حل التمارين صفحة 16', videoId: '0Um1JzpcZY4', duration: 17 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 3: تكملة حل التمارين صفحة 16', videoId: 'UqvslFGGfSo', duration: 13 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - قوانين', title: 'الدرس 4: قوانين الأشعة', videoId: '2TwvtZpCqzY', duration: 22 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - إحداثيات', title: 'الدرس 5: إيجاد إحداثيات نقطة - تمارين ص24', videoId: '-F3I0mXpkzU', duration: 18 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - إحداثيات', title: 'الدرس 6: تكملة تمارين ص24 + المستوى المحوري', videoId: 'rMhciGMRlsc', duration: 23 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 7: الارتباط الخطي لشعاعين', videoId: 'zwmMDGAiE5o', duration: 21 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 8: الارتباط الخطي لثلاث أشعة', videoId: '5ooREksaRgY', duration: 26 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 9: حل التمرين 13 ص41', videoId: 'mOFBF8BetA8', duration: 19 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - معلم', title: 'الدرس 10: المعلم في الفراغ وإيجاد إحداثيات', videoId: '_3KNMbaNaBM', duration: 22 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مبرهنات', title: 'الدرس 11: مبرهنة في الارتباط الخطي لثلاث أشعة', videoId: 'WQS5szcGibc', duration: 17 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 12: حل السؤال 5 صفحة 20', videoId: 'iHo_8wigOvs', duration: 22 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 13: حل السؤالين 4 و 6 صفحة 20', videoId: 't4uBlZ4QN88', duration: 19 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 14: حل السؤال 20 صفحة 42', videoId: 'Lfb-SKbsu84', duration: 17 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 15: حل السؤال 8 صفحة 39', videoId: 'kJKlN5CFCQs', duration: 20 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أسطوانة', title: 'الدرس 16: الأسطوانة', videoId: 'hQLRk6L7neE', duration: 13 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مخروط', title: 'الدرس 17: المخروط', videoId: '86oQaFNPa7k', duration: 10 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 18: حل السؤال 10 صفحة 41', videoId: 'rbJ-ZlCkbm0', duration: 15 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 19: حل السؤال 11 صفحة 41', videoId: '2LTU0IwV3IQ', duration: 16 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 20: حل السؤال 12 صفحة 41', videoId: 'Xv5S9Y1W-_o', duration: 13 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 21: حل السؤال 19 صفحة 42', videoId: 'OU-mXLkTTII', duration: 20 },
+
+                // الوحدة الثانية - الجداء السلمي
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 22: الجداء السلمي - الدرس الأول', videoId: '6G1YF4TOSbU', duration: 28 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 23: حل السؤال 4 صفحة 53', videoId: 'kFbSiOP68aE', duration: 19 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 24: حل س3 ص53 و 4 ص56', videoId: 'EVZsxhM0mmo', duration: 19 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 25: حل النشاط صفحة 61', videoId: 'vkJxQLA9UEE', duration: 18 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 26: حل س9 ص68 + دورة 2022', videoId: 'EDNmMGwXnRk', duration: 17 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 27: معادلة المستوي الحالات 1-2-3', videoId: 'XgC8HiExoLc', duration: 22 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 28: معادلة المستوي - الناظم غير معلوم', videoId: '-qb35BEQvCU', duration: 16 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 29: تكملة الحالة الرابعة + حل س4 ص65', videoId: 'pX3LegAuOSA', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 30: حل السؤال 14 صفحة 69', videoId: 'k1ArqiLuss4', duration: 8 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 31: الوضع النسبي لمستويين', videoId: 'Iq9W0nN7_CU', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 32: مستوي يمر بنقطة ويعامد مستويين', videoId: 'Eos4Gbu7eNA', duration: 8 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 33: معادلة الكرة', videoId: '0Cov6GHNWc4', duration: 16 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 34: تعيين مجموعات نقاط - حل س23 ص71', videoId: 'BA7N4mXGcqQ', duration: 10 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 35: مجموعات النقاط - حل س25 ص71', videoId: 'fJu5c89YINY', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 36: مجموعات النقاط - حل س24 ص71', videoId: 'yLRz5dxBX3w', duration: 9 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مسائل', title: 'الدرس 37: حل السؤال 5 ص66', videoId: '_nqOK9YxV-w', duration: 16 },
+
+                // الوحدة الثالثة - مستقيمات ومستويات
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 38: المستقيم في الفراغ', videoId: 'zfqPF9T79gA', duration: 15 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 39: تكملة التمثيلات الوسيطية', videoId: '-6HJmHMq5ZU', duration: 16 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 40: وضع نسبي لمستقيم ومستوي', videoId: 'rAsXtMYknlo', duration: 18 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 41: مسقط نقطة على مستوي', videoId: 'ogajzTO8owU', duration: 17 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 42: بعد نقطة عن مستقيم - فصل مشترك', videoId: '_NXhY-89yOY', duration: 13 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 43: الوضع النسبي لمستقيمين', videoId: 'n6vL6qxvzZU', duration: 20 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 44: بعد نقطة عن مستقيم - حل س12 ص69', videoId: 'lVRZ_CDfkUo', duration: 21 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 45: وضع نسبي لثلاثة مستويات', videoId: 'mRebhhDrLyc', duration: 27 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 46: تتمة الوضع النسبي لثلاثة مستويات', videoId: 'vIrTZxRy-ms', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 47: حل مسألة شاملة 11ص98', videoId: 'r-kO0ehybyA', duration: 22 },
+
+                // مركز الأبعاد المتناسبة
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 48: مركز الأبعاد المتناسبة', videoId: 'w_Fy9TZCqwc', duration: 23 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 49: حل السؤال 21 صفحة 43', videoId: 'INdy0waAZ8w', duration: 14 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 50: حل السؤال 25 صفحة 44', videoId: 'cQnZR_E0ETI', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 51: حل السؤال 7 صفحة 96', videoId: 'Kvw0qKoN3EQ', duration: 12 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 52: تعيين أثقال مركز أبعاد', videoId: 'A8GxUGxkN_Q', duration: 10 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 53: إيجاد أثقال + حل س3 و7 ص81', videoId: 'L-9VrYJPngY', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 54: حل السؤالين 6 و8 ص81', videoId: '0Lr6OitmeV4', duration: 11 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 55: حل السؤال 1 صفحة 94', videoId: '-1tgPIuzkiY', duration: 12 },
+                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 56: حل السؤال 22 ص42', videoId: '9q5wShirvvk', duration: 24 },
+            ];
+
+            // ========== الأعداد العقدية (30 فيديو) ==========
+            const complexVideos = [
+                { unit: 'الأعداد العقدية', subUnit: 'شكل جبري', title: 'الدرس 1: الشكل الجبري', videoId: 'SIZxhTQr2UI', duration: 19 },
+                { unit: 'الأعداد العقدية', subUnit: 'مرافق', title: 'الدرس 2: مرافق العدد العقدي', videoId: 'z-UvC56Uakk', duration: 16 },
+                { unit: 'الأعداد العقدية', subUnit: 'إثبات', title: 'الدرس 3: إثبات أن عدد حقيقي', videoId: 'ZEfmw9QupdE', duration: 35 },
+                { unit: 'الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 4: الشكل المثلثي', videoId: 'gjJb9AiykEw', duration: 17 },
+                { unit: 'الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 5: حل س1+3 ص113', videoId: 'yE3JXCk6Luk', duration: 27 },
+                { unit: 'الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 6: حل س2 ص113', videoId: 'pXBw6E5m3GY', duration: 12 },
+                { unit: 'الأعداد العقدية', subUnit: 'شكل أسي', title: 'الدرس 7: الشكل الأسي - حل س2 ص116', videoId: '3SWimFnOU9U', duration: 32 },
+                { unit: 'الأعداد العقدية', subUnit: 'أويلر', title: 'الدرس 8: دستورا أويلر - حل س3 ص122', videoId: '8UwEJ4QyAXw', duration: 15 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 9: حل معادلات من الدرجة الأولى', videoId: '0UyZSDf38Jc', duration: 17 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 10: حل معادلات من الدرجة الثانية', videoId: 'shwwGDCj2AM', duration: 10 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 11: حل معادلات الدرجة الثانية - النوع الثاني', videoId: 'l1ICmoDe_DU', duration: 12 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 12: حل معادلات الدرجة الثانية - النوع الثالث', videoId: 'rc21JfBqod4', duration: 9 },
+                { unit: 'الأعداد العقدية', subUnit: 'جمل معادلات', title: 'الدرس 13: حل معادلتين بمجهولين', videoId: 'nu1zAWQAg_4', duration: 7 },
+                { unit: 'الأعداد العقدية', subUnit: 'ثوابت', title: 'الدرس 14: إيجاد الثوابت في معادلة درجة ثانية', videoId: 'jZT9FIZkoWw', duration: 6 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 15: حل معادلة من الدرجة الثالثة', videoId: 'TMLUETTVYag', duration: 19 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 16: معادلة درجة ثالثة - س11ص123', videoId: '3K_Acs6Xh5o', duration: 13 },
+                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 17: حل معادلات من الدرجة الرابعة', videoId: 'g8zmWuspJT8', duration: 13 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 18: دائرة القلب - حل س4 ص113', videoId: 'k1cFAKasu8w', duration: 16 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 19: حل س12 ص124', videoId: 'epXLvIJNtpk', duration: 21 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 20: حل س1 ص122', videoId: '2GhQnO-E1TY', duration: 19 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 21: حل س2 ص120', videoId: '5VCf0l-aKN0', duration: 35 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 22: مجموعة النقاط - حل س4 ص110', videoId: 'pUaKGdT1zrY', duration: 24 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 23: حل س16 ص124', videoId: 'YvwYQWV33gw', duration: 15 },
+                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 24: حل س15 ص124', videoId: 'F3DAnJ_LREA', duration: 17 },
+                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 25: حل س3 ص116', videoId: 'qUajuoHP1Lc', duration: 8 },
+                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 26: حل س3 ص110', videoId: 'H70EmQ67Su4', duration: 10 },
+                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 27: حل س7 ص122', videoId: 'dME51xx09gw', duration: 9 },
+                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 28: حل س13 ص124', videoId: 'POv6sis-RCY', duration: 12 },
+                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 29: حل معادلة مميزة 2ص118', videoId: 'J9T7nx6KuYM', duration: 2 },
+                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 30: حل التمرين 3 ص208', videoId: 'Uab_Cdt0cTA', duration: 24 },
+            ];
+
+            // ========== تطبيقات العقدية (19 فيديو) ==========
+            const complexAppsVideos = [
+                { unit: 'تطبيقات العقدية', subUnit: 'أساسيات', title: 'الدرس 1: تطبيقات - الدرس الأول', videoId: 'wVOWp_t-esw', duration: 18 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 2: حل س3 ص132', videoId: '_v3W2yVLVy8', duration: 13 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 3: حل س5 ص133', videoId: 'gBrzZbnqY48', duration: 7 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 4: حل س2 ص132', videoId: 'ESzB8TNKp7k', duration: 6 },
+                { unit: 'تطبيقات العقدية', subUnit: 'نسبة ذهبية', title: 'الدرس 5: النسبة الذهبية - س6 ص133', videoId: 'T7T4TjcefJk', duration: 19 },
+                { unit: 'تطبيقات العقدية', subUnit: 'تحويلات', title: 'الدرس 6: التحويلات الهندسية', videoId: 'ydh__B-8tko', duration: 28 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 7: حل س2 ص136', videoId: 'kIr1Cz1p9-Y', duration: 14 },
+                { unit: 'تطبيقات العقدية', subUnit: 'زاوية', title: 'الدرس 8: حساب قياس الزاوية - حل س3 ص136', videoId: 'LJa0IbrBizc', duration: 9 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 9: حل س3 ص141', videoId: 'wSBSXaiLhd8', duration: 21 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 10: حل س2 ص141', videoId: 'v-YtVLVu2FI', duration: 25 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 11: حل س10 ص143', videoId: 'WXJAxZr9tVs', duration: 18 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 12: حل س6 ص142', videoId: 'WwhwIqR86_o', duration: 16 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 13: حل س7ص142', videoId: 'GyVy1X_UbkY', duration: 13 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 14: حل س8ص123', videoId: 'X4GdQFtuUXc', duration: 9 },
+                { unit: 'تطبيقات العقدية', subUnit: 'جذور تكعيبية', title: 'الدرس 15: الجذور التكعيبية', videoId: 'CBRj-eETojY', duration: 11 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مجموعة نقاط', title: 'الدرس 16: مجموعة نقاط - حل س4 ص141', videoId: 'yxBBUmUj1og', duration: 18 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 17: حل س12 ص144', videoId: '7dHx7MMpmHo', duration: 21 },
+                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 18: حل س8 ص142', videoId: 'Ww8eZeNNszk', duration: 7 },
+                { unit: 'تطبيقات العقدية', subUnit: 'نشاط', title: 'الدرس 19: نشاط ص138', videoId: 'O5z6qoz8PhE', duration: 11 },
+            ];
+
+            // ========== التحليل التوافقي (16 فيديو) ==========
+            const combinatoricsVideos = [
+                { unit: 'التحليل التوافقي', subUnit: 'عاملي', title: 'الدرس 1: العاملي', videoId: 'dAwhzChV4KE', duration: 17 },
+                { unit: 'التحليل التوافقي', subUnit: 'تراتيب وتوافيق', title: 'الدرس 2: دساتير التراتيب والتوافيق', videoId: '-HmVza1OwDA', duration: 16 },
+                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 3: حل س3ص155 + 1ص164', videoId: 'VdQiTIdHBh0', duration: 14 },
+                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 4: حل س1+2 ص164', videoId: 'ffTHDdWbcFM', duration: 9 },
+                { unit: 'التحليل التوافقي', subUnit: 'مبدأ العد', title: 'الدرس 5: المبدأ الأساسي بالعد', videoId: 'm3qO06O2-EY', duration: 32 },
+                { unit: 'التحليل التوافقي', subUnit: 'مبدأ العد', title: 'الدرس 6: تمارين على المبدأ', videoId: 'dgt3New4woc', duration: 23 },
+                { unit: 'التحليل التوافقي', subUnit: 'قانون التوافيق', title: 'الدرس 7: أسئلة على قانون التوافيق', videoId: 'zl1gz-0f8PM', duration: 35 },
+                { unit: 'التحليل التوافقي', subUnit: 'منشور ذي الحدين', title: 'الدرس 8: منشور ثنائي الحد', videoId: 'LdW95NmJVUY', duration: 19 },
+                { unit: 'التحليل التوافقي', subUnit: 'مسائل سحب', title: 'الدرس 9: مسائل السحب - حل 16+17 ص167', videoId: 'Qgyz-wNnMpQ', duration: 36 },
+                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 10: حل س3ص159 + 9ص164', videoId: 'dvkr40bf1N4', duration: 6 },
+                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 11: حل س2ص162', videoId: 'I2IxbR9Do9E', duration: 12 },
+                { unit: 'التحليل التوافقي', subUnit: 'دورات', title: 'الدرس 12: دورة 2024 + أمثلة خارجية', videoId: '0O5hG2fc0Og', duration: 10 },
+                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 13: حل س18 ص167', videoId: 'j9WPeyT7tU4', duration: 16 },
+                { unit: 'التحليل التوافقي', subUnit: 'تحويل مثلثي', title: 'الدرس 14: تحويل العبارات المثلثية بأويلر', videoId: 'y-ibH8g21es', duration: 12 },
+                { unit: 'التحليل التوافقي', subUnit: 'منشور', title: 'الدرس 15: مثال منشور ذي الحدين ص159', videoId: 'IVziwz0KcDg', duration: 7 },
+                { unit: 'التحليل التوافقي', subUnit: 'آحاد وعشرات', title: 'الدرس 16: آحاد وعشرات 11^11', videoId: '8k_cxSyeTmQ', duration: 6 },
+            ];
+
+            // ========== الاحتمالات (18 فيديو) ==========
+            const probabilityVideos = [
+                { unit: 'الاحتمالات', subUnit: 'أساسيات', title: 'الدرس 1: مسألة توافيق', videoId: 'R1bv9S1KhaI', duration: 28 },
+                { unit: 'الاحتمالات', subUnit: 'تتالي', title: 'الدرس 2: التتالي دون إعادة', videoId: 'TVNpuFmiykM', duration: 14 },
+                { unit: 'الاحتمالات', subUnit: 'تتالي', title: 'الدرس 3: التتالي مع إعادة', videoId: 'jbQnaU0WF-4', duration: 21 },
+                { unit: 'الاحتمالات', subUnit: 'قوانين', title: 'الدرس 4: قوانين عامة', videoId: '9WQv2RsGzUI', duration: 11 },
+                { unit: 'الاحتمالات', subUnit: 'مخطط شجري', title: 'الدرس 5: المخطط الشجري', videoId: 'W_yoa26SPJg', duration: 24 },
+                { unit: 'الاحتمالات', subUnit: 'مخطط شجري', title: 'الدرس 6: حل 5+6 ص180 و3ص208', videoId: 'R3HnXeLLEkM', duration: 23 },
+                { unit: 'الاحتمالات', subUnit: 'متحول عشوائي', title: 'الدرس 7: المتحول العشوائي', videoId: 'JOsMMnDAQzE', duration: 25 },
+                { unit: 'الاحتمالات', subUnit: 'متحول عشوائي', title: 'الدرس 8: حل 5ص184 + 2ص214', videoId: 'FY9kcMxcMiI', duration: 20 },
+                { unit: 'الاحتمالات', subUnit: 'استقلال', title: 'الدرس 9: الاستقلال الاحتمالي', videoId: 'GbQpGAW9yrQ', duration: 14 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 10: حل س1+2 ص187', videoId: 'tIJG4_RMcHk', duration: 14 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 11: حل س10 ص201', videoId: 'XOhRgsebPeE', duration: 15 },
+                { unit: 'الاحتمالات', subUnit: 'برنولي', title: 'الدرس 12: برنولي - حل 2+3 ص192 و14ص203', videoId: 'qwUDtGJLXZY', duration: 20 },
+                { unit: 'الاحتمالات', subUnit: 'برنولي', title: 'الدرس 13: برنولي - حل 4+1 ص192', videoId: 'fbfIPI0XNMc', duration: 18 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 14: حل س3ص198', videoId: 'vs8DzX5Hix0', duration: 10 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 15: حل مسألة سعاد 18 ص204', videoId: 'm2-KWSm3D0k', duration: 20 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 16: مسألة ضربات الجزاء 2 ص211', videoId: '44K_BUEUJrE', duration: 25 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 17: حل المسألة 15 ص203', videoId: 's9P_gGc3NF0', duration: 15 },
+                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 18: حل السؤال 8 ص202', videoId: 'Ybpimo2EM6w', duration: 12 },
+            ];
+
+            // ========== قراءة الخط البياني (5 فيديو) ==========
+            const graphReadingVideos = [
+                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 1: قراءة جدول التغيرات والخط البياني', videoId: '2vAkvLY44fo', duration: 15 },
+                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 2: قراءة الخط البياني', videoId: 'thQiK8Wm2lk', duration: 18 },
+                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 3: قراءة الخط البياني 2', videoId: 'ti587P96W14', duration: 22 },
+                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 4: قراءة الخطوط البيانية والجداول', videoId: 'B0d_E1en4TE', duration: 16 },
+                { unit: 'قراءة الخط البياني', subUnit: 'مشتقات', title: 'الدرس 5: قراءة الخط البياني لمشتق التابع', videoId: 'Rba0AoMl4vA', duration: 20 },
+            ];
+
+            // ========== دورات (32 فيديو) - عينة تمثيلية ==========
+            const examsVideos = [
+                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2018 ثانية', videoId: 'K0fOldLo70c', duration: 11 },
+                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2022 أولى', videoId: 'GvHRXkXQkvs', duration: 21 },
+                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2023 أولى', videoId: 'SYenxk3JvTM', duration: 11 },
+                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2024 أولى', videoId: 'zSKQA64AUP4', duration: 13 },
+                { unit: 'دورات وحلول', subUnit: 'متتاليات', title: 'حل دورة 2017 متتاليات', videoId: 'obRDP8UwVVQ', duration: 15 },
+                { unit: 'دورات وحلول', subUnit: 'نهايات', title: 'حل دورة 2018 نهايات', videoId: 'zpSEzQt0gjM', duration: 17 },
+                // أضف المزيد حسب الحاجة...
+            ];
+
+            // دمج جميع الفيديوهات مع إضافة id تلقائي
+            let allVideos = [
+                ...foundationVideos,
+                ...sequencesVideos,
+                ...limitsVideos,
+                ...derivativeVideos,
+                ...logVideos,
+                ...expVideos,
+                ...integralVideos,
+                ...vectorsVideos,
+                ...complexVideos,
+                ...complexAppsVideos,
+                ...combinatoricsVideos,
+                ...probabilityVideos,
+                ...graphReadingVideos,
+                ...examsVideos,
+            ];
+
+            // تحويل المدة إلى صيغة hh:mm:ss (المدة معطاة بالدقائق في الكود أعلاه)
+            allVideos = allVideos.map((v, index) => {
+                let dur = v.duration;
+                let hours = Math.floor(dur / 60);
+                let minutes = dur % 60;
+                let timeString = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
+                return {
+                    id: index,
+                    title: v.title,
+                    youtubeId: v.videoId,
+                    unit: v.unit,
+                    subUnit: v.subUnit,
+                    duration: timeString,
+                    watched: false
+                };
+            });
+
+            // ترتيب الوحدات للعرض (يمكن تعديلها)
+            const unitsList = [
+                { id: 'تأسيس', name: '🔰 تأسيس', icon: 'seedling' },
+                { id: 'المتتاليات', name: '📈 المتتاليات', icon: 'chart-line' },
+                { id: 'النهايات والاستمرار', name: '∞ النهايات والاستمرار', icon: 'infinity' },
+                { id: 'الاشتقاق', name: '📐 الاشتقاق', icon: 'chart-line' },
+                { id: 'اللوغاريتمي', name: '📊 اللوغاريتمي', icon: 'chart-line' },
+                { id: 'الأسي', name: '📈 الأسي', icon: 'chart-line' },
+                { id: 'التكامل', name: '∫ التكامل', icon: 'cubes' },
+                { id: 'الأشعة', name: '↗️ الأشعة', icon: 'vector-square' },
+                { id: 'الأعداد العقدية', name: '🔮 الأعداد العقدية', icon: 'square-root-alt' },
+                { id: 'تطبيقات العقدية', name: '⚡ تطبيقات العقدية', icon: 'bolt' },
+                { id: 'التحليل التوافقي', name: '🎲 التحليل التوافقي', icon: 'dice' },
+                { id: 'الاحتمالات', name: '🎯 الاحتمالات', icon: 'bullseye' },
+                { id: 'قراءة الخط البياني', name: '📉 قراءة الخط البياني', icon: 'chart-area' },
+                { id: 'دورات وحلول', name: '📝 دورات وحلول', icon: 'calendar-alt' },
+            ];
+
+            // متغيرات الحالة
+            let watchedVideos = JSON.parse(localStorage.getItem('mathWatched')) || [];
+            let currentVideo = allVideos[0];
+
+            // دوال مساعدة
+            function saveWatched() {
+                localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
+            }
+            function saveLastWatched(id) {
+                localStorage.setItem('mathLast', id);
+            }
+            function loadLastWatched() {
+                const last = localStorage.getItem('mathLast');
+                if (last !== null) {
+                    const idx = allVideos.findIndex(v => v.id == last);
+                    if (idx >= 0) currentVideo = allVideos[idx];
+                }
+            }
+
+            function setVideoByIndex(index) {
+                const v = allVideos[index];
+                if (!v) return;
+                currentVideo = v;
+                document.getElementById('youtube-player').src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                document.getElementById('current-video-title').innerText = v.title;
+                document.getElementById('current-unit').innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
+                document.getElementById('current-duration').innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
+                buildUnits(); // تحديث التمييز البصري للدرس النشط
+            }
+
+            function calcStats() {
+                const total = allVideos.length;
+                const watchedCount = watchedVideos.length;
+                const remaining = total - watchedCount;
+                const percent = total ? Math.round((watchedCount / total) * 100) : 0;
+                let totalSeconds = 0;
+                watchedVideos.forEach(id => {
+                    const v = allVideos.find(v => v.id === id);
+                    if (v) {
+                        const parts = v.duration.split(':');
+                        totalSeconds += parseInt(parts[0])*3600 + parseInt(parts[1])*60 + parseInt(parts[2]);
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                return { watchedCount, remaining, percent, hours, total };
+            }
+
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours, total } = calcStats();
+                document.getElementById('watched-count').innerText = watchedCount;
+                document.getElementById('remaining-count').innerText = remaining;
+                document.getElementById('completion-percent').innerText = percent + '%';
+                document.getElementById('total-hours').innerText = hours;
+                document.getElementById('overall-percent').innerText = percent + '%';
+                document.getElementById('overall-progress').style.width = percent + '%';
+
+                const badge5 = document.getElementById('badge5');
+                const badge25 = document.getElementById('badge25');
+                const badge50 = document.getElementById('badge50');
+                const badge100 = document.getElementById('badge100');
+                const badge339 = document.getElementById('badge339');
+                if (badge5) badge5.classList.toggle('achieved', watchedCount >= 5);
+                if (badge25) badge25.classList.toggle('achieved', watchedCount >= 25);
+                if (badge50) badge50.classList.toggle('achieved', watchedCount >= 50);
+                if (badge100) badge100.classList.toggle('achieved', watchedCount >= 100);
+                if (badge339) badge339.classList.toggle('achieved', watchedCount >= total);
+
+                // تقدم الوحدات في صفحة التقدم
+                const unitProgressDiv = document.getElementById('unit-progress-list');
+                if (unitProgressDiv) {
+                    let html = '';
+                    unitsList.forEach(u => {
+                        const unitVids = allVideos.filter(v => v.unit === u.id);
+                        if (unitVids.length === 0) return;
+                        const watchedU = unitVids.filter(v => watchedVideos.includes(v.id)).length;
+                        const percU = Math.round((watchedU / unitVids.length) * 100) || 0;
+                        html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${u.name}</span><span>${watchedU}/${unitVids.length}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${percU}%;"></div></div></div>`;
+                    });
+                    unitProgressDiv.innerHTML = html;
+                }
+            }
+
+            function buildUnits() {
+                const container = document.getElementById('units-container');
+                if (!container) return;
+                let htmlAll = '';
+                unitsList.forEach(unit => {
+                    const unitVideos = allVideos.filter(v => v.unit === unit.id);
+                    if (unitVideos.length === 0) return;
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const watchedU = unitVideos.filter(v => watchedVideos.includes(v.id)).length;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            const isWatched = watchedVideos.includes(v.id);
+                            const isActive = currentVideo?.id === v.id;
+                            lessonsHtml += `
+                                <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${v.id}">
+                                    <div class="lesson-watch ${isWatched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${isWatched?1:0};"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title">${sub}</div>
+                                <ul class="lesson-list">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unit.name}</span>
+                                <span class="unit-progress">${watchedU}/${unitVideos.length}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = htmlAll;
+
+                // event listeners للدوائر
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(el.dataset.id);
+                        if (watchedVideos.includes(id)) {
+                            watchedVideos = watchedVideos.filter(w => w !== id);
+                            el.classList.remove('watched');
+                            el.querySelector('i').style.opacity = 0;
+                        } else {
+                            watchedVideos.push(id);
+                            el.classList.add('watched');
+                            el.querySelector('i').style.opacity = 1;
+                        }
+                        saveWatched();
+                        updateAllStats();
+                        // تحديث عداد الوحدة
+                        const unitCard = el.closest('.unit-card');
+                        if (unitCard) {
+                            const unitName = unitCard.querySelector('.unit-title').innerText;
+                            const unitObj = unitsList.find(u => u.name === unitName);
+                            if (unitObj) {
+                                const unitVids = allVideos.filter(v => v.unit === unitObj.id);
+                                const w = unitVids.filter(v => watchedVideos.includes(v.id)).length;
+                                unitCard.querySelector('.unit-progress').innerText = `${w}/${unitVids.length}`;
+                            }
+                        }
+                    });
+                });
+
+                // event listeners للدروس (تشغيل الفيديو)
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = parseInt(el.dataset.id);
+                        const index = allVideos.findIndex(v => v.id === id);
+                        if (index !== -1) {
+                            setVideoByIndex(index);
+                        }
+                    });
+                });
+            }
+
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                }
+            };
+
+            function updateCountdown() {
+                const exam = new Date('2026-06-13T00:00:00');
+                const now = new Date();
+                const diff = exam - now;
+                if (diff <= 0) {
+                    document.getElementById('countdown-days').innerText = '0';
+                    document.getElementById('countdown-large').innerText = '0';
+                    document.getElementById('daily-plan-text').innerText = 'انتهى';
+                    document.getElementById('daily-plan-detail').innerText = 'انتهى';
+                    return;
+                }
+                const days = Math.floor(diff / (1000*60*60*24));
+                document.getElementById('countdown-days').innerText = days;
+                document.getElementById('countdown-large').innerText = days;
+                const remaining = allVideos.length - watchedVideos.length;
+                const perDay = Math.ceil(remaining / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} فيديو/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} فيديو يومياً`;
+            }
+
+            function updateLastWatched() {
+                const lastId = localStorage.getItem('mathLast');
+                if (lastId) {
+                    const v = allVideos.find(v => v.id == lastId);
+                    if (v) document.getElementById('last-watched').innerText = v.title;
+                }
+            }
+
+            function initTabs() {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                        if (page === 'progress') updateAllStats();
+                        if (page === 'profile') updateLastWatched();
+                    });
+                });
+            }
+
+            function init() {
+                const stored = localStorage.getItem('mathWatched');
+                if (stored) watchedVideos = JSON.parse(stored);
+                loadLastWatched();
+                setVideoByIndex(allVideos.findIndex(v => v.id === currentVideo.id));
+                buildUnits();
+                updateAllStats();
+                updateCountdown();
+                updateLastWatched();
+                initTabs();
+
+                setInterval(updateCountdown, 60000);
+                setInterval(() => {
+                    if (currentVideo) saveLastWatched(currentVideo.id);
+                }, 3000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>منارة التربية الدينية - البكالوريا</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Cairo / Tajawal / Amiri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+        }
+        body {
+            background-color: #0f172a;  /* خلفية داكنة عميقة */
+            color: #e2e8f0;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+        /* شريط التنقل السفلي الثابت */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            border-top: 2px solid #f97316;  /* برتقالي */
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            background: #f97316;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        /* الحاويات */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #f97316;
+            box-shadow: 0 15px 25px -10px #f9731633;
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        .subject-icon {
+            background: #f97316;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0f172a;
+        }
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: white;
+        }
+        .subject-name p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .exam-timer {
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #f97316;
+            margin-top: 15px;
+        }
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f97316;
+            direction: ltr;
+        }
+        .daily-plan {
+            font-size: 15px;
+            background: #f97316;
+            color: #0f172a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .progress-section {
+            margin-top: 16px;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            background: #334155;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #f97316;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #f97316;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+        /* مشغل الفيديو */
+        .video-player-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #f97316;
+            margin-bottom: 20px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0f172a;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+        /* الوحدات */
+        .units-container {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #f97316;
+            margin-bottom: 25px;
+        }
+        .unit-card {
+            background: #0f172a;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #f97316;
+            overflow: hidden;
+        }
+        .unit-header {
+            background: #1e293b;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f97316;
+        }
+        .unit-header i {
+            font-size: 24px;
+            color: #f97316;
+            transition: 0.2s;
+        }
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+            color: white;
+        }
+        .unit-progress {
+            background: #334155;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+        .sub-units {
+            padding: 12px;
+        }
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f97316;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #f97316;
+        }
+        .lesson-list {
+            list-style: none;
+        }
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1e293b;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .lesson-item:hover {
+            border-color: #f97316;
+        }
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #f97316;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f97316;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .lesson-watch.watched {
+            background: #f97316;
+            color: #0f172a;
+        }
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+        .lesson-duration {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        /* لوحة التقدم */
+        .progress-panel, .timer-panel, .profile-panel {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #f97316;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0f172a;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #f97316;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #f97316;
+        }
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .badge {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+        .badge.achieved {
+            border-color: #f97316;
+            background: #f97316;
+            color: #0f172a;
+            opacity: 1;
+        }
+        .badge i {
+            font-size: 26px;
+        }
+        /* خطة الامتحان */
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #f97316;
+            text-align: center;
+            direction: ltr;
+        }
+        .plan-box {
+            background: #0f172a;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #f97316;
+        }
+        /* tabs content */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        hr {
+            border: 0.5px solid #334155;
+            margin: 20px 0;
+        }
+        .small-note {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+
+        <!-- ======== الهيدر ثابت في كل الصفحات ======== -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-mosque"></i></div>
+                <div class="subject-name">
+                    <h1>التربية الدينية</h1>
+                    <p>البكالوريا - المنهاج المتكامل</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 21/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======== الصفحات ======== -->
+        <!-- الصفحة الرئيسية (المشغل + الوحدات) -->
+        <div id="page-home" class="page active">
+            <!-- مشغل الفيديو -->
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/xJ8aNhMkz5w" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">الحلقة الأولى - أول أربعة دروس من وحدة التلاوة</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> القرآن الكريم - التلاوة</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 1:06:46</span>
+                </div>
+            </div>
+
+            <!-- الوحدات القابلة للطي -->
+            <div class="units-container" id="units-container">
+                <!-- يتم تعبئتها بواسطة JavaScript -->
+            </div>
+        </div>
+
+        <!-- صفحة التقدم والإنجازات -->
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:#f97316;"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="watched-count">0</div>
+                        <div class="stat-label">درس مُشاهَد</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-hours">0</div>
+                        <div class="stat-label">ساعة مشاهدة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="remaining-count">0</div>
+                        <div class="stat-label">درس متبقي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completion-percent">0%</div>
+                        <div class="stat-label">إنجاز</div>
+                    </div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                <div class="badge-container" id="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 دروس</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 درس</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 درس</div>
+                    <div class="badge" id="badge100"><i class="fas fa-dragon"></i> 100 درس</div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-chart-pie"></i> تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- صفحة المؤقت والخطة اليومية -->
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 درس / يوم</div>
+                    <p class="small-note">لمشاهدة جميع الدروس المتبقية قبل الامتحان</p>
+                </div>
+                <div style="background: #0f172a; border-radius: 24px; padding: 16px; margin-top: 20px;">
+                    <p><i class="fas fa-info-circle" style="color:#f97316;"></i> الامتحان يوم 21 حزيران 2026. واصل بنشاط!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الملف الشخصي -->
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#f97316; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px; color:#0f172a;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>طالب بكالوريا</h3>
+                        <p class="small-note">فرع: علمي/أدبي</p>
+                    </div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle" style="color:#f97316;"></i> آخر درس تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
+                <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الدروس الكلي: <span id="total-lessons-count">0</span></div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ======================== بيانات المنهج الكامل (مبنية على ما ورد) ========================
+            const lessonsData = [
+                // ====== القرآن الكريم - التلاوة (7 دروس) ======
+                { id: 1, title: "نعم الله تعالى مدعاة للتوحيد والشكر", youtubeId: "Bw7eJIkiJJY", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:30:00" },
+                { id: 2, title: "الله وحده هو الخالق المتصرف", youtubeId: "y9w_X-EKwPs", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:28:00" },
+                { id: 3, title: "الله وحده القادر المعبود", youtubeId: "pPdM3DxS3PI", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:32:00" },
+                { id: 4, title: "من مظاهر قدرة الله تعالى وعظيم فضله", youtubeId: "h2Gci0R8rGo", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:35:00" },
+                { id: 5, title: "دلائل عظمة الخالق عز وجل", youtubeId: "qXVsG87YZgw", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:29:00" },
+                { id: 6, title: "مبادئ وقيم خالدة", youtubeId: "67kqPgu7P78", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:31:00" },
+                { id: 7, title: "أسس الدعوة إلى الله تعالى", youtubeId: "JWf67Oz2gR4", unit: "القرآن الكريم - التلاوة", subUnit: "الدروس", duration: "00:33:00" },
+                // الحلقات الإضافية من القائمة الثانية
+                { id: 8, title: "الحلقة الأولى - أول أربعة دروس من وحدة التلاوة", youtubeId: "xJ8aNhMkz5w", unit: "القرآن الكريم - التلاوة", subUnit: "حلقات مراجعة", duration: "1:06:46" },
+                { id: 9, title: "الحلقة الثانية - الدرس الخامس والسادس والسابع", youtubeId: "3kX1INnxxtw", unit: "القرآن الكريم - التلاوة", subUnit: "حلقات مراجعة", duration: "39:01" },
+                { id: 10, title: "الحلقة الثالثة - أحكام التجويد", youtubeId: "WKiPnx034ds", unit: "القرآن الكريم - التلاوة", subUnit: "حلقات مراجعة", duration: "43:06" },
+
+                // ====== القرآن الكريم - التفسير والاستحفاظ (6 دروس) ======
+                { id: 11, title: "صيانة الحقوق وتوثيق العقود (282-283 البقرة)", youtubeId: "4oIZAi7ajyo", unit: "التفسير والاستحفاظ", subUnit: "آيات وأحاديث", duration: "00:35:00" },
+                { id: 12, title: "إيمان ودعاء (284-286 البقرة)", youtubeId: "htyAHO-BvAg", unit: "التفسير والاستحفاظ", subUnit: "آيات وأحاديث", duration: "00:30:00" },
+                { id: 13, title: "القرآن الكريم وعظيم قدرة الله (فاطر 27-32)", youtubeId: "YktvG9fskis", unit: "التفسير والاستحفاظ", subUnit: "آيات وأحاديث", duration: "00:35:00" },
+                { id: 14, title: "سعة علم الله وكمال قدرته (الرعد 8-14)", youtubeId: "fSTXBjv8To4", unit: "التفسير والاستحفاظ", subUnit: "آيات وأحاديث", duration: "00:37:00" },
+                { id: 15, title: "الحلقة الرابعة - وحدة الاستحفاظ", youtubeId: "EmggqNPkUKo", unit: "التفسير والاستحفاظ", subUnit: "حلقات مراجعة", duration: "48:30" },
+
+                // ====== الحديث النبوي الشريف (6 دروس) ======
+                { id: 16, title: "بيعة صادقة (ص52)", youtubeId: "YFtEPtIouoc", unit: "الحديث النبوي الشريف", subUnit: "الأحاديث", duration: "00:12:00" },
+                { id: 17, title: "الإيمان قوة وعمل (ص57)", youtubeId: "5tOyu_wY9eU", unit: "الحديث النبوي الشريف", subUnit: "الأحاديث", duration: "00:10:00" },
+                { id: 18, title: "حكم القاضي لا يحل الحرام (ص61)", youtubeId: "jSRrkW9j1SU", unit: "الحديث النبوي الشريف", subUnit: "الأحاديث", duration: "00:11:00" },
+                { id: 19, title: "مكانة الشهيد وعظيم أجره (ص65)", youtubeId: "hQFI79JKrx8", unit: "الحديث النبوي الشريف", subUnit: "الأحاديث", duration: "00:13:00" },
+                { id: 20, title: "عموم المسؤولية (ص69)", youtubeId: "xRsI0hZOezk", unit: "الحديث النبوي الشريف", subUnit: "الأحاديث", duration: "00:14:00" },
+                { id: 21, title: "توجيه نبوي حكيم (ص73)", youtubeId: "3KuIsJadRCM", unit: "الحديث النبوي الشريف", subUnit: "الأحاديث", duration: "00:12:00" },
+                { id: 22, title: "الحلقة الخامسة - وحدة الحديث الشريف", youtubeId: "yNdFpawja6Y", unit: "الحديث النبوي الشريف", subUnit: "حلقات مراجعة", duration: "49:54" },
+
+                // ====== سورة النحل - تفسير + تجويد (عدد كبير من الفيديوهات) ======
+                { id: 23, title: "تفسير سورة النحل (1-6)", youtubeId: "lhvEIrwpZr8", unit: "سورة النحل", subUnit: "تفسير", duration: "00:20:00" },
+                { id: 24, title: "تفسير سورة النحل (7-14)", youtubeId: "KX3499Wft1w", unit: "سورة النحل", subUnit: "تفسير", duration: "00:22:00" },
+                { id: 25, title: "تفسير سورة النحل (15-26)", youtubeId: "mRryJBiGtM4", unit: "سورة النحل", subUnit: "تفسير", duration: "00:25:00" },
+                { id: 26, title: "تفسير سورة النحل (27-34)", youtubeId: "KWn1bLnRXj0", unit: "سورة النحل", subUnit: "تفسير", duration: "00:18:00" },
+                { id: 27, title: "تفسير سورة النحل (35-42)", youtubeId: "Gl-7TbM-f4s", unit: "سورة النحل", subUnit: "تفسير", duration: "00:20:00" },
+                { id: 28, title: "تفسير سورة النحل (43-54)", youtubeId: "ZhH55mP0J9s", unit: "سورة النحل", subUnit: "تفسير", duration: "00:21:00" },
+                { id: 29, title: "تفسير سورة النحل (55-64)", youtubeId: "5NleIcqA-3A", unit: "سورة النحل", subUnit: "تفسير", duration: "00:23:00" },
+                { id: 30, title: "تفسير سورة النحل (65-72)", youtubeId: "8e8v-21ub4E", unit: "سورة النحل", subUnit: "تفسير", duration: "00:24:00" },
+                { id: 31, title: "تفسير سورة النحل (73-79)", youtubeId: "AzxkPgtrxvQ", unit: "سورة النحل", subUnit: "تفسير", duration: "00:19:00" },
+                { id: 32, title: "تفسير سورة النحل (80-87)", youtubeId: "1UmIrfmJCdM", unit: "سورة النحل", subUnit: "تفسير", duration: "00:22:00" },
+                { id: 33, title: "تفسير سورة النحل (88-93)", youtubeId: "GpZGfqwaoEw", unit: "سورة النحل", subUnit: "تفسير", duration: "00:21:00" },
+                { id: 34, title: "تفسير سورة النحل (94-102)", youtubeId: "sAnxmE5adcs", unit: "سورة النحل", subUnit: "تفسير", duration: "00:26:00" },
+                { id: 35, title: "تفسير سورة النحل (103-110)", youtubeId: "EmU54gN5QvQ", unit: "سورة النحل", subUnit: "تفسير", duration: "00:24:00" },
+                { id: 36, title: "تفسير سورة النحل (111-118)", youtubeId: "1iPhnjmC44A", unit: "سورة النحل", subUnit: "تفسير", duration: "00:22:00" },
+                { id: 37, title: "تفسير سورة النحل (119-128)", youtubeId: "tIs0FtNOQjU", unit: "سورة النحل", subUnit: "تفسير", duration: "00:28:00" },
+                // أحكام التجويد لسورة النحل (حوالي 30 فيديو)
+                { id: 38, title: "أحكام التجويد (1-3) سورة النحل", youtubeId: "-7K3BTDJxL0", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:15:00" },
+                { id: 39, title: "أحكام التجويد (4-6) سورة النحل", youtubeId: "65EkEtOGPkI", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:14:00" },
+                { id: 40, title: "أحكام التجويد (7-9) سورة النحل", youtubeId: "UrC4DdBkprU", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:16:00" },
+                { id: 41, title: "أحكام التجويد (10-14) سورة النحل", youtubeId: "UbdJ4zAJGOc", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:18:00" },
+                { id: 42, title: "أحكام التجويد (15-16) سورة النحل", youtubeId: "QrmwmO3ClMA", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:10:00" },
+                { id: 43, title: "أحكام التجويد (17-22) سورة النحل", youtubeId: "1iWSFuru-N4", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:17:00" },
+                { id: 44, title: "أحكام التجويد (23-26) سورة النحل", youtubeId: "HnSBnas7meY", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:15:00" },
+                { id: 45, title: "أحكام التجويد (27-30) سورة النحل", youtubeId: "DlwphPEQ4kc", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:16:00" },
+                { id: 46, title: "أحكام التجويد (31-34) سورة النحل", youtubeId: "TaK6VMLTok0", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:14:00" },
+                { id: 47, title: "أحكام التجويد (35-37) سورة النحل", youtubeId: "hAQPin47bBA", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:12:00" },
+                { id: 48, title: "أحكام التجويد (38-42) سورة النحل", youtubeId: "hh28n5-B-mE", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:13:00" },
+                { id: 49, title: "أحكام التجويد (55-60) سورة النحل", youtubeId: "xsef1EsbcpI", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:14:00" },
+                { id: 50, title: "أحكام التجويد (61-64) سورة النحل", youtubeId: "y4V0vEgAQwY", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:15:00" },
+                { id: 51, title: "أحكام التجويد (65-68) سورة النحل", youtubeId: "JdVbcZi8_ww", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:16:00" },
+                { id: 52, title: "أحكام التجويد (69-72) سورة النحل", youtubeId: "BmZ7fqOpWE8", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:17:00" },
+                { id: 53, title: "أحكام التجويد (73-76) سورة النحل", youtubeId: "_hXZzmn6_M8", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:15:00" },
+                { id: 54, title: "أحكام التجويد (77-79) سورة النحل", youtubeId: "Qp6j1XhfoJc", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:12:00" },
+                { id: 55, title: "أحكام التجويد (80-83) سورة النحل", youtubeId: "Yd8_DKBObXc", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:14:00" },
+                { id: 56, title: "أحكام التجويد (84-87) سورة النحل", youtubeId: "pkIlD0_7Abo", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:13:00" },
+                { id: 57, title: "أحكام التجويد (88-90) سورة النحل", youtubeId: "1KaEYgobKoI", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:12:00" },
+                { id: 58, title: "أحكام التجويد (91-93) سورة النحل", youtubeId: "W2PtHayujN4", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:11:00" },
+                { id: 59, title: "أحكام التجويد (94-97) سورة النحل", youtubeId: "LrJ50NQhupI", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:14:00" },
+                { id: 60, title: "أحكام التجويد (98-102) سورة النحل", youtubeId: "yQdMx27mHa4", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:15:00" },
+                { id: 61, title: "أحكام التجويد (103-106) سورة النحل", youtubeId: "qIdCCzryPbk", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:13:00" },
+                { id: 62, title: "أحكام التجويد (107-110) سورة النحل", youtubeId: "ZUyrwnPMvhs", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:14:00" },
+                { id: 63, title: "أحكام التجويد (111-114) سورة النحل", youtubeId: "e1tYp1n6q6o", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:12:00" },
+                { id: 64, title: "أحكام التجويد (115-118) سورة النحل", youtubeId: "7GpKMS03YKU", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:13:00" },
+                { id: 65, title: "أحكام التجويد (119-123) سورة النحل", youtubeId: "qs-uzKwzkvI", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:15:00" },
+                { id: 66, title: "أحكام التجويد (124-128) سورة النحل", youtubeId: "XvBfKmwTRHo", unit: "سورة النحل", subUnit: "أحكام التجويد", duration: "00:16:00" },
+
+                // ====== التربية الإنسانية ======
+                { id: 67, title: "بناء الحضارة في الإسلام", youtubeId: "XBNX9eFcaXg", unit: "التربية الإنسانية", subUnit: "الدروس", duration: "00:25:00" },
+                { id: 68, title: "مقومات الحضارة الإنسانية في الإسلام", youtubeId: "CIwPM76ZPLs", unit: "التربية الإنسانية", subUnit: "الدروس", duration: "00:28:00" },
+                { id: 69, title: "مظاهر الحضارة الإسلامية", youtubeId: "2LQLET4Zg-s", unit: "التربية الإنسانية", subUnit: "الدروس", duration: "00:26:00" },
+                { id: 70, title: "الحلقة السادسة: وحدة التربية الإنسانية", youtubeId: "FzpQVe1t9Kg", unit: "التربية الإنسانية", subUnit: "حلقات مراجعة", duration: "19:59" },
+
+                // ====== التربية الأسرية والاجتماعية ======
+                { id: 71, title: "نظام الأسرة في الإسلام", youtubeId: "bKAiesp0P78", unit: "التربية الأسرية", subUnit: "الدروس", duration: "00:35:00" },
+                { id: 72, title: "المحرمات من النساء في الزواج", youtubeId: "plkDeVGrYAk", unit: "التربية الأسرية", subUnit: "الدروس", duration: "00:30:00" },
+                { id: 73, title: "الخطبة والأسس الإسلامية للزواج", youtubeId: "rOsa9Bi4sa4", unit: "التربية الأسرية", subUnit: "الدروس", duration: "00:32:00" },
+                { id: 74, title: "عقد الزواج", youtubeId: "7x2wjKrIOBg", unit: "التربية الأسرية", subUnit: "الدروس", duration: "00:28:00" },
+                { id: 75, title: "حقوق الزوجين", youtubeId: "6ASqE0hDYhA", unit: "التربية الأسرية", subUnit: "الدروس", duration: "00:27:00" },
+                { id: 76, title: "الطلاق", youtubeId: "ng--rTcWOL0", unit: "التربية الأسرية", subUnit: "الدروس", duration: "00:33:00" },
+                { id: 77, title: "الحلقة السابعة: نظام الأسرة والمحرمات", youtubeId: "tecYenbRcX0", unit: "التربية الأسرية", subUnit: "حلقات مراجعة", duration: "37:49" },
+                { id: 78, title: "الحلقة الثامنة: الخطبة وعقد الزواج والطلاق", youtubeId: "uycvPX_kwi0", unit: "التربية الأسرية", subUnit: "حلقات مراجعة", duration: "56:37" },
+
+                // ====== التربية الاقتصادية والمالية ======
+                { id: 79, title: "نظام المال في الإسلام", youtubeId: "6P4bO7u1_SQ", unit: "التربية الاقتصادية", subUnit: "الدروس", duration: "00:38:00" },
+                { id: 80, title: "قيود الملكية (الفردية - الجماعية)", youtubeId: "cYZx2L0LZQ4", unit: "التربية الاقتصادية", subUnit: "الدروس", duration: "00:34:00" },
+                { id: 81, title: "الحلقة التاسعة: نظام المال في الإسلام", youtubeId: "Z3hGmxB469w", unit: "التربية الاقتصادية", subUnit: "حلقات مراجعة", duration: "37:18" },
+                { id: 82, title: "الحلقة العاشرة: قيود الملكية", youtubeId: "PhA1Yv7sGKk", unit: "التربية الاقتصادية", subUnit: "حلقات مراجعة", duration: "28:27" },
+
+                // ====== العلاقات الدولية ======
+                { id: 83, title: "أسس العلاقات الدولية في الإسلام", youtubeId: "iEmuxfIY5BA", unit: "العلاقات الدولية", subUnit: "الدروس", duration: "00:29:00" },
+                { id: 84, title: "الجهاد في الإسلام", youtubeId: "AlFA7PRjLHI", unit: "العلاقات الدولية", subUnit: "الدروس", duration: "00:31:00" },
+                { id: 85, title: "من آداب الجهاد وأحكامه", youtubeId: "mqdQ3AtSK2A", unit: "العلاقات الدولية", subUnit: "الدروس", duration: "00:27:00" },
+                { id: 86, title: "الحلقة الحادية عشرة: وحدة العلاقات الدولية", youtubeId: "yeAEnIzzeYg", unit: "العلاقات الدولية", subUnit: "حلقات مراجعة", duration: "30:45" },
+
+                // ====== السيرة النبوية والأعلام ======
+                { id: 87, title: "هدي النبي في القيادة", youtubeId: "39n_QNvCk5g", unit: "السيرة والأعلام", subUnit: "الدروس", duration: "00:26:00" },
+                { id: 88, title: "أم سليم بنت ملحان", youtubeId: "c24-PQIkpxA", unit: "السيرة والأعلام", subUnit: "الدروس", duration: "00:20:00" },
+                { id: 89, title: "الإمام جعفر الصادق", youtubeId: "o94iDYO1__w", unit: "السيرة والأعلام", subUnit: "الدروس", duration: "00:22:00" },
+                { id: 90, title: "الحلقة الثانية عشرة: وحدة السيرة والأعلام", youtubeId: "TczfaoPqnzE", unit: "السيرة والأعلام", subUnit: "حلقات مراجعة", duration: "34:26" },
+
+                // ====== حفظ الآيات (مقاطع قصيرة) ======
+                { id: 91, title: "سورة البقرة 282-283 (صيانة الحقوق)", youtubeId: "t80c_Uw7qOs?start=7001&end=7175", unit: "حفظ الآيات", subUnit: "البقرة", duration: "00:02:54" },
+                { id: 92, title: "سورة البقرة 284-286 (إيمان ودعاء)", youtubeId: "t80c_Uw7qOs?start=7171&end=7304", unit: "حفظ الآيات", subUnit: "البقرة", duration: "00:02:13" },
+                { id: 93, title: "سورة فاطر 27-32", youtubeId: "LLIKI0Kol0k?start=505&end=644", unit: "حفظ الآيات", subUnit: "فاطر", duration: "00:02:19" },
+                { id: 94, title: "سورة الرعد 8-14", youtubeId: "CySYtDE9Gbo?start=191&end=328", unit: "حفظ الآيات", subUnit: "الرعد", duration: "00:02:17" },
+                { id: 95, title: "حديث ص52 (بيعة صادقة)", youtubeId: "BbhlZn8G1KE", unit: "حفظ الآيات", subUnit: "الأحاديث", duration: "00:02:00" },
+                { id: 96, title: "حديث ص57 (الإيمان قوة وعمل)", youtubeId: "06qq2F_1zDA", unit: "حفظ الآيات", subUnit: "الأحاديث", duration: "00:02:00" },
+                { id: 97, title: "حديث ص61 (حكم القاضي)", youtubeId: "52uPfb14Q84", unit: "حفظ الآيات", subUnit: "الأحاديث", duration: "00:02:00" },
+                { id: 98, title: "حديث ص65 (مكانة الشهيد)", youtubeId: "cq7Ajsp-_dc", unit: "حفظ الآيات", subUnit: "الأحاديث", duration: "00:02:00" },
+                { id: 99, title: "حديث ص69 (عموم المسؤولية)", youtubeId: "W8iZTgupnQs", unit: "حفظ الآيات", subUnit: "الأحاديث", duration: "00:02:00" },
+                { id: 100, title: "حديث ص73 (توجيه نبوي)", youtubeId: "aRgy2QailSo", unit: "حفظ الآيات", subUnit: "الأحاديث", duration: "00:02:00" }
+            ];
+
+            // ترتيب حسب الوحدة والفئة
+            const videos = lessonsData;
+
+            // إجمالي الدروس
+            const totalLessons = videos.length;
+
+            // المتغيرات العامة
+            let currentVideoIndex = 0;  // آخر فيديو تم اختياره
+            let watchedLessons = JSON.parse(localStorage.getItem('deen_watched')) || [];
+            // التأكد من أن watchedLessons تحتوي على أرقام صحيحة فقط
+            watchedLessons = watchedLessons.filter(id => videos.some(v => v.id === id));
+
+            // عناصر DOM
+            const player = document.getElementById('youtube-player');
+            const currentTitle = document.getElementById('current-video-title');
+            const currentUnitSpan = document.getElementById('current-unit');
+            const currentDurationSpan = document.getElementById('current-duration');
+            const unitsContainer = document.getElementById('units-container');
+
+            // حفظ آخر فيديو
+            function saveLastWatched(id) {
+                localStorage.setItem('deen_last', id);
+            }
+            function loadLastWatched() {
+                const last = localStorage.getItem('deen_last');
+                if (last !== null) {
+                    const idx = videos.findIndex(v => v.id == last);
+                    if (idx >= 0) currentVideoIndex = idx;
+                }
+            }
+
+            // تحديث مشغل الفيديو
+            function setVideoByIndex(index) {
+                const v = videos[index];
+                if (!v) return;
+                currentVideoIndex = index;
+                // دعم الروابط التي تحتوي على start,end
+                let baseUrl = `https://www.youtube.com/embed/${v.youtubeId}`;
+                if (v.youtubeId.includes('?start=')) {
+                    // إذا كان الرابط يحتوي بالفعل على معلمات
+                    baseUrl = `https://www.youtube.com/embed/${v.youtubeId}`;
+                } else {
+                    baseUrl = `https://www.youtube.com/embed/${v.youtubeId}`;
+                }
+                player.src = baseUrl;
+                currentTitle.innerText = v.title;
+                currentUnitSpan.innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
+                currentDurationSpan.innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
+                saveLastWatched(v.id);
+            }
+
+            // دوال الحفظ والاسترجاع
+            function saveWatched() {
+                localStorage.setItem('deen_watched', JSON.stringify(watchedLessons));
+            }
+
+            function isWatched(id) {
+                return watchedLessons.includes(id);
+            }
+
+            function toggleWatched(id) {
+                if (isWatched(id)) {
+                    watchedLessons = watchedLessons.filter(w => w !== id);
+                } else {
+                    watchedLessons.push(id);
+                }
+                saveWatched();
+                updateAllStats();
+                renderUnits(); // إعادة رسم القوائم لتحديث الأيقونات
+            }
+
+            // حساب الإحصائيات
+            function calcStats() {
+                const watchedCount = watchedLessons.length;
+                const remaining = totalLessons - watchedCount;
+                const percent = totalLessons ? Math.round((watchedCount / totalLessons) * 100) : 0;
+                // حساب الساعات (تحويل hh:mm:ss إلى ثواني ثم ساعات)
+                let totalSeconds = 0;
+                videos.forEach(v => {
+                    if (watchedLessons.includes(v.id)) {
+                        const parts = v.duration.split(':');
+                        if (parts.length === 3) {
+                            totalSeconds += parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+                        } else if (parts.length === 2) {
+                            totalSeconds += parseInt(parts[0]) * 60 + parseInt(parts[1]);
+                        }
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                return { watchedCount, remaining, percent, hours };
+            }
+
+            // تحديث واجهة التقدم والشارات
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours } = calcStats();
+                document.getElementById('watched-count').innerText = watchedCount;
+                document.getElementById('remaining-count').innerText = remaining;
+                document.getElementById('completion-percent').innerText = percent + '%';
+                document.getElementById('total-hours').innerText = hours;
+                document.getElementById('overall-percent').innerText = percent + '%';
+                document.getElementById('overall-progress').style.width = percent + '%';
+                document.getElementById('total-lessons-count').innerText = totalLessons;
+
+                // الشارات
+                const badge5 = document.getElementById('badge5');
+                const badge25 = document.getElementById('badge25');
+                const badge50 = document.getElementById('badge50');
+                const badge100 = document.getElementById('badge100');
+                if (badge5) badge5.classList.toggle('achieved', watchedCount >= 5);
+                if (badge25) badge25.classList.toggle('achieved', watchedCount >= 25);
+                if (badge50) badge50.classList.toggle('achieved', watchedCount >= 50);
+                if (badge100) badge100.classList.toggle('achieved', watchedCount >= 100);
+
+                // تقدم الوحدات
+                const units = [...new Set(videos.map(v => v.unit))];
+                let html = '';
+                units.forEach(u => {
+                    const unitVideos = videos.filter(v => v.unit === u);
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => watchedLessons.includes(v.id)).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+                    html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${u}</span><span>${watchedU}/${totalU}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${percU}%;"></div></div></div>`;
+                });
+                document.getElementById('unit-progress-list').innerHTML = html;
+
+                // آخر درس مشاهد
+                const lastId = localStorage.getItem('deen_last');
+                if (lastId) {
+                    const lastVid = videos.find(v => v.id == lastId);
+                    if (lastVid) document.getElementById('last-watched').innerText = lastVid.title;
+                }
+            }
+
+            // بناء الوحدات في الصفحة الرئيسية
+            function renderUnits() {
+                const units = [...new Set(videos.map(v => v.unit))];
+                let htmlAll = '';
+                units.forEach(unit => {
+                    const unitVideos = videos.filter(v => v.unit === unit);
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => watchedLessons.includes(v.id)).length;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            lessonsHtml += `
+                                <li class="lesson-item" data-id="${v.id}">
+                                    <div class="lesson-watch ${isWatched(v.id) ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${isWatched(v.id) ? 1 : 0};"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title">${sub}</div>
+                                <ul class="lesson-list">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unit}</span>
+                                <span class="unit-progress">${watchedU}/${totalU}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                        </div>
+                    `;
+                });
+                unitsContainer.innerHTML = htmlAll;
+
+                // إضافة event listeners للدوائر وعناصر الدروس
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(el.dataset.id);
+                        toggleWatched(id);
+                        // تحديث شكل الدائرة
+                        el.classList.toggle('watched');
+                        const icon = el.querySelector('i');
+                        if (icon) icon.style.opacity = isWatched(id) ? 1 : 0;
+                        // تحديث عداد الوحدة
+                        const unitCard = el.closest('.unit-card');
+                        if (unitCard) {
+                            const unitTitle = unitCard.querySelector('.unit-title').innerText;
+                            const unitVids = videos.filter(v => v.unit === unitTitle);
+                            const w = unitVids.filter(v => watchedLessons.includes(v.id)).length;
+                            unitCard.querySelector('.unit-progress').innerText = `${w}/${unitVids.length}`;
+                        }
+                    });
+                });
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = parseInt(el.dataset.id);
+                        const index = videos.findIndex(v => v.id === id);
+                        if (index !== -1) {
+                            setVideoByIndex(index);
+                        }
+                    });
+                });
+            }
+
+            // دالة طي الوحدة (تُستدعى من onclick)
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                }
+            };
+
+            // تحديث عداد الامتحان والخطة اليومية
+            function updateExamCountdown() {
+                const examDate = new Date('2026-06-21T00:00:00');
+                const today = new Date();
+                const diffTime = examDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const daysLeft = diffDays > 0 ? diffDays : 0;
+                document.getElementById('countdown-days').innerText = daysLeft;
+                document.getElementById('countdown-large').innerText = daysLeft;
+
+                const remaining = totalLessons - watchedLessons.length;
+                const days = daysLeft || 1;
+                const perDay = Math.ceil(remaining / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} درس/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} درس يومياً`;
+            }
+
+            // التبديل بين الصفحات
+            function initTabs() {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                    });
+                });
+            }
+
+            // تهيئة
+            function init() {
+                loadLastWatched();
+                setVideoByIndex(currentVideoIndex);
+                renderUnits();
+                updateAllStats();
+                updateExamCountdown();
+                initTabs();
+
+                // تحديث العداد كل دقيقة
+                setInterval(() => {
+                    updateExamCountdown();
+                }, 60000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

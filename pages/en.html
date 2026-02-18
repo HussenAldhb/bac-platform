@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🇬🇧 منصة الإنجليزية - البكالوريا</title>
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1120 0%, #1a2639 100%);
+            color: #e2e8f0;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+
+        /* شريط التنقل السفلي - زجاجي أحمر */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 2px solid #ef4444;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(239, 68, 68, 0.3);
+            z-index: 1000;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            background: #ef4444;
+            color: #0f172a;
+            font-weight: 600;
+            box-shadow: 0 0 15px #ef4444;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* الهيدر - زجاجي أحمر */
+        .header-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #ef4444;
+            box-shadow: 0 15px 25px -10px #ef444466;
+            margin-bottom: 20px;
+        }
+
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .subject-icon {
+            background: #ef4444;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0f172a;
+            box-shadow: 0 0 15px #ef4444;
+        }
+
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subject-name p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .exam-timer {
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ef4444;
+            margin-top: 15px;
+        }
+
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ef4444;
+            direction: ltr;
+        }
+
+        .daily-plan {
+            font-size: 15px;
+            background: #ef4444;
+            color: #0f172a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .progress-section {
+            margin-top: 16px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+            background: #334155;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #ef4444;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ef4444;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+
+        /* مشغل الفيديو - زجاجي أحمر */
+        .video-player-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #ef4444;
+            margin-bottom: 20px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0f172a;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+
+        /* الوحدات - زجاجية حمراء */
+        .units-container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #ef4444;
+            margin-bottom: 25px;
+        }
+
+        .unit-card {
+            background: #0f172a;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #ef4444;
+            overflow: hidden;
+        }
+
+        .unit-header {
+            background: #1e293b;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #ef4444;
+        }
+
+        .unit-header i {
+            font-size: 24px;
+            color: #ef4444;
+            transition: 0.2s;
+        }
+
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .unit-progress {
+            background: #334155;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+
+        .sub-units {
+            padding: 12px;
+        }
+
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ef4444;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #ef4444;
+        }
+
+        .lesson-list {
+            list-style: none;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1e293b;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .lesson-item:hover {
+            border-color: #ef4444;
+        }
+
+        .lesson-item.active {
+            border-color: #ef4444;
+            background: #2d3748;
+            box-shadow: 0 0 10px #ef4444;
+        }
+
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #ef4444;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .lesson-watch.watched {
+            background: #ef4444;
+            color: #0f172a;
+        }
+
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .lesson-duration {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+
+        /* صفحات التقدم والمؤقت والملف - زجاجية حمراء */
+        .progress-panel, .timer-panel, .profile-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #ef4444;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #0f172a;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #ef4444;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ef4444;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .badge {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+
+        .badge.achieved {
+            border-color: #ef4444;
+            background: #ef4444;
+            color: #0f172a;
+            opacity: 1;
+        }
+
+        .badge i {
+            font-size: 26px;
+        }
+
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ef4444;
+            text-align: center;
+            direction: ltr;
+        }
+
+        .plan-box {
+            background: #0f172a;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #ef4444;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        hr {
+            border: 0.5px solid #334155;
+            margin: 20px 0;
+        }
+
+        .small-note {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+        <!-- الهيدر الثابت -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-language"></i></div>
+                <div class="subject-name">
+                    <h1>English البكالوريا</h1>
+                    <p>منصة تفاعلية - منهاج سوريا</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 9/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحات -->
+        <div id="page-home" class="page active">
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/e5RdDqcdupk" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">Subject Pronouns</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> أساسيات / ضمائر</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 00:07:00</span>
+                </div>
+            </div>
+            <div class="units-container" id="units-container"></div>
+        </div>
+
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:#ef4444;"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number" id="watched-count">0</div><div class="stat-label">فيديو مُشاهَد</div></div>
+                    <div class="stat-card"><div class="stat-number" id="total-hours">0</div><div class="stat-label">ساعة مشاهدة</div></div>
+                    <div class="stat-card"><div class="stat-number" id="remaining-count">62</div><div class="stat-label">فيديو متبقي</div></div>
+                    <div class="stat-card"><div class="stat-number" id="completion-percent">0%</div><div class="stat-label">إنجاز</div></div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                <div class="badge-container" id="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 فيديوهات</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 فيديو</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 فيديو</div>
+                    <div class="badge" id="badge62"><i class="fas fa-dragon"></i> 62 فيديو</div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-chart-pie"></i> تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 فيديو / يوم</div>
+                    <p class="small-note">لمشاهدة جميع الفيديوهات المتبقية قبل الامتحان</p>
+                </div>
+                <div style="background: #0f172a; border-radius: 24px; padding: 16px; margin-top: 20px;">
+                    <p><i class="fas fa-info-circle" style="color:#ef4444;"></i> الامتحان يوم 9 حزيران 2026. واصل بنشاط!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#ef4444; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px; color:#0f172a; box-shadow:0 0 15px #ef4444;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>طالب بكالوريا</h3>
+                        <p class="small-note">إنجليزي - علمي / أدبي</p>
+                    </div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle" style="color:#ef4444;"></i> آخر فيديو تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
+                <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: 62</div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- بيانات الفيديوهات (62 فيديو) ----------
+            const rawVideos = [
+                // أساسيات وقواعد (26)
+                { unit: 'أساسيات وقواعد', subUnit: 'ضمائر', title: 'Subject Pronouns', videoId: 'e5RdDqcdupk', duration: 7 },
+                { unit: 'أساسيات وقواعد', subUnit: 'ضمائر', title: 'Possessive Adjectives', videoId: '_K1TUvT_hSk', duration: 5 },
+                { unit: 'أساسيات وقواعد', subUnit: 'ضمائر', title: 'Possessive Pronouns', videoId: 'Ggz6YECHeXk', duration: 4 },
+                { unit: 'أساسيات وقواعد', subUnit: 'ضمائر', title: 'Object Pronouns', videoId: '8yLZ55Zj1l4', duration: 4 },
+                { unit: 'أساسيات وقواعد', subUnit: 'ضمائر', title: 'Reflexive Pronouns', videoId: 'HaPIm6c4xkE', duration: 4 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أفعال مساعدة', title: 'Auxiliary Verbs', videoId: 'tnqsjJky6ug', duration: 18 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أفعال شاذة', title: 'Irregular Verbs', videoId: 'qmSEyBOGymY', duration: 35 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أزمنة', title: 'Present Simple', videoId: 'lUiwN8Vl73M', duration: 20 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أزمنة', title: 'Present Continuous', videoId: 'yigNKXtNbuI', duration: 12 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أزمنة', title: 'Past Simple', videoId: 'ov5LawQIdx4', duration: 9 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أزمنة', title: 'Past Continuous', videoId: 'vZxMtqPaDOI', duration: 9 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أزمنة', title: 'Present Perfect', videoId: 'GFdw29I2gyM', duration: 31 },
+                { unit: 'أساسيات وقواعد', subUnit: 'أزمنة', title: 'Present Perfect Continuous', videoId: 'tHG7vWHjoLc', duration: 28 },
+                { unit: 'أساسيات وقواعد', subUnit: 'مستقبل', title: 'Will & Going to', videoId: 'IdRKx4Q1Rig', duration: 7 },
+                { unit: 'أساسيات وقواعد', subUnit: 'مستقبل', title: 'Future Forms', videoId: 'rZr1dmL9fHc', duration: 10 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Question Formation', videoId: 'OQCf57rl8Bk', duration: 21 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Question Tags', videoId: '5GXj0QP0CIc', duration: 8 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Reported Questions', videoId: 'k9HQ4KI6N7E', duration: 12 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Reported Speech', videoId: 'd1v0Yp1SzYA', duration: 13 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Imperative', videoId: 'xElMAnNJ-Ts', duration: 3 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Determiners', videoId: 'Qv6BF2shdmM', duration: 17 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Comparative & Superlative', videoId: '3aVERP2y_dg', duration: 10 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Passive Voice', videoId: 'pOa-ddCKusE', duration: 14 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Relative Pronouns', videoId: 'yWMu0yfJQd4', duration: 9 },
+                { unit: 'أساسيات وقواعد', subUnit: 'شرطية', title: 'Conditionals Type 2 & 3', videoId: 'nSUPApTo9kU', duration: 15 },
+                { unit: 'أساسيات وقواعد', subUnit: 'قواعد', title: 'Modals', videoId: 'wu_1w4dzcME', duration: 8 },
+                // Unit 1 Life Choices (8)
+                { unit: 'Unit 1 Life Choices', subUnit: 'قراءة', title: 'Reading SB - Future Careers', videoId: 'sXlyxNPKD-Y', duration: 25 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'قراءة', title: 'Reading AB - Learned Lesson', videoId: '0OJImEtQ_kg', duration: 20 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'مفردات', title: 'Vocabulary - Phrasal Verbs', videoId: 'i2NxrGGDc2o', duration: 18 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'صوتيات', title: 'Pronunciation - Homophones', videoId: 'MRoTlWD3v2E', duration: 15 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'قواعد', title: 'Grammar - Tenses Revision', videoId: '6MG-antR3fE', duration: 22 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'محادثة', title: 'Everyday English - Giving Advice', videoId: 'P6iB8b4rLtU', duration: 12 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'استماع', title: 'Listening', videoId: 't_Le5LuNbsA', duration: 10 },
+                { unit: 'Unit 1 Life Choices', subUnit: 'كتابة', title: 'Writing', videoId: 'b--HtiJqskI', duration: 14 },
+                // Unit 2 Success (8)
+                { unit: 'Unit 2 Success', subUnit: 'قراءة', title: 'Reading SB', videoId: '4hEQI60hGlY', duration: 22 },
+                { unit: 'Unit 2 Success', subUnit: 'قراءة', title: 'Reading AB', videoId: 'fJGN2FiyVGE', duration: 18 },
+                { unit: 'Unit 2 Success', subUnit: 'مفردات', title: 'Vocabulary - Success Idioms', videoId: 'Y8if3RQFm-4', duration: 16 },
+                { unit: 'Unit 2 Success', subUnit: 'صوتيات', title: 'Pronunciation -ed', videoId: '_ouq5Skwe54', duration: 10 },
+                { unit: 'Unit 2 Success', subUnit: 'قواعد', title: 'Grammar - Past Tenses', videoId: 'gzU_h7xYL8M', duration: 20 },
+                { unit: 'Unit 2 Success', subUnit: 'محادثة', title: 'Everyday English - Congratulating', videoId: 'pFzHZvm-vbY', duration: 12 },
+                { unit: 'Unit 2 Success', subUnit: 'استماع', title: 'Listening', videoId: 'Z2KIv0P5nGM', duration: 8 },
+                { unit: 'Unit 2 Success', subUnit: 'كتابة', title: 'Writing', videoId: 'SsEnNJCXJBs', duration: 15 },
+                // Unit 3 Medicine (8)
+                { unit: 'Unit 3 Medicine', subUnit: 'قراءة', title: 'Reading SB - History of Medicine', videoId: 'ympkwTPUqws', duration: 24 },
+                { unit: 'Unit 3 Medicine', subUnit: 'قراءة', title: 'Reading AB - Inventions', videoId: 'XwDf1WhFdqs', duration: 20 },
+                { unit: 'Unit 3 Medicine', subUnit: 'مفردات', title: 'Medical Words & Idioms', videoId: 'TZoGPnG3jro', duration: 18 },
+                { unit: 'Unit 3 Medicine', subUnit: 'صوتيات', title: 'Emphatic Stress', videoId: 'ZSzxxGQOWPU', duration: 12 },
+                { unit: 'Unit 3 Medicine', subUnit: 'قواعد', title: 'Passive Voice', videoId: 'npKhZD8wPpY', duration: 22 },
+                { unit: 'Unit 3 Medicine', subUnit: 'محادثة', title: 'Asking for Information', videoId: 'Vf8S20OAZUw', duration: 14 },
+                { unit: 'Unit 3 Medicine', subUnit: 'استماع', title: 'Listening', videoId: 'ZcdXJp2u40w', duration: 9 },
+                { unit: 'Unit 3 Medicine', subUnit: 'كتابة', title: 'Writing', videoId: 'wAyNu2xJOBQ', duration: 13 },
+                // Unit 4 Engineering (8)
+                { unit: 'Unit 4 Engineering', subUnit: 'قراءة', title: 'Reading SB - History of Engineering', videoId: 'JE1NO1ZMt6k', duration: 26 },
+                { unit: 'Unit 4 Engineering', subUnit: 'قراءة', title: 'Reading AB - Medical Technology', videoId: 'Q0GvPc5wcWE', duration: 19 },
+                { unit: 'Unit 4 Engineering', subUnit: 'مفردات', title: 'Phrasal Verbs & Prepositions', videoId: '7pNgi43TdAU', duration: 17 },
+                { unit: 'Unit 4 Engineering', subUnit: 'صوتيات', title: 'Elision', videoId: 'vXeOFIBFXQM', duration: 11 },
+                { unit: 'Unit 4 Engineering', subUnit: 'قواعد', title: 'Causative', videoId: '4AFzplsmk0k', duration: 21 },
+                { unit: 'Unit 4 Engineering', subUnit: 'محادثة', title: 'Hesitation & Uncertainty', videoId: 'TUtkyNHiOjs', duration: 13 },
+                { unit: 'Unit 4 Engineering', subUnit: 'استماع', title: 'Listening', videoId: 'S1rMBUL-1_g', duration: 10 },
+                { unit: 'Unit 4 Engineering', subUnit: 'كتابة', title: 'Writing', videoId: 'iIyCsMTnV44', duration: 14 },
+                // Unit 5 Civil Rights (8)
+                { unit: 'Unit 5 Civil Rights', subUnit: 'قراءة', title: 'Reading SB', videoId: 'U7gWPFVPF3I', duration: 23 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'قراءة', title: 'Reading AB', videoId: 'zGsi0A2wTO0', duration: 18 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'مفردات', title: 'Law Idioms', videoId: 'UzflQy8UzLc', duration: 15 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'صوتيات', title: 'Voiced/Voiceless', videoId: '5WaSrpJm7kE', duration: 9 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'قواعد', title: 'Relative Clauses', videoId: 'ONz8N-oEZZs', duration: 20 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'محادثة', title: 'Complaints & Apologies', videoId: '3kb-kRub8yA', duration: 12 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'استماع', title: 'Listening', videoId: 'okMHMkqnPbM', duration: 8 },
+                { unit: 'Unit 5 Civil Rights', subUnit: 'كتابة', title: 'Writing', videoId: '0XqdLSmOA64', duration: 13 },
+                // Unit 6 United Nations (8)
+                { unit: 'Unit 6 United Nations', subUnit: 'قراءة', title: 'Reading SB', videoId: 'RJM3hrrHmgI', duration: 21 },
+                { unit: 'Unit 6 United Nations', subUnit: 'قراءة', title: 'Reading AB', videoId: 'Gyt-FwAWpCk', duration: 17 },
+                { unit: 'Unit 6 United Nations', subUnit: 'مفردات', title: 'Prefixes', videoId: 'c-bYRZD1eGM', duration: 14 },
+                { unit: 'Unit 6 United Nations', subUnit: 'صوتيات', title: 'Word Stress', videoId: 'VckTP9UrDRg', duration: 10 },
+                { unit: 'Unit 6 United Nations', subUnit: 'قواعد', title: 'Future Forms', videoId: 'Joaoy3x0vfM', duration: 22 },
+                { unit: 'Unit 6 United Nations', subUnit: 'محادثة', title: 'Modesty', videoId: 'NmvtQVTnFIY', duration: 11 },
+                { unit: 'Unit 6 United Nations', subUnit: 'استماع', title: 'Listening', videoId: 'Kf_ntoNAosE', duration: 9 },
+                { unit: 'Unit 6 United Nations', subUnit: 'كتابة', title: 'Writing', videoId: '3s1lmVeWXJE', duration: 12 },
+                // Unit 7 Microorganisms (8)
+                { unit: 'Unit 7 Microorganisms', subUnit: 'قراءة', title: 'Reading SB', videoId: 'ZHyw95zdPaY', duration: 24 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'قراءة', title: 'Reading AB', videoId: '9ebuPPIf8XM', duration: 19 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'مفردات', title: 'Collocations', videoId: 'F8YXjccPaY8', duration: 16 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'صوتيات', title: 'Silent Letters', videoId: 'IGf7PVE_u80', duration: 12 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'قواعد', title: 'Conditionals II & III', videoId: '6-Lml1qCUT4', duration: 21 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'محادثة', title: 'On the Phone', videoId: '0aHYztuy4QQ', duration: 13 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'استماع', title: 'Listening', videoId: '0UwsOCA66wA', duration: 10 },
+                { unit: 'Unit 7 Microorganisms', subUnit: 'كتابة', title: 'Writing', videoId: 'utzaPysgk78', duration: 14 },
+                // Unit 8 Human Body (8)
+                { unit: 'Unit 8 Human Body', subUnit: 'قراءة', title: 'Reading SB', videoId: '-ITSTxkE730', duration: 22 },
+                { unit: 'Unit 8 Human Body', subUnit: 'قراءة', title: 'Reading AB', videoId: 'Gto0Jq9xiNk', duration: 18 },
+                { unit: 'Unit 8 Human Body', subUnit: 'مفردات', title: 'Body Idioms', videoId: '1hj5UcbOZrs', duration: 15 },
+                { unit: 'Unit 8 Human Body', subUnit: 'صوتيات', title: 'Syllable Stress', videoId: 'G8hf5sDuBrU', duration: 11 },
+                { unit: 'Unit 8 Human Body', subUnit: 'قواعد', title: 'Expressing Wishes', videoId: 'D6mNZaQgGu0', duration: 20 },
+                { unit: 'Unit 8 Human Body', subUnit: 'محادثة', title: 'Asking for Help', videoId: 'bWV8Xvm24ls', duration: 12 },
+                { unit: 'Unit 8 Human Body', subUnit: 'استماع', title: 'Listening', videoId: '3UjlsHrrpVw', duration: 9 },
+                { unit: 'Unit 8 Human Body', subUnit: 'كتابة', title: 'Writing', videoId: 'Vr0TvYWZeqs', duration: 13 },
+                // Unit 9 Citizenship (8)
+                { unit: 'Unit 9 Citizenship', subUnit: 'قراءة', title: 'Reading SB', videoId: 'nS_zdhYWcYI', duration: 21 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'قراءة', title: 'Reading AB', videoId: 'vzjhr0JlTEw', duration: 17 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'مفردات', title: 'Word Family', videoId: 'HcSxmUX4qs0', duration: 14 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'صوتيات', title: 'Homographs', videoId: 'h2vc8tPBxNk', duration: 10 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'قواعد', title: 'Paired Conjunctions', videoId: 'tFZ-W_MLENc', duration: 19 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'محادثة', title: 'Accepting/Declining Offers', videoId: 'hHjxA77Hphc', duration: 12 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'استماع', title: 'Listening', videoId: 'uQTX_ZnzLrk', duration: 8 },
+                { unit: 'Unit 9 Citizenship', subUnit: 'كتابة', title: 'Writing', videoId: 'CuFc6AB04ho', duration: 13 },
+                // Unit 10 Culture Shock (8)
+                { unit: 'Unit 10 Culture Shock', subUnit: 'قراءة', title: 'Reading SB', videoId: 'rgCRbAUWQLY', duration: 22 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'قراءة', title: 'Reading AB', videoId: 'GhuGOmhccNY', duration: 18 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'مفردات', title: 'Idioms', videoId: 'wjb3pUuO-jY', duration: 15 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'صوتيات', title: 'Question Intonation', videoId: '99BQxNSsI-c', duration: 11 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'قواعد', title: 'Modals (Obligation)', videoId: 'dPArKWIxAhE', duration: 20 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'محادثة', title: 'Expressing Surprise', videoId: 'sPtk47vDoPo', duration: 12 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'استماع', title: 'Listening', videoId: 'pe_IBjMn0fw', duration: 9 },
+                { unit: 'Unit 10 Culture Shock', subUnit: 'كتابة', title: 'Writing', videoId: 'vLEQWytMIMQ', duration: 13 },
+                // Unit 11 Artificial Intelligence (8)
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'قراءة', title: 'Reading SB', videoId: 'oWSI9ONfI8M', duration: 23 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'قراءة', title: 'Reading AB', videoId: '5iXRDqZtK54', duration: 19 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'مفردات', title: 'Science Verbs', videoId: 'bbze3U43oKQ', duration: 16 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'صوتيات', title: 'Strong/Weak Forms', videoId: 'RzqnnoJJJUc', duration: 12 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'قواعد', title: 'Reported Speech', videoId: '0sR70Jgi4L8', duration: 21 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'محادثة', title: 'Being Tactful', videoId: 'rJ3Nl3JT_hM', duration: 13 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'استماع', title: 'Listening', videoId: 'dzoqf9oK29o', duration: 10 },
+                { unit: 'Unit 11 Artificial Intelligence', subUnit: 'كتابة', title: 'Writing', videoId: 'g9PkBxtLNiE', duration: 14 },
+                // Unit 12 Digital Literacy (8)
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'قراءة', title: 'Reading SB', videoId: 'pt8DnIGXWr8', duration: 22 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'قراءة', title: 'Reading AB', videoId: 'guXAt8bSFxk', duration: 18 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'مفردات', title: 'Phrasal Verbs', videoId: 'ro5rVm8As1E', duration: 15 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'صوتيات', title: 'Sound Linking', videoId: 'VPp-VdgGSRE', duration: 11 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'قواعد', title: 'Inversion', videoId: '7RDndmUYvv4', duration: 20 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'محادثة', title: 'Asking for Permission', videoId: 'yfjIDeP-kUs', duration: 12 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'استماع', title: 'Listening', videoId: '8GlFveQLarQ', duration: 9 },
+                { unit: 'Unit 12 Digital Literacy', subUnit: 'كتابة', title: 'Writing', videoId: '6yoVb2I5ED4', duration: 13 },
+                // تحريري (6)
+                { unit: 'تحريري', subUnit: 'قواعد', title: 'الأزمنة تحريري', videoId: '5XGdOqJK_cA', duration: 18 },
+                { unit: 'تحريري', subUnit: 'قواعد', title: 'المبني للمجهول تحريري', videoId: 'aUPf56v0dEg', duration: 30 },
+                { unit: 'تحريري', subUnit: 'قواعد', title: 'دليلك الشامل لفراغات الذاكرة', videoId: 'L92bJgSwssY', duration: 70 },
+                { unit: 'تحريري', subUnit: 'قواعد', title: 'صناعة السؤال', videoId: 'L92bJgSwssY', duration: 45 },
+                { unit: 'تحريري', subUnit: 'قواعد', title: 'قاعدة السببية', videoId: 'pBLx26YAKLg', duration: 26 },
+                { unit: 'تحريري', subUnit: 'قواعد', title: 'كيف تهكر سؤال اكمال الجمل', videoId: 'L92bJgSwssY', duration: 47 }
+            ];
+
+            // تحويل البيانات إلى كائنات مع id والمدة بصيغة hh:mm:ss
+            const videos = rawVideos.map((v, index) => {
+                const mins = v.duration;
+                const hours = Math.floor(mins / 60);
+                const minutes = mins % 60;
+                const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
+                return {
+                    id: index,
+                    title: v.title,
+                    youtubeId: v.videoId,
+                    unit: v.unit,
+                    subUnit: v.subUnit,
+                    duration: timeString,
+                    watched: false
+                };
+            });
+
+            // وحدات العرض (مرتبة يدوياً للحفاظ على الترتيب)
+            const units = [
+                { id: 'أساسيات وقواعد', name: '📘 أساسيات وقواعد', icon: 'book-open' },
+                { id: 'Unit 1 Life Choices', name: '📌 Unit 1: Life Choices', icon: 'leaf' },
+                { id: 'Unit 2 Success', name: '🏆 Unit 2: Success', icon: 'trophy' },
+                { id: 'Unit 3 Medicine', name: '💊 Unit 3: Medicine', icon: 'stethoscope' },
+                { id: 'Unit 4 Engineering', name: '⚙️ Unit 4: Engineering', icon: 'gears' },
+                { id: 'Unit 5 Civil Rights', name: '⚖️ Unit 5: Civil Rights', icon: 'gavel' },
+                { id: 'Unit 6 United Nations', name: '🌐 Unit 6: United Nations', icon: 'globe' },
+                { id: 'Unit 7 Microorganisms', name: '🦠 Unit 7: Microorganisms', icon: 'bacteria' },
+                { id: 'Unit 8 Human Body', name: '❤️ Unit 8: Human Body', icon: 'heart' },
+                { id: 'Unit 9 Citizenship', name: '👥 Unit 9: Citizenship', icon: 'users' },
+                { id: 'Unit 10 Culture Shock', name: '🏖️ Unit 10: Culture Shock', icon: 'umbrella-beach' },
+                { id: 'Unit 11 Artificial Intelligence', name: '🤖 Unit 11: AI', icon: 'robot' },
+                { id: 'Unit 12 Digital Literacy', name: '💻 Unit 12: Digital Literacy', icon: 'laptop' },
+                { id: 'تحريري', name: '✍️ تحريري - مهارات امتحانية', icon: 'pencil' }
+            ];
+
+            // المتغيرات العامة
+            let watchedVideos = JSON.parse(localStorage.getItem('engWatched')) || [];
+            let currentVideo = videos[0];
+
+            // دوال مساعدة
+            function saveWatched() {
+                localStorage.setItem('engWatched', JSON.stringify(watchedVideos));
+            }
+
+            function saveLastWatched(id) {
+                localStorage.setItem('engLast', id);
+            }
+
+            function loadLastWatched() {
+                const last = localStorage.getItem('engLast');
+                if (last !== null) {
+                    const idx = videos.findIndex(v => v.id == last);
+                    if (idx >= 0) currentVideo = videos[idx];
+                }
+            }
+
+            function setVideoByIndex(index) {
+                const v = videos[index];
+                if (!v) return;
+                currentVideo = v;
+                const player = document.getElementById('youtube-player');
+                if (player) player.src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                const titleEl = document.getElementById('current-video-title');
+                if (titleEl) titleEl.innerText = v.title;
+                const unitEl = document.getElementById('current-unit');
+                if (unitEl) unitEl.innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
+                const durationEl = document.getElementById('current-duration');
+                if (durationEl) durationEl.innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
+                const countEl = document.getElementById('videoCount');
+                if (countEl) countEl.innerText = `${index + 1}/${videos.length}`;
+                // تحديث التحديد البصري في القائمة
+                buildUnits();
+            }
+
+            // حساب الإحصائيات
+            function calcStats() {
+                const total = videos.length;
+                const watchedCount = watchedVideos.length;
+                const remaining = total - watchedCount;
+                const percent = total ? Math.round((watchedCount / total) * 100) : 0;
+                let totalSeconds = 0;
+                watchedVideos.forEach(id => {
+                    const v = videos.find(v => v.id === id);
+                    if (v) {
+                        const parts = v.duration.split(':');
+                        totalSeconds += parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                return { watchedCount, remaining, percent, hours };
+            }
+
+            // تحديث كل الإحصائيات والشارات
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours } = calcStats();
+                const watchedEl = document.getElementById('watched-count');
+                if (watchedEl) watchedEl.innerText = watchedCount;
+                const remainingEl = document.getElementById('remaining-count');
+                if (remainingEl) remainingEl.innerText = remaining;
+                const percentEl = document.getElementById('completion-percent');
+                if (percentEl) percentEl.innerText = percent + '%';
+                const hoursEl = document.getElementById('total-hours');
+                if (hoursEl) hoursEl.innerText = hours;
+                const overallPercentEl = document.getElementById('overall-percent');
+                if (overallPercentEl) overallPercentEl.innerText = percent + '%';
+                const progressFill = document.getElementById('overall-progress');
+                if (progressFill) progressFill.style.width = percent + '%';
+
+                // تحديث الشارات
+                const badge5 = document.getElementById('badge5');
+                const badge25 = document.getElementById('badge25');
+                const badge50 = document.getElementById('badge50');
+                const badge62 = document.getElementById('badge62');
+                if (badge5) badge5.classList.toggle('achieved', watchedCount >= 5);
+                if (badge25) badge25.classList.toggle('achieved', watchedCount >= 25);
+                if (badge50) badge50.classList.toggle('achieved', watchedCount >= 50);
+                if (badge62) badge62.classList.toggle('achieved', watchedCount >= 62);
+
+                // تقدم الوحدات في صفحة التقدم
+                const unitProgressDiv = document.getElementById('unit-progress-list');
+                if (unitProgressDiv) {
+                    let html = '';
+                    units.forEach(u => {
+                        const unitVids = videos.filter(v => v.unit === u.id);
+                        if (unitVids.length === 0) return;
+                        const watchedU = unitVids.filter(v => watchedVideos.includes(v.id)).length;
+                        const percU = Math.round((watchedU / unitVids.length) * 100) || 0;
+                        html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${u.name}</span><span>${watchedU}/${unitVids.length}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${percU}%;"></div></div></div>`;
+                    });
+                    unitProgressDiv.innerHTML = html;
+                }
+            }
+
+            // بناء الوحدات في الصفحة الرئيسية
+            function buildUnits() {
+                const container = document.getElementById('units-container');
+                if (!container) return;
+                let htmlAll = '';
+                units.forEach(unit => {
+                    const unitVideos = videos.filter(v => v.unit === unit.id);
+                    if (unitVideos.length === 0) return;
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const watchedU = unitVideos.filter(v => watchedVideos.includes(v.id)).length;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            const isWatched = watchedVideos.includes(v.id);
+                            const isActive = currentVideo?.id === v.id;
+                            lessonsHtml += `
+                                <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${v.id}">
+                                    <div class="lesson-watch ${isWatched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${isWatched ? 1 : 0};"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title">${sub}</div>
+                                <ul class="lesson-list">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unit.name}</span>
+                                <span class="unit-progress">${watchedU}/${unitVideos.length}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = htmlAll;
+
+                // إضافة event listeners للدوائر
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(el.dataset.id);
+                        if (watchedVideos.includes(id)) {
+                            watchedVideos = watchedVideos.filter(w => w !== id);
+                            el.classList.remove('watched');
+                            el.querySelector('i').style.opacity = 0;
+                        } else {
+                            watchedVideos.push(id);
+                            el.classList.add('watched');
+                            el.querySelector('i').style.opacity = 1;
+                        }
+                        saveWatched();
+                        updateAllStats();
+                        // تحديث عداد الوحدة
+                        const unitCard = el.closest('.unit-card');
+                        if (unitCard) {
+                            const unitName = unitCard.querySelector('.unit-title').innerText;
+                            const unitObj = units.find(u => u.name === unitName);
+                            if (unitObj) {
+                                const unitVids = videos.filter(v => v.unit === unitObj.id);
+                                const w = unitVids.filter(v => watchedVideos.includes(v.id)).length;
+                                const progressSpan = unitCard.querySelector('.unit-progress');
+                                if (progressSpan) progressSpan.innerText = `${w}/${unitVids.length}`;
+                            }
+                        }
+                    });
+                });
+
+                // إضافة event listeners لعناصر الدرس (للتشغيل)
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = parseInt(el.dataset.id);
+                        const index = videos.findIndex(v => v.id === id);
+                        if (index !== -1) {
+                            setVideoByIndex(index);
+                        }
+                    });
+                });
+            }
+
+            // دالة طي الوحدة - معرفة على النافذة لاستخدامها في onclick
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                }
+            };
+
+            // تحديث العد التنازلي
+            function updateCountdown() {
+                const exam = new Date('2026-06-09T00:00:00');
+                const now = new Date();
+                const diff = exam - now;
+                if (diff <= 0) {
+                    const cd = document.getElementById('countdown-days');
+                    if (cd) cd.innerText = '0';
+                    const cl = document.getElementById('countdown-large');
+                    if (cl) cl.innerText = '0';
+                    const dpt = document.getElementById('daily-plan-text');
+                    if (dpt) dpt.innerText = 'انتهى';
+                    const dpd = document.getElementById('daily-plan-detail');
+                    if (dpd) dpd.innerText = 'انتهى';
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const cd = document.getElementById('countdown-days');
+                if (cd) cd.innerText = days;
+                const cl = document.getElementById('countdown-large');
+                if (cl) cl.innerText = days;
+                const remaining = videos.length - watchedVideos.length;
+                const perDay = Math.ceil(remaining / days);
+                const dpt = document.getElementById('daily-plan-text');
+                if (dpt) dpt.innerText = `${perDay} فيديو/يوم`;
+                const dpd = document.getElementById('daily-plan-detail');
+                if (dpd) dpd.innerText = `${perDay} فيديو يومياً`;
+            }
+
+            // تحديث آخر فيديو في صفحة الملف
+            function updateLastWatched() {
+                const lastId = localStorage.getItem('engLast');
+                if (lastId) {
+                    const v = videos.find(v => v.id == lastId);
+                    if (v) {
+                        const lastSpan = document.getElementById('last-watched');
+                        if (lastSpan) lastSpan.innerText = v.title;
+                    }
+                }
+            }
+
+            // التنقل بين الصفحات
+            function initTabs() {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        const targetPage = document.getElementById(`page-${page}`);
+                        if (targetPage) targetPage.classList.add('active');
+                        if (page === 'progress') updateAllStats();
+                        if (page === 'profile') updateLastWatched();
+                    });
+                });
+            }
+
+            // تهيئة كل شيء
+            function init() {
+                // تحميل المحفوظات
+                const stored = localStorage.getItem('engWatched');
+                if (stored) watchedVideos = JSON.parse(stored);
+                loadLastWatched();
+                // تعيين الفيديو الحالي
+                const currentIndex = videos.findIndex(v => v.id === currentVideo.id);
+                setVideoByIndex(currentIndex);
+                // بناء الوحدات
+                buildUnits();
+                // تحديث الإحصائيات
+                updateAllStats();
+                // بدء العد التنازلي
+                updateCountdown();
+                updateLastWatched();
+                initTabs();
+
+                // تحديث العد التنازلي كل دقيقة
+                setInterval(updateCountdown, 60000);
+                // حفظ آخر فيديو كل 3 ثوانٍ
+                setInterval(() => {
+                    if (currentVideo) saveLastWatched(currentVideo.id);
+                }, 3000);
+            }
+
+            // بدء التشغيل
+            init();
+        })();
+    </script>
+</body>
+</html>

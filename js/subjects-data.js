@@ -1,0 +1,75 @@
+// بيانات المواد الثمانية
+const SUBJECTS = [
+    { 
+        id: 'chem', 
+        name: 'الكيمياء', 
+        icon: '🧪', 
+        file: 'pages/che.html', 
+        totalVideos: 57, 
+        color: '#6b21a5',
+        storageKey: 'chem_watched'
+    },
+    { 
+        id: 'phy', 
+        name: 'الفيزياء', 
+        icon: '⚛️', 
+        file: 'pages/phy.html', 
+        totalVideos: 129, 
+        color: '#0b4f6c',
+        storageKey: 'phys_watched'
+    },
+    { 
+        id: 'ar', 
+        name: 'العربية', 
+        icon: '📚', 
+        file: 'pages/ar.html', 
+        totalVideos: 75, 
+        color: '#2e7d32',
+        storageKey: 'arabic_watched'
+    },
+    { 
+        id: 'sci', 
+        name: 'العلوم', 
+        icon: '🔬', 
+        file: 'pages/sci.html', 
+        totalVideos: 133, 
+        color: '#b45309',
+        storageKey: 'sci_watched'
+    },
+    { 
+        id: 'isl', 
+        name: 'الديانة', 
+        icon: '🕌', 
+        file: 'pages/isl.html', 
+        totalVideos: 100, 
+        color: '#7b2c2c',
+        storageKey: 'deen_watched'
+    },
+    { 
+        id: 'en', 
+        name: 'الإنجليزية', 
+        icon: '🇬🇧', 
+        file: 'pages/en.html', 
+        totalVideos: 62, 
+        color: '#7e22ce',
+        storageKey: 'engWatched'
+    },
+    { 
+        id: 'fr', 
+        name: 'الفرنسية', 
+        icon: '🇫🇷', 
+        file: 'pages/fr.html', 
+        totalVideos: 150, 
+        color: '#1e3a8a',
+        storageKey: 'french_ultime_progress'
+    },
+    { 
+        id: 'math', 
+        name: 'الرياضيات', 
+        icon: '📐', 
+        file: 'pages/ma.html', 
+        totalVideos: 339, 
+        color: '#854d0e',
+        storageKey: 'mathWatched'
+    }
+];

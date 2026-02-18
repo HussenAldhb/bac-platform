@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🧪 كيمياء البكالوريا - المنصة التفاعلية</title>
+    <!-- Font Awesome 6 (مجاني) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Cairo / Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+        }
+        body {
+            background-color: #0f172a;  /* خلفية داكنة */
+            color: #e2e8f0;
+            padding: 16px 12px 80px 12px;
+            min-height: 100vh;
+        }
+        /* شريط التنقل السفلي الثابت */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            border-top: 2px solid #0ea5e9;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            transition: 0.2s;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            background: #0ea5e9;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        /* الحاويات */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .header-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 22px 18px;
+            border: 1px solid #0ea5e9;
+            box-shadow: 0 15px 25px -10px #0ea5e933;
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        .subject-icon {
+            background: #0ea5e9;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #0f172a;
+        }
+        .subject-name h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .subject-name p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .exam-timer {
+            background: #0f172a;
+            border-radius: 50px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #0ea5e9;
+            margin-top: 15px;
+        }
+        .timer-number {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0ea5e9;
+            direction: ltr;
+        }
+        .daily-plan {
+            font-size: 15px;
+            background: #0ea5e9;
+            color: #0f172a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .progress-section {
+            margin-top: 16px;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            background: #334155;
+            height: 18px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #0ea5e9;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #0ea5e9;
+            width: 0%;
+            border-radius: 30px;
+            transition: width 0.3s;
+        }
+        /* مشغل الفيديو */
+        .video-player-card {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 18px;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 20px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #0f172a;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-title {
+            margin: 12px 0 8px;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            padding-right: 6px;
+        }
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 0 6px;
+        }
+        /* الوحدات */
+        .units-container {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 16px;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 25px;
+        }
+        .unit-card {
+            background: #0f172a;
+            border-radius: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #0ea5e9;
+            overflow: hidden;
+        }
+        .unit-header {
+            background: #1e293b;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #0ea5e9;
+        }
+        .unit-header i {
+            font-size: 24px;
+            color: #0ea5e9;
+            transition: 0.2s;
+        }
+        .unit-header .unit-title {
+            font-size: 20px;
+            font-weight: 700;
+            flex: 1;
+        }
+        .unit-progress {
+            background: #334155;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: white;
+        }
+        .sub-units {
+            padding: 12px;
+        }
+        .sub-unit {
+            margin-bottom: 16px;
+        }
+        .sub-unit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0ea5e9;
+            margin-bottom: 8px;
+            padding-right: 8px;
+            border-right: 4px solid #0ea5e9;
+        }
+        .lesson-list {
+            list-style: none;
+        }
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: #1e293b;
+            border-radius: 18px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .lesson-item:hover {
+            border-color: #0ea5e9;
+        }
+        .lesson-watch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #0ea5e9;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0ea5e9;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .lesson-watch.watched {
+            background: #0ea5e9;
+            color: #0f172a;
+        }
+        .lesson-info {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        .lesson-duration {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        /* لوحة التقدم */
+        .progress-panel, .timer-panel, .profile-panel {
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 20px 18px;
+            border: 1px solid #0ea5e9;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #0f172a;
+            border-radius: 24px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid #0ea5e9;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0ea5e9;
+        }
+        .stat-label {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .badge {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 60px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+        .badge.achieved {
+            border-color: #0ea5e9;
+            background: #0ea5e9;
+            color: #0f172a;
+            opacity: 1;
+        }
+        .badge i {
+            font-size: 26px;
+        }
+        /* خطة الامتحان */
+        .countdown-big {
+            font-size: 48px;
+            font-weight: 800;
+            color: #0ea5e9;
+            text-align: center;
+            direction: ltr;
+        }
+        .plan-box {
+            background: #0f172a;
+            border-radius: 30px;
+            padding: 18px;
+            margin-top: 20px;
+            border: 1px solid #0ea5e9;
+        }
+        /* tabs content */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        /* miscellaneous */
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+        hr {
+            border: 0.5px solid #334155;
+            margin: 20px 0;
+        }
+        .small-note {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .glass-back-btn:hover {
+            background: rgba(139, 92, 246, 0.35);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-back-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+
+</head>
+<body>
+    <div class="container">
+
+        <!-- ======== الهيدر ثابت في كل الصفحات ======== -->
+        <div class="header-card">
+            <div class="subject-title">
+                <div class="subject-icon"><i class="fas fa-flask"></i></div>
+                <div class="subject-name">
+                    <h1>كيمياء البكالوريا</h1>
+                    <p>منصة تفاعلية - منهاج سوريا</p>
+                </div>
+            </div>
+            <div class="exam-timer">
+                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 28/6/2026</div>
+                <div class="timer-number" id="countdown-days">0</div>
+                <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
+            </div>
+            <div class="progress-section">
+                <div class="progress-label">
+                    <span><i class="fas fa-tasks"></i> التقدم العام</span>
+                    <span id="overall-percent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======== الصفحات (التابع) ======== -->
+        <!-- الصفحة الرئيسية (المشغل + الوحدات) -->
+        <div id="page-home" class="page active">
+            <!-- مشغل الفيديو -->
+            <div class="video-player-card">
+                <div class="video-wrapper">
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/7gCmgoLlWdc" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="current-video-title">ترشيحي بكلوريا (1) - تأسيس</div>
+                <div class="video-meta">
+                    <span id="current-unit"><i class="fas fa-folder-open"></i> أساسيات</span>
+                    <span id="current-duration"><i class="far fa-clock"></i> 00:00</span>
+                </div>
+            </div>
+
+            <!-- الوحدات القابلة للطي -->
+            <div class="units-container" id="units-container">
+                <!-- هنا سيتم إنشاء الوحدات ديناميكياً -->
+            </div>
+        </div>
+
+        <!-- صفحة التقدم والإنجازات -->
+        <div id="page-progress" class="page">
+            <div class="progress-panel">
+                <h2 style="font-size: 26px; margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:#0ea5e9;"></i> إحصائياتك</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="watched-count">0</div>
+                        <div class="stat-label">فيديو مُشاهَد</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-hours">0</div>
+                        <div class="stat-label">ساعة مشاهدة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="remaining-count">57</div>
+                        <div class="stat-label">فيديو متبقي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completion-percent">0%</div>
+                        <div class="stat-label">إنجاز</div>
+                    </div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-medal"></i> شارات الإنجاز</h3>
+                <div class="badge-container" id="badge-container">
+                    <div class="badge" id="badge5"><i class="fas fa-play"></i> 5 فيديوهات</div>
+                    <div class="badge" id="badge25"><i class="fas fa-star"></i> 25 فيديو</div>
+                    <div class="badge" id="badge50"><i class="fas fa-crown"></i> 50 فيديو</div>
+                    <div class="badge" id="badge100"><i class="fas fa-dragon"></i> 100 فيديو</div>
+                </div>
+                <hr>
+                <h3><i class="fas fa-chart-pie"></i> تقدم الوحدات</h3>
+                <div id="unit-progress-list" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- صفحة المؤقت والخطة اليومية -->
+        <div id="page-timer" class="page">
+            <div class="timer-panel">
+                <h2 style="margin-bottom: 10px;"><i class="fas fa-hourglass-half"></i> العد التنازلي للامتحان</h2>
+                <div class="countdown-big" id="countdown-large">0</div>
+                <div class="plan-box">
+                    <div style="font-size: 20px; font-weight: 700;">📅 خطتك اليومية</div>
+                    <div style="font-size: 18px; margin: 15px 0;" id="daily-plan-detail">0 فيديو / يوم</div>
+                    <p class="small-note">لمشاهدة جميع الفيديوهات المتبقية قبل الامتحان</p>
+                </div>
+                <div style="background: #0f172a; border-radius: 24px; padding: 16px; margin-top: 20px;">
+                    <p><i class="fas fa-info-circle" style="color:#0ea5e9;"></i> الامتحان يوم 28 حزيران 2026. واصل بنشاط!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة الملف الشخصي -->
+        <div id="page-profile" class="page">
+            <div class="profile-panel">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="background:#0ea5e9; width:80px; height:80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 40px; color:#0f172a;">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>طالب بكالوريا</h3>
+                        <p class="small-note">كيمياء - علمي</p>
+                    </div>
+                </div>
+                <hr>
+                <div><i class="fas fa-check-circle" style="color:#0ea5e9;"></i> آخر فيديو تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
+                <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: 57</div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-item" data-page="progress"><i class="fas fa-chart-bar"></i><span>التقدم</span></div>
+            <div class="nav-item" data-page="timer"><i class="fas fa-clock"></i><span>المؤقت</span></div>
+            <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>ملفي</span></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- بيانات الفيديوهات الكاملة (57 فيديو) ----------
+            const videos = [
+                // ترشيحي بكلوريا (أساسيات) - 7 فيديوهات
+                { id: 0, title: "ترشيحي بكلوريا (1) - تأسيس من الصفر", youtubeId: "7gCmgoLlWdc", unit: "أساسيات", subUnit: "تمهيد", duration: "00:54:07", watched: false },
+                { id: 1, title: "ترشيحي بكلوريا (2) - مسائل السطرين", youtubeId: "uK9tCHpQcHY", unit: "أساسيات", subUnit: "تمهيد", duration: "00:32:21", watched: false },
+                { id: 2, title: "ترشيحي بكلوريا (3) - الأعداد الكمومية + حالات المادة", youtubeId: "FCx94w7ACjU", unit: "أساسيات", subUnit: "تمهيد", duration: "00:33:10", watched: false },
+                { id: 3, title: "ترشيحي بكلوريا (4) - البناء الالكتروني + الجدول الدوري", youtubeId: "3Zj6mXeX1tk", unit: "أساسيات", subUnit: "تمهيد", duration: "00:37:17", watched: false },
+                { id: 4, title: "ترشيحي بكلوريا (5) - الروابط الكيميائية والتهجين", youtubeId: "0kI29xnQctQ", unit: "أساسيات", subUnit: "تمهيد", duration: "00:39:36", watched: false },
+                { id: 5, title: "ترشيحي بكلوريا (6) - الكيمياء العضوية + الحرارية", youtubeId: "EYFE5zaLXZQ", unit: "أساسيات", subUnit: "تمهيد", duration: "00:40:48", watched: false },
+                { id: 6, title: "ترشيحي بكلوريا (7) - 10 نماذج امتحانية", youtubeId: "UQHfAkpXbAE", unit: "أساسيات", subUnit: "تمهيد", duration: "00:27:29", watched: false },
+
+                // الوحدة النووية (5 فيديوهات)
+                { id: 7, title: "1- تركيب النواة + التحولات النووية", youtubeId: "8SSHuwGs6F8", unit: "النووية", subUnit: "التحولات النووية", duration: "00:54:07", watched: false },
+                { id: 8, title: "2- التفاعلات النووية وسلاسل النشاط الإشعاعي", youtubeId: "9CxWv_jnSA8", unit: "النووية", subUnit: "التحولات النووية", duration: "00:32:21", watched: false },
+                { id: 9, title: "3- طاقة الارتباط ومقارنة (ألفا، بيتا، غاما)", youtubeId: "BFmtj46HxCY", unit: "النووية", subUnit: "طاقة الارتباط", duration: "00:33:10", watched: false },
+                { id: 10, title: "4- عمر النصف + مراجعة عامة", youtubeId: "F39MfzLJ5wg", unit: "النووية", subUnit: "عمر النصف", duration: "00:37:17", watched: false },
+                { id: 11, title: "5- حل أسئلة درس الكيمياء النووية", youtubeId: "IIqQFOawrL4", unit: "النووية", subUnit: "حل أسئلة", duration: "00:39:36", watched: false },
+
+                // الغازات (6 فيديوهات)
+                { id: 12, title: "1- أساسيات الغازات + قانون بويل", youtubeId: "kr4j5uw87ys", unit: "الغازات", subUnit: "قوانين الغازات", duration: "00:37:17", watched: false },
+                { id: 13, title: "2- تتمة قوانين الغازات + حل مسائل", youtubeId: "LUKSvsiEmjw", unit: "الغازات", subUnit: "قوانين الغازات", duration: "00:39:21", watched: false },
+                { id: 14, title: "3- قانون الغازات العام + الكثافة", youtubeId: "vqDXyMZzumw", unit: "الغازات", subUnit: "قوانين الغازات", duration: "00:28:36", watched: false },
+                { id: 15, title: "4- قانون دالتون وحل مسائل", youtubeId: "3VN-0n2Wg7w", unit: "الغازات", subUnit: "قوانين الغازات", duration: "00:35:47", watched: false },
+                { id: 16, title: "5- قانون غراهام + نظري الغازات", youtubeId: "cIcuxJmMLuk", unit: "الغازات", subUnit: "قوانين الغازات", duration: "00:39:50", watched: false },
+                { id: 17, title: "6- حل أسئلة درس الغازات", youtubeId: "T1DRrZ6uEdg", unit: "الغازات", subUnit: "حل أسئلة", duration: "00:55:02", watched: false },
+
+                // حركية (سرعة التفاعل + التوازن) 11 فيديو
+                { id: 18, title: "1- السرعة الوسطية للتفاعل", youtubeId: "FfTdSNCoIjQ", unit: "حركية", subUnit: "سرعة التفاعل", duration: "00:40:48", watched: false },
+                { id: 19, title: "2- نظري سرعة التفاعل", youtubeId: "hRu6HLyYHLo", unit: "حركية", subUnit: "سرعة التفاعل", duration: "00:41:09", watched: false },
+                { id: 20, title: "3- السرعة اللحظية", youtubeId: "xwSwzEzOLtk", unit: "حركية", subUnit: "سرعة التفاعل", duration: "00:34:40", watched: false },
+                { id: 21, title: "4- مسائل السرعة اللحظية", youtubeId: "ZVnSucBIuic", unit: "حركية", subUnit: "سرعة التفاعل", duration: "00:30:12", watched: false },
+                { id: 22, title: "5- التفاعلات غير الأولية", youtubeId: "hzxaahbF7so", unit: "حركية", subUnit: "سرعة التفاعل", duration: "00:47:43", watched: false },
+                { id: 23, title: "6- حل أسئلة سرعة التفاعل", youtubeId: "VjoGCKzjKEo", unit: "حركية", subUnit: "سرعة التفاعل", duration: "00:46:46", watched: false },
+                { id: 24, title: "1- أساسيات التوازن", youtubeId: "A-KFw5Xu2vw", unit: "حركية", subUnit: "التوازن", duration: "00:28:07", watched: false },
+                { id: 25, title: "2- كتابة ثابت التوازن", youtubeId: "3GbwuQYuluY", unit: "حركية", subUnit: "التوازن", duration: "00:27:29", watched: false },
+                { id: 26, title: "3- العوامل المؤثرة على التوازن", youtubeId: "sqUv67zyKNg", unit: "حركية", subUnit: "التوازن", duration: "00:23:58", watched: false },
+                { id: 27, title: "4- تأثير درجة الحرارة + الحفاز", youtubeId: "3cpdXb0ALCE", unit: "حركية", subUnit: "التوازن", duration: "00:37:48", watched: false },
+                { id: 28, title: "5- حل أسئلة التوازن", youtubeId: "dAQGRPsmYrw", unit: "حركية", subUnit: "التوازن", duration: "00:59:49", watched: false },
+
+                // تحليلية (حموض + أملاح + معايرة) 16 فيديو
+                { id: 29, title: "1- نظريات الحموض والأسس", youtubeId: "okAhM0moHWk", unit: "تحليلية", subUnit: "الحموض والأسس", duration: "00:34:49", watched: false },
+                { id: 30, title: "2- الخواص المذبذبة للماء", youtubeId: "ZzgziIQH34A", unit: "تحليلية", subUnit: "الحموض والأسس", duration: "00:37:27", watched: false },
+                { id: 31, title: "3- حساب pH المحاليل", youtubeId: "fbuPhnammYQ", unit: "تحليلية", subUnit: "الحموض والأسس", duration: "00:31:31", watched: false },
+                { id: 32, title: "4- الحموض والأسس الضعيفة", youtubeId: "1pKjHVdJvOo", unit: "تحليلية", subUnit: "الحموض والأسس", duration: "00:25:17", watched: false },
+                { id: 33, title: "5- حل أسئلة الحموض (ج1)", youtubeId: "IKwm3XzdlPQ", unit: "تحليلية", subUnit: "الحموض والأسس", duration: "01:02:38", watched: false },
+                { id: 34, title: "6- حل أسئلة الحموض (ج2)", youtubeId: "lZ66yXIw64Q", unit: "تحليلية", subUnit: "الحموض والأسس", duration: "00:17:40", watched: false },
+                { id: 35, title: "1- الأملاح الذوابة ج1", youtubeId: "yNmSkjbSZbM", unit: "تحليلية", subUnit: "الأملاح", duration: "00:37:50", watched: false },
+                { id: 36, title: "2- الأملاح الذوابة ج2", youtubeId: "pzmpss-WYOc", unit: "تحليلية", subUnit: "الأملاح", duration: "00:30:06", watched: false },
+                { id: 37, title: "3- الأملاح قليلة الذوبان", youtubeId: "cKs0jqtLTDU", unit: "تحليلية", subUnit: "الأملاح", duration: "00:24:41", watched: false },
+                { id: 38, title: "4- تطبيقات الأملاح", youtubeId: "Pl6s8FpgA_Q", unit: "تحليلية", subUnit: "الأملاح", duration: "00:35:44", watched: false },
+                { id: 39, title: "5- حل أسئلة الأملاح ج1", youtubeId: "HTTECEDbHbc", unit: "تحليلية", subUnit: "الأملاح", duration: "00:37:09", watched: false },
+                { id: 40, title: "6- حل أسئلة الأملاح ج2", youtubeId: "gCUXq3AhlPk", unit: "تحليلية", subUnit: "الأملاح", duration: "00:23:08", watched: false },
+                { id: 41, title: "1- المعايرة الحجمية", youtubeId: "C2NdSV80LxQ", unit: "تحليلية", subUnit: "المعايرة", duration: "00:22:56", watched: false },
+                { id: 42, title: "2- حل مسائل المعايرة", youtubeId: "vTPCw4gfdCY", unit: "تحليلية", subUnit: "المعايرة", duration: "00:22:37", watched: false },
+                { id: 43, title: "3- منحنيات المعايرة", youtubeId: "vFaH6uzvzoQ", unit: "تحليلية", subUnit: "المعايرة", duration: "00:17:35", watched: false },
+                { id: 44, title: "4- حل أسئلة المعايرة", youtubeId: "TGqUsginc_o", unit: "تحليلية", subUnit: "المعايرة", duration: "00:35:19", watched: false },
+
+                // عضوية (12 فيديو)
+                { id: 45, title: "1- مقدمة في العضوية", youtubeId: "wOEKoxtOhrg", unit: "عضوية", subUnit: "عام", duration: "00:30:57", watched: false },
+                { id: 46, title: "2- تسميات (ج1)", youtubeId: "EtqClsVoNKI", unit: "عضوية", subUnit: "تسميات", duration: "00:21:34", watched: false },
+                { id: 47, title: "3- تسميات (ج2)", youtubeId: "3jw2Yz60I-E", unit: "عضوية", subUnit: "تسميات", duration: "00:27:29", watched: false },
+                { id: 48, title: "4- حل تعاليل العضوية", youtubeId: "6VxWdhsU4gQ", unit: "عضوية", subUnit: "تعاليل", duration: "00:28:46", watched: false },
+                { id: 49, title: "5- تفاعلات العضوية ج1", youtubeId: "hwFU7p0Hv2c", unit: "عضوية", subUnit: "تفاعلات", duration: "00:35:31", watched: false },
+                { id: 50, title: "6- تفاعلات العضوية ج2", youtubeId: "yrw4QxYsL8M", unit: "عضوية", subUnit: "تفاعلات", duration: "00:34:24", watched: false },
+                { id: 51, title: "7- تفاعلات العضوية ج3", youtubeId: "V4KxkOLEU8k", unit: "عضوية", subUnit: "تفاعلات", duration: "00:33:53", watched: false },
+                { id: 52, title: "8- تفاعلات الأكسدة", youtubeId: "z2kXjL1guuw", unit: "عضوية", subUnit: "تفاعلات", duration: "00:44:12", watched: false },
+                { id: 53, title: "9- تفاعلات الإرجاع", youtubeId: "fHZYaZt_TVk", unit: "عضوية", subUnit: "تفاعلات", duration: "00:22:36", watched: false },
+                { id: 54, title: "10- حل أسئلة الأغوال", youtubeId: "-iZvk6uPLZg", unit: "عضوية", subUnit: "حل أسئلة", duration: "00:45:26", watched: false },
+                { id: 55, title: "11- حل أسئلة الألدهيدات والكيتونات", youtubeId: "rwt-tLomBsA", unit: "عضوية", subUnit: "حل أسئلة", duration: "00:20:39", watched: false },
+                { id: 56, title: "12- حل أسئلة الحموض الكربوكسيلية", youtubeId: "dfE_7L32GT8", unit: "عضوية", subUnit: "حل أسئلة", duration: "00:22:47", watched: false }
+            ];
+
+            // ---------- متغيرات عامة ----------
+            let currentVideoIndex = 0;  // آخر فيديو تم اختياره
+            const player = document.getElementById('youtube-player');
+            const currentTitle = document.getElementById('current-video-title');
+            const currentUnitSpan = document.getElementById('current-unit');
+            const currentDurationSpan = document.getElementById('current-duration');
+            const unitsContainer = document.getElementById('units-container');
+
+            // ---------- دوال مساعدة ----------
+            function formatDuration(sec) { return sec; } // لا حاجة، المدة موجودة
+
+            // تحميل حالة المشاهدة من localStorage
+            function loadWatched() {
+                const stored = localStorage.getItem('chem_watched');
+                if (stored) {
+                    const watchedSet = new Set(JSON.parse(stored));
+                    videos.forEach(v => { v.watched = watchedSet.has(v.id); });
+                }
+            }
+            function saveWatched() {
+                const watchedIds = videos.filter(v => v.watched).map(v => v.id);
+                localStorage.setItem('chem_watched', JSON.stringify(watchedIds));
+            }
+            // آخر فيديو
+            function saveLastWatched(id) {
+                localStorage.setItem('chem_last', id);
+            }
+            function loadLastWatched() {
+                const last = localStorage.getItem('chem_last');
+                if (last !== null) {
+                    const idx = videos.findIndex(v => v.id == last);
+                    if (idx >= 0) currentVideoIndex = idx;
+                }
+            }
+
+            // تحديث مشغل الفيديو
+            function setVideoByIndex(index) {
+                const v = videos[index];
+                if (!v) return;
+                currentVideoIndex = index;
+                player.src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                currentTitle.innerText = v.title;
+                currentUnitSpan.innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
+                currentDurationSpan.innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
+                saveLastWatched(v.id);
+            }
+
+            // حساب الإحصائيات
+            function calcStats() {
+                const total = videos.length;
+                const watchedCount = videos.filter(v => v.watched).length;
+                const remaining = total - watchedCount;
+                const percent = total ? Math.round((watchedCount / total) * 100) : 0;
+                // حساب الساعات (تقريبي: نحول مدة hh:mm:ss إلى ساعات)
+                let totalSeconds = 0;
+                videos.forEach(v => {
+                    if (v.watched) {
+                        const parts = v.duration.split(':');
+                        if (parts.length === 3) {
+                            totalSeconds += parseInt(parts[0])*3600 + parseInt(parts[1])*60 + parseInt(parts[2]);
+                        }
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                return { watchedCount, remaining, percent, hours };
+            }
+
+            // تحديث واجهة التقدم والشارات
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours } = calcStats();
+                document.getElementById('watched-count').innerText = watchedCount;
+                document.getElementById('remaining-count').innerText = remaining;
+                document.getElementById('completion-percent').innerText = percent + '%';
+                document.getElementById('total-hours').innerText = hours;
+                document.getElementById('overall-percent').innerText = percent + '%';
+                document.getElementById('overall-progress').style.width = percent + '%';
+
+                // الشارات
+                const badge5 = document.getElementById('badge5');
+                const badge25 = document.getElementById('badge25');
+                const badge50 = document.getElementById('badge50');
+                const badge100 = document.getElementById('badge100');
+                badge5.classList.toggle('achieved', watchedCount >= 5);
+                badge25.classList.toggle('achieved', watchedCount >= 25);
+                badge50.classList.toggle('achieved', watchedCount >= 50);
+                badge100.classList.toggle('achieved', watchedCount >= 100); // غير ممكن لكن تبقى للتحفيز
+
+                // تقدم الوحدات (لصفحة التقدم)
+                const units = [...new Set(videos.map(v => v.unit))];
+                let html = '';
+                units.forEach(u => {
+                    const unitVideos = videos.filter(v => v.unit === u);
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => v.watched).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+                    html += `<div style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span>${u}</span><span>${watchedU}/${totalU}</span></div><div class="progress-bar-bg" style="height:10px;"><div class="progress-fill" style="width:${percU}%;"></div></div></div>`;
+                });
+                document.getElementById('unit-progress-list').innerHTML = html;
+            }
+
+            // بناء الوحدات في الصفحة الرئيسية
+            function buildUnits() {
+                const units = [...new Set(videos.map(v => v.unit))];
+                let htmlAll = '';
+                units.forEach(unit => {
+                    const unitVideos = videos.filter(v => v.unit === unit);
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const totalU = unitVideos.length;
+                    const watchedU = unitVideos.filter(v => v.watched).length;
+                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            lessonsHtml += `
+                                <li class="lesson-item" data-id="${v.id}">
+                                    <div class="lesson-watch ${v.watched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${v.watched?1:0};"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title">${sub}</div>
+                                <ul class="lesson-list">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-down"></i>
+                                <span class="unit-title">${unit}</span>
+                                <span class="unit-progress">${watchedU}/${totalU}</span>
+                            </div>
+                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                        </div>
+                    `;
+                });
+                unitsContainer.innerHTML = htmlAll;
+
+                // إضافة event listeners للدوائر وعناصر الدروس
+                document.querySelectorAll('.lesson-watch').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = parseInt(el.dataset.id);
+                        const video = videos.find(v => v.id === id);
+                        if (video) {
+                            video.watched = !video.watched;
+                            el.classList.toggle('watched', video.watched);
+                            const icon = el.querySelector('i');
+                            if (icon) icon.style.opacity = video.watched ? 1 : 0;
+                            saveWatched();
+                            updateAllStats();
+                            // تحديث عداد الوحدة
+                            const unitCard = el.closest('.unit-card');
+                            if (unitCard) {
+                                const unit = unitCard.querySelector('.unit-title').innerText;
+                                const unitVids = videos.filter(v => v.unit === unit);
+                                const w = unitVids.filter(v => v.watched).length;
+                                unitCard.querySelector('.unit-progress').innerText = `${w}/${unitVids.length}`;
+                            }
+                        }
+                    });
+                });
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = parseInt(el.dataset.id);
+                        const index = videos.findIndex(v => v.id === id);
+                        if (index !== -1) {
+                            setVideoByIndex(index);
+                        }
+                    });
+                });
+            }
+
+            // دالة طي الوحدة (تُستدعى من onclick)
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
+                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                }
+            };
+
+            // تحديث عداد الامتحان والخطة اليومية
+            function updateExamCountdown() {
+                const examDate = new Date('2026-06-28T00:00:00');
+                const today = new Date();
+                const diffTime = examDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('countdown-days').innerText = diffDays > 0 ? diffDays : 0;
+                document.getElementById('countdown-large').innerText = diffDays > 0 ? diffDays : 0;
+
+                const remaining = videos.length - videos.filter(v => v.watched).length;
+                const days = diffDays > 0 ? diffDays : 1;
+                const perDay = Math.ceil(remaining / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} فيديو/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} فيديو يومياً`;
+            }
+
+            // التبديل بين الصفحات
+            function initTabs() {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                    });
+                });
+            }
+
+            // آخر فيديو مشاهَد
+            function updateLastWatchedText() {
+                const lastId = localStorage.getItem('chem_last');
+                if (lastId) {
+                    const v = videos.find(v => v.id == lastId);
+                    if (v) document.getElementById('last-watched').innerText = v.title;
+                }
+            }
+
+            // تهيئة كاملة
+            function init() {
+                loadWatched();
+                loadLastWatched();
+                setVideoByIndex(currentVideoIndex);
+                buildUnits();
+                updateAllStats();
+                updateExamCountdown();
+                updateLastWatchedText();
+                initTabs();
+
+                // تحديث كل ثانية للعد التنازلي (يكفي مرة واحدة لكن نجعلها متكررة)
+                setInterval(() => {
+                    updateExamCountdown();
+                }, 60000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>

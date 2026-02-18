@@ -1,0 +1,175 @@
+/* ========== رأس الصفحة ========== */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.page-header h1 {
+    font-size: 2.2rem;
+    color: #1e293b;
+}
+
+/* ========== مشغل الفيديو ========== */
+.video-player {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #0f172a;
+}
+
+.video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-title {
+    margin: 15px 0 5px;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.video-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* ========== الوحدات ========== */
+.units-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.unit-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.unit-header {
+    background: #f8fafc;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.unit-header:hover {
+    background: #f1f5f9;
+}
+
+.unit-header i {
+    font-size: 1.2rem;
+    color: #3b82f6;
+    transition: transform 0.2s;
+}
+
+.unit-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex: 1;
+}
+
+.unit-progress {
+    background: #3b82f6;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+}
+
+.sub-units {
+    padding: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.sub-unit {
+    margin-bottom: 20px;
+}
+
+.sub-unit-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3b82f6;
+    margin-bottom: 10px;
+    padding-right: 10px;
+    border-right: 4px solid #3b82f6;
+}
+
+.lesson-list {
+    list-style: none;
+}
+
+.lesson-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    border: 1px solid #e2e8f0;
+}
+
+.lesson-item:hover {
+    border-color: #3b82f6;
+    background: #f1f5f9;
+}
+
+.lesson-item.active {
+    border-color: #3b82f6;
+    background: #e0f2fe;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.2);
+}
+
+.lesson-watch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #3b82f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #3b82f6;
+    background: white;
+    transition: all 0.2s;
+}
+
+.lesson-watch.watched {
+    background: #3b82f6;
+    color: white;
+}
+
+.lesson-info {
+    flex: 1;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.lesson-duration {
+    font-size: 0.85rem;
+    color: #64748b;
+    white-space: nowrap;
+}
