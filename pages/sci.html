@@ -156,10 +156,12 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 16/9;
+            aspect-ratio: 9/16;               /* نسبة عمودية لدروس البكالوريا */
+            max-height: 80vh;                  /* منع التمدد الرأسي المفرط */
             border-radius: 24px;
             overflow: hidden;
             background: #0f172a;
+            margin: 0 auto;                     /* توسيط الحاوية */
         }
         .video-wrapper iframe {
             width: 100%;
@@ -369,7 +371,7 @@
             font-size: 13px;
         }
     </style>
-<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <!-- بداية: إضافة الزر الزجاجي العصري -->
     <style>
         .glass-back-btn {
             position: fixed;
@@ -411,8 +413,6 @@
     <!-- الزر الزجاجي -->
     <a href="../index.html" class="glass-back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
 
-</head>
-<body>
     <div class="container">
 
         <!-- ======== الهيدر ثابت ======== -->
@@ -713,20 +713,38 @@
                 { id: 142, title: "الدرس الرابع وراثة (الأمور التي نحفظها)", youtubeId: "الدرس الرابع وراثة _ الأمور التي نحفظها من الدرس(480P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:13:40" },
             ];
 
-            // تعويض المعرفات الوهمية بمعرفات حقيقية متاحة
-            // قائمة المعرفات الحقيقية المتوفرة من الروابط
+            // قائمة بجميع المعرفات الحقيقية من القائمة الجديدة (حوالي 117 معرف)
             const realIds = [
-                "SIscKlu_dLc", "kVH3MJHtq2U", "sVVm_ocIBnw", "Y5zKYzgZdo4", "eBS5xKclKl8",
-                "DwsfCR5GfoY", "uljewnlV5Hs", "kU4eAfa1rFE", "m5dTOFYjm1s", "t3DGna5SK-4",
-                "QWHGZNpvd94", "gooZvIrZy1k", "7-et3o4cxto", "XXBg1ueqCtM", "NUBRKS76zzY",
-                "VwPnFt-8nuY", "J1hg1wPI4ow", "yfwASOc07Pg", "o5xLUmyIEJo", "F1PbCvqXveE",
-                "vFgHsqhjcLU", "O9foukzwMZA", "ts2pCw4AAL8", "2q0YZZEIxGg", "fYzyk-Y0oSY",
-                "OBUzgbizX1k"
+                "uushEI9TYyk", "8ud5-jhVbz8", "fDNkE1meiYg", "C2z9AqRfWrQ", "6I6vfb3uV5Q",
+                "bC2ohYA1Rcc", "E25S9CPuLFA", "sU_r9LT1oow", "opNcM4RXQJg", "AAMt5f2fLZA",
+                "8ugLnNtOM9w", "DXCbIKrIFc4", "ZA5ZjfZYAX8", "w2OCajdhyEU", "u6-CQQ27vdc",
+                "VGOzTgOo10c", "MubAFjAwG4U", "JmXrFGyXD2U", "fKOpAxSV850", "AabVH9FsHkM",
+                "Dmv8oJj_34w", "1fOsDfE4b9w", "NFXbYL91buY", "y0mMDS8yjsg", "tOGmhbeuiYM",
+                "wlVLPcvKAaE", "nMXmg_nMK8k", "ZRS4iMqMYd0", "kMb1q33-pCY", "4a4f9qqwcOg",
+                "ipnjy0Fwd8Y", "MFRpKugQ0Lw", "31lZU3RatG4", "uzwv_nYn4Jw", "UrSH7DCOQv0",
+                "Rc2OAJU9JJM", "KmmQT6nU_2E", "heHaucC6WF0", "4qQBqngkRR4", "a_a-Rm4P83Y",
+                "zjn_GX3XRSE", "jpmj9W2xKyA", "O1LOmltoUj4", "DB4Ppe6Vvl8", "294uipO1Cl4",
+                "Rc-heJL7rno", "hIzl7ETjWDo", "lJmCrHN6Tg0", "LCaopRnnMvI", "dSmlWQ_TdAI",
+                "gbSXxeDPkgU", "cyPik0Q5WCs", "n6_jINF4rUA", "XqF3AU4oJSA", "5Zm-nmv6cTI",
+                "39h0UDpkGYo", "-25adODXz_g", "mgSjFMmkUCo", "oe7pDyoQ4xc", "zLF_X_qxp4s",
+                "BdX405V0NV8", "LG09TjKCfwU", "YpCOqYFwSik", "6QYQwcuwsFE", "6biC4LN74Qk",
+                "et0CmjUiCrY", "KZIqNO5ZHn0", "XxK2K3OhMH4", "PFnlrbhx-Xo", "TIp69tCgKhY",
+                "wADqJu32CFI", "0C9t0FHyjwc", "T8FHd41KhYc", "StLUnWLsfyc", "TTh_U3FJmp8",
+                "QWDfdlTL7OQ", "FOWsvEt3eGc", "20a3x0Q9QvU", "6D8NsCIWi4s", "yw40PywYfW8",
+                "mmuEoLmB59Y", "lqtJnFaQwZw", "pxGwF9WlCuI", "O8eEBsPVqPI", "xXBOrLfOcc4",
+                "7g4_gQ2L0oI", "obPUoIDDvJQ", "pgq9lbPNKOE", "z-uGQdyQh8Q", "_tC_SS_X6ys",
+                "d0olNPLha8w", "1uYCEnTRmb4", "0iiNd9uwbV8", "D102GtNHcwM", "Np1Qo_XE5fc",
+                "zZYvel79y90", "FKUuoqjqxoQ", "Uz2iwnNSqos", "mA1MBWqruTE", "obhPX2OY2x0",
+                "VFBeXNNCqAI", "QZ8VzTl1QiY", "DVjIzPJoSOY", "pZppAGUt8OI", "a1AoVHccUYI",
+                "xpEwOqNF1Qw", "9fDxxSG3PQA", "EF3gzcQss4Y", "FFj628D8jA0", "efGovYJ_clc",
+                "j8Hfq7pV6v8", "JDjR4Gny4Zg", "1S5f7-2nLUw", "A2vbA53mv5w", "5o_g1PnCsac",
+                "pF2K15R75Rg", "0R4Y78QGvI4"
             ];
-            // توزيع المعرفات على الفيديوهات التي ليس لها معرف حقيقي
+
+            // تعويض المعرفات الوهمية بمعرفات حقيقية من القائمة الجديدة
             videos.forEach((v, index) => {
                 if (!v.youtubeId || v.youtubeId.length > 20 || v.youtubeId.includes('.mp4')) {
-                    // اختيار معرف حقيقي بشكل دوري
+                    // اختيار معرف حقيقي بشكل دوري من القائمة الكبيرة
                     v.youtubeId = realIds[index % realIds.length];
                 }
             });
