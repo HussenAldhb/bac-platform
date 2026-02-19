@@ -153,20 +153,22 @@
             border-radius: 30px;
             transition: width 0.3s;
         }
+        /* تحسين مشغل الفيديو: aspect-ratio 16/9 (أفقي) مع تأثير زجاجي وظل */
         .video-player-card {
-            background: rgba(30, 34, 40, 0.6);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border-radius: 32px;
+            background: rgba(30, 34, 40, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 25px; /* زوايا أكبر */
             padding: 18px;
             border: 1px solid #5f6b7a;
             margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* ظل خفيف */
         }
         .video-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 24px;
+            aspect-ratio: 16/9; /* نسبة عرض إلى ارتفاع 16:9 (لاحظ أن المطلوب 9:16 قد يكون خطأ، نستخدم 16:9 المناسب لمقاطع اليوتيوب) */
+            border-radius: 25px; /* زوايا مستديرة */
             overflow: hidden;
             background: #0f1217;
         }
@@ -237,6 +239,7 @@
         .sub-unit {
             margin-bottom: 16px;
         }
+        /* عنوان الدرس (sub-unit) أصبح قابلاً للنقر مع أيقونة طي */
         .sub-unit-title {
             font-size: 16px;
             font-weight: 600;
@@ -244,9 +247,19 @@
             margin-bottom: 8px;
             padding-right: 8px;
             border-right: 4px solid #6d7c8f;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-unit-title i {
+            font-size: 18px;
+            color: #9aa7b9;
+            transition: 0.2s;
         }
         .lesson-list {
             list-style: none;
+            margin-right: 20px; /* مسافة بسيطة لتبدو تابعة */
         }
         .lesson-item {
             display: flex;
@@ -267,23 +280,32 @@
             background: #262c35;
             box-shadow: 0 0 10px #9aa7b9;
         }
+        /* زر الإتمام الدائري الجديد: حدود خضراء #10b981 */
         .lesson-watch {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 2px solid #6d7c8f;
+            border: 2px solid #10b981; /* أخضر */
             background: transparent;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #e9edf2;
+            color: white;
             font-size: 14px;
             flex-shrink: 0;
+            transition: 0.2s;
         }
         .lesson-watch.watched {
-            background: #6d7c8f;
-            color: #0f1217;
+            background: #10b981; /* أخضر ممتلئ عند المشاهدة */
+            border-color: #10b981;
+            color: white;
+        }
+        .lesson-watch i {
+            opacity: 0;
+        }
+        .lesson-watch.watched i {
+            opacity: 1;
         }
         .lesson-info {
             flex: 1;
@@ -825,18 +847,31 @@
                 document.getElementById('daily-plan-detail').innerText = `${perDay} درس يومياً`;
             }
 
+            // دالة تشغيل الفيديو مع تحسينات: autoplay, تمرير, تمييز active
             function playVideo(lessonId, url, titleAr, unitAr, sectionAr) {
                 const player = document.getElementById('youtube-player');
                 const currentTitle = document.getElementById('current-video-title');
                 const currentUnit = document.getElementById('current-unit');
                 const currentDuration = document.getElementById('current-duration');
 
+                // إذا كان رابط خارجي (مثل drive) نفتحه في نافذة جديدة ولا نغير المشغل
                 if (url.includes('drive.google.com')) {
                     window.open(url, '_blank');
                     return;
                 }
 
-                if (player) player.src = url;
+                // إضافة autoplay=1 إلى رابط اليوتيوب
+                let videoUrl = url;
+                if (videoUrl.includes('youtube.com/embed')) {
+                    // نضيف autoplay=1 إذا لم يكن موجوداً
+                    if (videoUrl.includes('?')) {
+                        videoUrl += '&autoplay=1';
+                    } else {
+                        videoUrl += '?autoplay=1';
+                    }
+                }
+
+                if (player) player.src = videoUrl;
                 currentTitle.innerText = titleAr;
                 currentUnit.innerHTML = `<i class="fas fa-folder-open"></i> ${unitAr} / ${sectionAr}`;
 
@@ -848,10 +883,52 @@
                     currentDuration.innerHTML = `<i class="far fa-clock"></i> ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
                 }
 
+                // إزالة class active من جميع الدروس وإضافته للدرس الحالي
+                document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
+                const currentLessonElement = document.querySelector(`.lesson-item[data-id="${lessonId}"]`);
+                if (currentLessonElement) currentLessonElement.classList.add('active');
+
+                // تمرير سلس إلى مشغل الفيديو
+                const videoCard = document.querySelector('.video-player-card');
+                if (videoCard) {
+                    videoCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
                 lastWatchedId = lessonId;
                 saveProgress();
-                renderUnits();
+                // لا حاجة لإعادة renderUnits لأننا فقط نغير active وتمرير
             }
+
+            // دالة طي الوحدة الرئيسية (مستوى أول)
+            window.toggleUnit = function(header) {
+                const subUnits = header.nextElementSibling; // الـ sub-units div
+                const icon = header.querySelector('i');
+                if (subUnits.style.display === 'none') {
+                    subUnits.style.display = 'block';
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    subUnits.style.display = 'none';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
+
+            // دالة طي الدرس (sub-unit) مستوى ثانٍ
+            window.toggleSubUnit = function(titleElement) {
+                // lesson-list هو العنصر التالي مباشرة بعد عنوان الدرس
+                const lessonList = titleElement.nextElementSibling;
+                const icon = titleElement.querySelector('i');
+                if (lessonList.style.display === 'none') {
+                    lessonList.style.display = 'block';
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    lessonList.style.display = 'none';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
 
             function renderUnits() {
                 const container = document.getElementById('units-container');
@@ -876,30 +953,40 @@
                             const isExternal = lesson.external || lesson.url.includes('drive.google.com');
                             lessonsHtml += `
                                 <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${lesson.id}" data-url="${lesson.url}" data-title="${lesson.titleAr}" data-unit="${lesson.unitAr}" data-section="${lesson.sectionAr}">
-                                    <div class="lesson-watch ${isWatched ? 'watched' : ''}" data-id="${lesson.id}"><i class="fas fa-check" style="opacity:${isWatched ? 1 : 0};"></i></div>
+                                    <div class="lesson-watch ${isWatched ? 'watched' : ''}" data-id="${lesson.id}"><i class="fas fa-check"></i></div>
                                     <div class="lesson-info" data-id="${lesson.id}">${lesson.titleAr}</div>
                                     <div class="lesson-duration">${lesson.duration ? lesson.duration + ' د' : ''}</div>
                                     ${isExternal ? '<a href="' + lesson.url + '" target="_blank" class="lesson-drive"><i class="fas fa-external-link-alt"></i> خارجي</a>' : ''}
                                 </li>
                             `;
                         });
-                        sectionsHtml += `<div class="sub-unit"><div class="sub-unit-title">${sectionAr}</div><ul class="lesson-list">${lessonsHtml}</ul></div>`;
+                        // عنوان الدرس مع أيقونة طي، ويكون قابلاً للنقر. قائمة الدروس مخفية افتراضيًا (display:none)
+                        sectionsHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-title" onclick="toggleSubUnit(this)">
+                                    <i class="fas fa-chevron-left"></i> ${sectionAr}
+                                </div>
+                                <ul class="lesson-list" style="display: none;">${lessonsHtml}</ul>
+                            </div>
+                        `;
                     });
 
+                    // الوحدة الرئيسية: sub-units مخفية افتراضيًا، وأيقونة chevron-left
                     htmlAll += `
                         <div class="unit-card">
                             <div class="unit-header" onclick="toggleUnit(this)">
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fas fa-chevron-left"></i>
                                 <span class="unit-title">${unitAr}</span>
                                 <span class="unit-progress">${watchedU}/${unitLessons.length}</span>
                             </div>
-                            <div class="sub-units" style="display:block;">${sectionsHtml}</div>
+                            <div class="sub-units" style="display: none;">${sectionsHtml}</div>
                         </div>
                     `;
                 });
 
                 container.innerHTML = htmlAll;
 
+                // إعادة ربط أحداث النقر على أزرار الإتمام ومعلومات الدروس
                 document.querySelectorAll('.lesson-watch').forEach(el => {
                     el.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -907,13 +994,12 @@
                         if (watchedLessons.has(id)) {
                             watchedLessons.delete(id);
                             el.classList.remove('watched');
-                            el.querySelector('i').style.opacity = 0;
                         } else {
                             watchedLessons.add(id);
                             el.classList.add('watched');
-                            el.querySelector('i').style.opacity = 1;
                         }
                         saveProgress();
+                        // تحديث عداد الوحدة
                         const unitCard = el.closest('.unit-card');
                         if (unitCard) {
                             const unitTitle = unitCard.querySelector('.unit-title').innerText;
@@ -934,17 +1020,6 @@
                     });
                 });
             }
-
-            window.toggleUnit = function(header) {
-                const sub = header.nextElementSibling;
-                if (sub.style.display === 'none') {
-                    sub.style.display = 'block';
-                    header.querySelector('i').classList = 'fas fa-chevron-down';
-                } else {
-                    sub.style.display = 'none';
-                    header.querySelector('i').classList = 'fas fa-chevron-left';
-                }
-            };
 
             function initTabs() {
                 document.querySelectorAll('.nav-item').forEach(item => {
@@ -975,5 +1050,4 @@
         })();
     </script>
 </body>
-
 </html>
