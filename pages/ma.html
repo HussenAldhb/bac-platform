@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>📐 منصة الرياضيات - البكالوريا العلمية</title>
+    <title>📐 منصة الرياضيات الشاملة - البكالوريا العلمية</title>
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ========== التصميم الأساسي والتحسينات الزجاجية ========== */
         * {
             margin: 0;
             padding: 0;
@@ -174,24 +175,63 @@
             transition: width 0.3s;
         }
 
-        /* مشغل الفيديو - زجاجي أخضر فسفوري */
-        .video-player-card {
+        /* أزرار تبديل المصدر */
+        .source-switcher {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .source-btn {
             background: rgba(20, 60, 50, 0.7);
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid #84cc16;
+            color: #e0f2e9;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            flex: 1;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .source-btn.active {
+            background: #10b981;
+            border-color: #10b981;
+            color: #0b1f1a;
+            box-shadow: 0 0 15px #10b981;
+        }
+
+        .source-btn:last-child.active {
+            background: #ffd700;
+            border-color: #ffd700;
+            color: #0b1f1a;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        /* مشغل الفيديو المحسن - زجاجي مع حواف مدورة وظل */
+        .video-player-card {
+            background: rgba(20, 60, 50, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 32px;
             padding: 18px;
-            border: 1px solid #84cc16;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 20px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.3);
         }
 
         .video-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 24px;
+            aspect-ratio: 16 / 9;
+            border-radius: 25px;
             overflow: hidden;
             background: #0b1f1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .video-wrapper iframe {
@@ -216,7 +256,7 @@
             padding: 0 6px;
         }
 
-        /* الوحدات - زجاجية خضراء فسفورية */
+        /* الوحدات - زجاجية مع طي متقدم */
         .units-container {
             background: rgba(20, 60, 50, 0.7);
             backdrop-filter: blur(6px);
@@ -271,19 +311,35 @@
 
         .sub-unit {
             margin-bottom: 16px;
+            border-right: 2px solid #84cc16;
+            padding-right: 8px;
+        }
+
+        .sub-unit-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .sub-unit-header i {
+            font-size: 18px;
+            color: #84cc16;
+            transition: 0.2s;
         }
 
         .sub-unit-title {
             font-size: 16px;
             font-weight: 600;
             color: #84cc16;
-            margin-bottom: 8px;
-            padding-right: 8px;
-            border-right: 4px solid #84cc16;
+            flex: 1;
         }
 
         .lesson-list {
             list-style: none;
+            margin-top: 8px;
+            margin-right: 20px;
         }
 
         .lesson-item {
@@ -308,24 +364,36 @@
             box-shadow: 0 0 10px #84cc16;
         }
 
-        .lesson-watch {
+        /* زر الإتمام الدائري */
+        .lesson-watch-circle {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 2px solid #84cc16;
+            border: 2px solid #10b981;
             background: transparent;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #84cc16;
+            color: white;
             font-size: 14px;
             flex-shrink: 0;
+            transition: 0.2s;
         }
 
-        .lesson-watch.watched {
-            background: #84cc16;
-            color: #0b1f1a;
+        .lesson-watch-circle.watched {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .lesson-watch-circle i {
+            font-size: 12px;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .lesson-watch-circle.watched i {
+            opacity: 1;
         }
 
         .lesson-info {
@@ -343,7 +411,9 @@
         }
 
         /* صفحات التقدم والمؤقت والملف - زجاجية خضراء */
-        .progress-panel, .timer-panel, .profile-panel {
+        .progress-panel,
+        .timer-panel,
+        .profile-panel {
             background: rgba(20, 60, 50, 0.7);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
@@ -443,9 +513,8 @@
             color: #a3c9b7;
             font-size: 13px;
         }
-    </style>
-<!-- بداية: إضافة الزر الزجاجي العصري -->
-    <style>
+
+        /* الزر الزجاجي للعودة للرئيسية */
         .glass-home-btn {
             position: fixed;
             top: 20px;
@@ -474,12 +543,7 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
-
-        .glass-home-btn:active {
-            transform: translateY(0);
-        }
     </style>
-    <!-- نهاية الزر الزجاجي -->
 </head>
 <body>
     <!-- الزر الزجاجي -->
@@ -493,12 +557,12 @@
             <div class="subject-title">
                 <div class="subject-icon"><i class="fas fa-square-root-alt"></i></div>
                 <div class="subject-name">
-                    <h1>الرياضيات</h1>
-                    <p>منصة تفاعلية - بكالوريا علمي 2026</p>
+                    <h1>الرياضيات الشاملة</h1>
+                    <p>بكالوريا علمي 2026 - جميع الفروع</p>
                 </div>
             </div>
             <div class="exam-timer">
-                <div><i class="far fa-calendar-alt" style="margin-left:6px;"></i> الامتحان: 13/6/2026</div>
+                <div><i class="far fa-calendar-alt"></i> الامتحان: 13/6/2026</div>
                 <div class="timer-number" id="countdown-days">0</div>
                 <div class="daily-plan" id="daily-plan-text">خطة 0/يوم</div>
             </div>
@@ -511,6 +575,12 @@
                     <div class="progress-fill" id="overall-progress" style="width:0%"></div>
                 </div>
             </div>
+        </div>
+
+        <!-- أزرار تبديل المصدر -->
+        <div class="source-switcher">
+            <div class="source-btn active" id="source-mk">🎓 MK Academy</div>
+            <div class="source-btn" id="source-mohammad">👨‍🏫 محمد رسول رياضيات</div>
         </div>
 
         <!-- الصفحات -->
@@ -534,7 +604,7 @@
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-number" id="watched-count">0</div><div class="stat-label">فيديو مُشاهَد</div></div>
                     <div class="stat-card"><div class="stat-number" id="total-hours">0</div><div class="stat-label">ساعة مشاهدة</div></div>
-                    <div class="stat-card"><div class="stat-number" id="remaining-count">339</div><div class="stat-label">فيديو متبقي</div></div>
+                    <div class="stat-card"><div class="stat-number" id="remaining-count">0</div><div class="stat-label">فيديو متبقي</div></div>
                     <div class="stat-card"><div class="stat-number" id="completion-percent">0%</div><div class="stat-label">إنجاز</div></div>
                 </div>
                 <hr>
@@ -581,7 +651,7 @@
                 <hr>
                 <div><i class="fas fa-check-circle" style="color:#84cc16;"></i> آخر فيديو تم مشاهدته: <span id="last-watched">لا يوجد</span></div>
                 <div style="margin-top: 15px;"><i class="fas fa-save"></i> يتم حفظ التقدم تلقائياً</div>
-                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: 339</div>
+                <div style="margin-top: 20px;" class="small-note">عدد الفيديوهات الكلي: <span id="total-videos-count">0</span></div>
             </div>
         </div>
 
@@ -596,449 +666,743 @@
 
     <script>
         (function() {
-            // دالة مساعدة لتحويل الدقائق إلى صيغة hh:mm:ss
-            function formatDuration(min) {
-                let hours = Math.floor(min / 60);
-                let minutes = min % 60;
-                return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
+            // ========== دوال تحويل المدة ==========
+            function formatDurationFromSeconds(seconds) {
+                const h = Math.floor(seconds / 3600);
+                const m = Math.floor((seconds % 3600) / 60);
+                const s = seconds % 60;
+                return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            function formatDurationFromMinutes(min) {
+                const h = Math.floor(min / 60);
+                const m = min % 60;
+                return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:00`;
             }
 
-            // ========== متتاليات (42 فيديو) ==========
-            const sequencesVideos = [
-                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 1: تعريف المتتاليات وأشكالها', videoId: 'obRDP8UwVVQ', duration: 15 },
-                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 2: تعريف المتتالية الحسابية', videoId: 'jiIx516YyDc', duration: 10 },
-                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 3: الحد العام للمتتالية الحسابية', videoId: '8RpanRA5bak', duration: 18 },
-                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 4: المتتالية الهندسية', videoId: 'PUMsBVwgXGs', duration: 13 },
-                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 5: الحد العام للمتتالية الهندسية', videoId: '_zK5zfElkho', duration: 15 },
-                { unit: 'المتتاليات', subUnit: 'تعاريف', title: 'الدرس 6: مجموع حدود غير متعاقبة', videoId: 'b2nMTvUJiv4', duration: 12 },
-                { unit: 'المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 7: الإثبات بالتدريج', videoId: 'Tqes31LPWWQ', duration: 28 },
-                { unit: 'المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 8: إثبات مساواة بالتدريج', videoId: 'SRMsP3BcWZo', duration: 10 },
-                { unit: 'المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 9: الإثبات التدريجي لمتراجحة', videoId: 'QWOKJvVdt4I', duration: 14 },
-                { unit: 'المتتاليات', subUnit: 'اطراد', title: 'الدرس 10: اطراد متتالية', videoId: 'H2PqRKZUEU0', duration: 22 },
-                { unit: 'المتتاليات', subUnit: 'اطراد', title: 'الدرس 11: حل تمارين اطراد', videoId: 'zQp3CQKpmXY', duration: 24 },
-                { unit: 'المتتاليات', subUnit: 'محدودية', title: 'الدرس 12: محدودية متتالية', videoId: 'FDpuewqRoes', duration: 13 },
-                { unit: 'المتتاليات', subUnit: 'متجاورتان', title: 'الدرس 13: المتتاليتان المتجاورتان', videoId: 'dIQ4-IlxXmE', duration: 16 },
-                { unit: 'المتتاليات', subUnit: 'خواص', title: 'الدرس 14: الحد الأوسط لثلاث حدود', videoId: 'aIQpog7ylVg', duration: 17 },
-                { unit: 'المتتاليات', subUnit: 'عنصر راجح', title: 'الدرس 15: العنصر الراجح - س17 ص143', videoId: 'SG2NFejLo4A', duration: 23 },
-                { unit: 'المتتاليات', subUnit: 'عنصر راجح', title: 'الدرس 16: العنصر الراجح - س6 ص128', videoId: 'LLRW2KQg7yE', duration: 14 },
-                { unit: 'المتتاليات', subUnit: 'إحاطة', title: 'الدرس 17: إحاطة متتالية مجاميع', videoId: 'uZC8VgHOx5Y', duration: 17 },
-                { unit: 'المتتاليات', subUnit: 'إحاطة', title: 'الدرس 18: إحاطة المتتاليات', videoId: 'yeSDch6aesY', duration: 12 },
-                { unit: 'المتتاليات', subUnit: 'تخمين', title: 'الدرس 19: تخمين un بدلالة n', videoId: 'YSRlT5DVfFY', duration: 14 },
-                { unit: 'المتتاليات', subUnit: 'تمثيل', title: 'الدرس 20: تعيين حدود متتالية بالرسم', videoId: 'Mk1Zv285XHs', duration: 3 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 21: حل مسألة وزارية', videoId: 'wb619UAQolI', duration: 14 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 22: حل السؤال 4 ص22', videoId: 'PCjFiGm4tCM', duration: 12 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 23: حل المسألة 6 ص119', videoId: 'fsQGQqomaDQ', duration: 22 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 24: حل س3 ص18', videoId: '07Joe_boIdM', duration: 4 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 25: حل س12 ص25', videoId: 'AHU-1Q7Wh2Y', duration: 6 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 26: حل س13 ص140', videoId: 'ukKWwnpEFo0', duration: 13 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 27: حل س22 ص144', videoId: 'llUTEBNB5_A', duration: 12 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 28: حل س19 ص143', videoId: '-PgNiNJuZ08', duration: 15 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 29: حل س6 ص22', videoId: 'npnPEljOYPY', duration: 9 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 30: حل س10 ص24', videoId: 'JSv3LphYG5o', duration: 18 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 31: حل س13 ص25', videoId: '0JyjFezq3Yo', duration: 15 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 32: حل س9 ص24', videoId: 'aMkSoDuIEjY', duration: 10 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 33: حل س17 ص26', videoId: 'l7lbMq4GVzo', duration: 13 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 34: حل س15 ص25', videoId: 'Nv_LmZPepxk', duration: 18 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 35: حل س16 ص25', videoId: 'Ie9EjFCU7cE', duration: 19 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 36: حل س8+9 ص138', videoId: 'rFCSa36Lj10', duration: 11 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 37: حل س21 ص144', videoId: 'DOyvPcHmVDs', duration: 19 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 38: حل س5 ص119', videoId: 'UhnON4tm9Is', duration: 5 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 39: حل س28 ص145 (دورة 2020)', videoId: 'GKTjykSCytY', duration: 22 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 40: حل س23 ص144', videoId: 'NfTVszMd2Xo', duration: 21 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 41: حل س8 ص23 - المتتالية المتخفية', videoId: 'YojP7iMsODQ', duration: 18 },
-                { unit: 'المتتاليات', subUnit: 'مسائل', title: 'الدرس 42: مثال محلول ص130 دورة 2024', videoId: 'cadRVI1_X3g', duration: 14 },
+            // ========== بيانات MK Academy (شاملة جميع الفيديوهات) ==========
+            const mkVideosRaw = [
+                // ===== الأساسيات (40+ فيديو) =====
+                { unit: '📚 الأساسيات', subUnit: 'مجموعات الأعداد', title: 'مجموعات الأعداد في الرياضيات', videoId: 'NHuB1x_GOVk', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'العمليات', title: 'العمليات على الأعداد الصحيحة', videoId: 'tt16M4mn9Q4', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الكسور', title: 'تبسيط الكسور', videoId: 'Rd9Ft43jeHI', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'القوى', title: 'خواص القوة', videoId: 'P-ryy__TG4o', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الجذور', title: 'الجذور التربيعية', videoId: 'sYX-NqLK3DE', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الجذور', title: 'إزالة الجذر من المقام', videoId: 'f1MKBa2AI5U', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المطابقات', title: 'المطابقات', videoId: 'CZ5MdQTc0f0', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الإشارات', title: 'قواعد الإشارات', videoId: 'a5PFrvNBdrQ', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'العمليات', title: 'عملية الجمع', videoId: 'XuZktcA4hKk', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'العمليات', title: 'عملية الطرح', videoId: 'dbrp3xrNgKw', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'العمليات', title: 'عملية القسمة', videoId: 'FZsDPkOJuyQ', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الأعداد النسبية', title: 'الأعداد النسبية - الجزء الأول', videoId: '-BAo5z7SASc', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الأعداد النسبية', title: 'الأعداد النسبية - الجزء الثاني', videoId: 'CMNLU350DDU', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'قابلية القسمة', title: 'قابلية القسمة', videoId: 'Zj2mmydqG4Y', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'التناسب', title: 'الرابع المتناسب', videoId: 'A4DTE3wUv1Y', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الجذور', title: 'إيجاد ناتج الجذور', videoId: '3Vcoyu5lHX4', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الجذور', title: 'العمليات على الجذور - ضرب الجذور', videoId: 'pEqYkdFiBZo', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الجذور', title: 'تبسيط الجذور في الجمع والطرح', videoId: 'kpUxh6ZyaZE', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'القوى', title: 'خواص القوى في الأعداد الحقيقية', videoId: 'P-ryy__TG4o', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'النشر', title: 'النشر - الجزء الأول تأسيس', videoId: 'AwhfqEiTxYg', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'النشر', title: 'النشر - الجزء الثاني حل مسائل', videoId: '_-sH_fyj-3Y', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المتطابقات', title: 'المتطابقات التربيعية الشهيرة - الجزء الأول', videoId: 'CZ5MdQTc0f0', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المتطابقات', title: 'المتطابقات التربيعية الشهيرة - الجزء الثاني', videoId: 'FiznFFwLn64', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'التحليل', title: 'التحليل بالمتطابقات وباستخراج عامل مشترك', videoId: 'V0n4XVKOfJQ', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'التحليل', title: 'التحليل بالطريقة المباشرة', videoId: 'k4CA27j9RQc', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المعادلات', title: 'حل المعادلات في R - تأسيس', videoId: 'FXnNBOQhWz0', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المعادلات', title: 'حل المعادلات في R - الجزء الثاني', videoId: 'ib5C9PhxlDs', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المعادلات', title: 'حل المعادلات في R - الصفحة 92 و93', videoId: '44BbnqUC2kY', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المتراجحات', title: 'المتراجحات - الجزء الأول', videoId: 'JLsbkJ1lxmk', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المتراجحات', title: 'مجالات المتراجحات', videoId: 'TWj966fWF-U', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المتراجحات', title: 'حل متراجحات', videoId: 'R1IzPmRR4N4', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'القيمة المطلقة', title: 'القيمة المطلقة لعدد حقيقي', videoId: 'owDoWUOFPmU', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'المعادلات', title: 'حل معادلة من الدرجة الثالثة بطريقة القسمة', videoId: 'UFxB8D7XGVE', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الصيغة القانونية', title: 'الصيغة القانونية (الاتمام لمربع كامل)', videoId: 'lxLcHhCY2so', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الدائرة المثلثية', title: 'الارجاع للربع الأول', videoId: 'ip1MdzKxUQY', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'الدائرة المثلثية', title: 'الدائرة المثلثية والإشارات', videoId: '03K1_VpU3sw', duration: 0 },
+                { unit: '📚 الأساسيات', subUnit: 'مجموعة التعريف', title: 'حالات مجموعة التعريف', videoId: 'awqTyi6talw', duration: 0 },
+                // ===== المتتاليات (42 فيديو) =====
+                { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'الدرس 1: تعريف المتتاليات وأشكالها', videoId: 'obRDP8UwVVQ', duration: 15 },
+                { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'الدرس 2: تعريف المتتالية الحسابية', videoId: 'jiIx516YyDc', duration: 10 },
+                { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'الدرس 3: الحد العام للمتتالية الحسابية', videoId: '8RpanRA5bak', duration: 18 },
+                { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'الدرس 4: المتتالية الهندسية', videoId: 'PUMsBVwgXGs', duration: 13 },
+                { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'الدرس 5: الحد العام للمتتالية الهندسية', videoId: '_zK5zfElkho', duration: 15 },
+                { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'الدرس 6: مجموع حدود غير متعاقبة', videoId: 'b2nMTvUJiv4', duration: 12 },
+                { unit: '📈 المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 7: الإثبات بالتدريج', videoId: 'Tqes31LPWWQ', duration: 28 },
+                { unit: '📈 المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 8: إثبات مساواة بالتدريج', videoId: 'SRMsP3BcWZo', duration: 10 },
+                { unit: '📈 المتتاليات', subUnit: 'الاستقراء', title: 'الدرس 9: الإثبات التدريجي لمتراجحة', videoId: 'QWOKJvVdt4I', duration: 14 },
+                { unit: '📈 المتتاليات', subUnit: 'اطراد', title: 'الدرس 10: اطراد متتالية', videoId: 'H2PqRKZUEU0', duration: 22 },
+                { unit: '📈 المتتاليات', subUnit: 'اطراد', title: 'الدرس 11: حل تمارين اطراد', videoId: 'zQp3CQKpmXY', duration: 24 },
+                { unit: '📈 المتتاليات', subUnit: 'محدودية', title: 'الدرس 12: محدودية متتالية', videoId: 'FDpuewqRoes', duration: 13 },
+                { unit: '📈 المتتاليات', subUnit: 'متجاورتان', title: 'الدرس 13: المتتاليتان المتجاورتان', videoId: 'dIQ4-IlxXmE', duration: 16 },
+                { unit: '📈 المتتاليات', subUnit: 'خواص', title: 'الدرس 14: الحد الأوسط لثلاث حدود', videoId: 'aIQpog7ylVg', duration: 17 },
+                { unit: '📈 المتتاليات', subUnit: 'عنصر راجح', title: 'الدرس 15: العنصر الراجح - س17 ص143', videoId: 'SG2NFejLo4A', duration: 23 },
+                { unit: '📈 المتتاليات', subUnit: 'عنصر راجح', title: 'الدرس 16: العنصر الراجح - س6 ص128', videoId: 'LLRW2KQg7yE', duration: 14 },
+                { unit: '📈 المتتاليات', subUnit: 'إحاطة', title: 'الدرس 17: إحاطة متتالية مجاميع', videoId: 'uZC8VgHOx5Y', duration: 17 },
+                { unit: '📈 المتتاليات', subUnit: 'إحاطة', title: 'الدرس 18: إحاطة المتتاليات', videoId: 'yeSDch6aesY', duration: 12 },
+                { unit: '📈 المتتاليات', subUnit: 'تخمين', title: 'الدرس 19: تخمين un بدلالة n', videoId: 'YSRlT5DVfFY', duration: 14 },
+                { unit: '📈 المتتاليات', subUnit: 'تمثيل', title: 'الدرس 20: تعيين حدود متتالية بالرسم', videoId: 'Mk1Zv285XHs', duration: 3 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 21: حل مسألة وزارية', videoId: 'wb619UAQolI', duration: 14 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 22: حل السؤال 4 ص22', videoId: 'PCjFiGm4tCM', duration: 12 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 23: حل المسألة 6 ص119', videoId: 'fsQGQqomaDQ', duration: 22 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 24: حل س3 ص18', videoId: '07Joe_boIdM', duration: 4 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 25: حل س12 ص25', videoId: 'AHU-1Q7Wh2Y', duration: 6 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 26: حل س13 ص140', videoId: 'ukKWwnpEFo0', duration: 13 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 27: حل س22 ص144', videoId: 'llUTEBNB5_A', duration: 12 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 28: حل س19 ص143', videoId: '-PgNiNJuZ08', duration: 15 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 29: حل س6 ص22', videoId: 'npnPEljOYPY', duration: 9 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 30: حل س10 ص24', videoId: 'JSv3LphYG5o', duration: 18 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 31: حل س13 ص25', videoId: '0JyjFezq3Yo', duration: 15 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 32: حل س9 ص24', videoId: 'aMkSoDuIEjY', duration: 10 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 33: حل س17 ص26', videoId: 'l7lbMq4GVzo', duration: 13 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 34: حل س15 ص25', videoId: 'Nv_LmZPepxk', duration: 18 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 35: حل س16 ص25', videoId: 'Ie9EjFCU7cE', duration: 19 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 36: حل س8+9 ص138', videoId: 'rFCSa36Lj10', duration: 11 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 37: حل س21 ص144', videoId: 'DOyvPcHmVDs', duration: 19 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 38: حل س5 ص119', videoId: 'UhnON4tm9Is', duration: 5 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 39: حل س28 ص145 (دورة 2020)', videoId: 'GKTjykSCytY', duration: 22 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 40: حل س23 ص144', videoId: 'NfTVszMd2Xo', duration: 21 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 41: حل س8 ص23 - المتتالية المتخفية', videoId: 'YojP7iMsODQ', duration: 18 },
+                { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'الدرس 42: مثال محلول ص130 دورة 2024', videoId: 'cadRVI1_X3g', duration: 14 },
+                // ===== النهايات والاستمرار (34 فيديو) =====
+                { unit: '∞ النهايات والاستمرار', subUnit: 'تعاريف', title: 'الدرس 1: التابع - أنواعه ومجموعة تعريفه', videoId: 'zpSEzQt0gjM', duration: 33 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'نهايات', title: 'الدرس 2: نهاية تابع كسري عند اللانهاية', videoId: 'XytxFFymEok', duration: 15 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'نهايات', title: 'الدرس 3: نهاية تابع كسري عند a', videoId: 'F50fzQ5u6vQ', duration: 16 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 4: حالة لانهاية/لانهاية', videoId: 'SPACCDaB2pY', duration: 26 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 5: حالة لانهاية - لانهاية', videoId: 'pC1k5k2wCVo', duration: 27 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 6: حالة 0/0 دون مثلثي', videoId: 'SUL7Mk0x2P0', duration: 28 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 7: حالة 0/0 مع مثلثي', videoId: 'j5rES_aH5EI', duration: 30 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 8: حل تمرين مميز', videoId: 'VZJoUy62Fuk', duration: 9 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 9: حالة 0×∞', videoId: 'C52wzbs3Log', duration: 11 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مبرهنات', title: 'الدرس 10: مبرهنة الإحاطة (1)', videoId: 'lTOHPIChpAs', duration: 17 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مبرهنات', title: 'الدرس 11: مبرهنة الإحاطة (2 و3)', videoId: 'ISHQepRqhgw', duration: 11 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 12: حل س10 ص70', videoId: '7s4xVBm6mJM', duration: 14 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 13: حل س2 ص46 + دورة 2020', videoId: 'QgcXRstcJoc', duration: 19 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'تابع مركب', title: 'الدرس 14: نهاية تابع مركب', videoId: 'Mb7q_lCdHl8', duration: 13 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 15: تعريف النهاية الحالة الأولى', videoId: 'w8TAiMPjhOc', duration: 16 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 16: تعريف النهاية الحالة الثانية', videoId: 'ckVdw3qGjU0', duration: 16 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 17: تعريف النهاية الحالة الثالثة', videoId: 'rtJYoaaWuFw', duration: 9 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقاربات', title: 'الدرس 18: المقاربات الشاقولية والأفقية', videoId: 'R_SvWgKMdao', duration: 29 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 19: إثبات أن مستقيم مقارب مائل', videoId: 'x2WYCxAwiYg', duration: 12 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 20: حل س20 ص72 + 8 ص51', videoId: 'wQLs9Zoc8xQ', duration: 26 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 21: حالات إيجاد معادلة مقارب مائل', videoId: 's6l8uUTz9HU', duration: 12 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 22: الحالة 2 - حل مثال 19', videoId: 'vZyzGy-oTps', duration: 9 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 23: تكملة الحالة 2 - حل س7', videoId: '3A7X0jvlgnk', duration: 19 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 24: الحالة 3 - حل س18', videoId: 'w1Sgd0js2rk', duration: 14 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 25: الحالة 4', videoId: 'ZPpEeazXpvI', duration: 14 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 26: حل تمرين ص51', videoId: 'SYenxk3JvTM', duration: 20 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'استمرار', title: 'الدرس 27: الاستمرار', videoId: '31W2cdoN50o', duration: 20 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'استمرار', title: 'الدرس 28: حل س28+29 ص73', videoId: 'WiAB3-Pc-8Q', duration: 16 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'جزء صحيح', title: 'الدرس 29: تابع الجزء الصحيح - س31 ص73', videoId: '9_sb41-CqQ8', duration: 24 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'جزء صحيح', title: 'الدرس 30: تكملة - س30 ص73', videoId: '2qWFekKS0s4', duration: 15 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 31: حل س21 ص72', videoId: 'GvHRXkXQkvs', duration: 27 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 32: ملاحظة خطيرة وحل س17 ص71', videoId: 'K0fOldLo70c', duration: 12 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 33: حل س34 ص74', videoId: 'RM8KLOQb-ZE', duration: 16 },
+                { unit: '∞ النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 34: حل س33 ص74', videoId: 'zSKQA64AUP4', duration: 6 },
+                // ===== الاشتقاق (21 فيديو) =====
+                { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: 'الدرس 1: قواعد الاشتقاق', videoId: 'RFrSkMTMn7s', duration: 25 },
+                { unit: '📐 الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس 2: مشتق التابع المركب', videoId: 'iy1nUR_vtPU', duration: 17 },
+                { unit: '📐 الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس 3: مشتق تابع مركب - حل س17', videoId: 'n2YtRqC8J80', duration: 9 },
+                { unit: '📐 الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 4: مشتق مراتب عليا والمشتق النوني', videoId: 'SRm6Ot0Zyjw', duration: 17 },
+                { unit: '📐 الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 5: المشتق النوني 2', videoId: 'eLl0kvHJZrE', duration: 18 },
+                { unit: '📐 الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 6: المشتق النوني 3 - حل س34', videoId: 'R6yCP0F7YzQ', duration: 14 },
+                { unit: '📐 الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 7: مشتقات مراتب عليا 4 - حل س33', videoId: 'CHGp_ojXWEs', duration: 18 },
+                { unit: '📐 الاشتقاق', subUnit: 'مماس', title: 'الدرس 8: معادلة المماس', videoId: 'RFhpJ2TuVYM', duration: 24 },
+                { unit: '📐 الاشتقاق', subUnit: 'مماس', title: 'الدرس 9: معادلة المماس 2 - حل س2', videoId: '1ZWq4euN8f8', duration: 17 },
+                { unit: '📐 الاشتقاق', subUnit: 'قابلية اشتقاق', title: 'الدرس 10: دراسة قابلية الاشتقاق 1', videoId: 'LntfyAnjvn8', duration: 16 },
+                { unit: '📐 الاشتقاق', subUnit: 'قابلية اشتقاق', title: 'الدرس 11: حل تمارين - س9+10', videoId: 'PUMpFbfKJjw', duration: 14 },
+                { unit: '📐 الاشتقاق', subUnit: 'تعيين ثوابت', title: 'الدرس 12: تعيين الثوابت - س19', videoId: 'FjLAogfxclc', duration: 8 },
+                { unit: '📐 الاشتقاق', subUnit: 'تغيرات', title: 'الدرس 13: دراسة تغيرات تابع', videoId: '_1Wb9d9JEkU', duration: 23 },
+                { unit: '📐 الاشتقاق', subUnit: 'نهايات', title: 'الدرس 14: إيجاد النهاية حسب تعريف المشتق', videoId: '3TKlnvBYV68', duration: 13 },
+                { unit: '📐 الاشتقاق', subUnit: 'مسائل', title: 'الدرس 15: حل س25 ص109', videoId: 'cvE95PaJD08', duration: 11 },
+                { unit: '📐 الاشتقاق', subUnit: 'مسائل', title: 'الدرس 16: حل س27 ص110', videoId: 'teqFQaZMHls', duration: 39 },
+                { unit: '📐 الاشتقاق', subUnit: 'مسائل', title: 'الدرس 17: حل س29 ص110', videoId: 'XegbIO-dS3c', duration: 14 },
+                { unit: '📐 الاشتقاق', subUnit: 'مسائل', title: 'الدرس 18: حل التمرين 24 ص109', videoId: 'FIizdraxjQg', duration: 18 },
+                { unit: '📐 الاشتقاق', subUnit: 'تعيين ثوابت', title: 'الدرس 19: تعيين ثوابت - س20 و4', videoId: '8om3kXD2zIc', duration: 10 },
+                { unit: '📐 الاشتقاق', subUnit: 'مسائل', title: 'الدرس 20: حل س1+2', videoId: 'l0G4xxApqGI', duration: 11 },
+                { unit: '📐 الاشتقاق', subUnit: 'مثلثاتي', title: 'الدرس 21: دراسة تغيرات تابع مثلثاتي - س30', videoId: '3oSgDl1x-WM', duration: 27 },
+                // ===== اللوغاريتمي (26 فيديو) =====
+                { unit: '📊 اللوغاريتمي', subUnit: 'أساسيات', title: 'الدرس 1: التابع اللوغاريتمي', videoId: '6jV2s96cGHM', duration: 19 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'أساسيات', title: 'الدرس 2: حل تمارين خواص اللوغارتم', videoId: 'YaSaPxUOQlQ', duration: 10 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'تعريف', title: 'الدرس 3: مجموعة تعريف اللوغاريتم', videoId: 'FkJweK_lj7g', duration: 14 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'معادلات', title: 'الدرس 4: حل المعادلات اللوغارتمية', videoId: '2UDeZrCLpIo', duration: 23 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'معادلات', title: 'الدرس 5: تكملة حل المعادلات', videoId: 't85y_W27FE0', duration: 27 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'متراجحات', title: 'الدرس 6: حل متراجحات لوغارتمية', videoId: 'mBo-uvqkoew', duration: 17 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'اشتقاق', title: 'الدرس 7: اشتقاق تابع لوغارتمي 1', videoId: 'nZUOB-S0yLQ', duration: 10 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 8: النهايات في التابع اللوغارتمي 1', videoId: 'JSnoX1vqx8E', duration: 25 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 9: النهايات 2', videoId: 'bC8LDg4JROg', duration: 20 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 10: النهايات 3 - دورة 2017', videoId: 'GlQJxbI-y8Y', duration: 7 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'تطبيقات', title: 'الدرس 11: تطبيقات على النهايات', videoId: 'kem1N3Xne1k', duration: 5 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 12: حل س7+6', videoId: 'pZ5RYvksnng', duration: 7 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'دراسة تابع', title: 'الدرس 13: دراسة تغيرات - حل 21ص177', videoId: 'JenJkRwQT0Q', duration: 18 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 14: حل 19ص176', videoId: 'pswn7ZtQyYo', duration: 30 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 15: حل 26ص178', videoId: 'B4W0VbGjaJI', duration: 19 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 16: حل 27ص178', videoId: 'MW7K4wB-2Ww', duration: 27 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 17: حل س29ص178', videoId: 'jQ8udVlVdpI', duration: 23 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 18: حل 30ص179', videoId: '6KPNow7Qla4', duration: 23 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'متراجحات', title: 'الدرس 19: إثبات متراجحة لوغاريتمية', videoId: 'oQMxDD_6xlk', duration: 12 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 20: حل 20ص176', videoId: 'bMRx33i-20c', duration: 20 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 21: حل 32ص179 (دورة 2017)', videoId: 'e8aGEzakeHE', duration: 30 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'شامل', title: 'الدرس 22: مسألة شاملة', videoId: 'kSqignRgdeY', duration: 37 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 23: حل 33ص180', videoId: 'yPIrCkwAL8g', duration: 31 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 24: حل 10ص173', videoId: 'Up-OmChvXw8', duration: 8 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 25: حل س1+2 ص171', videoId: '2fHoKqCCIuE', duration: 15 },
+                { unit: '📊 اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 26: حل س29ص178 (تكملة)', videoId: 'Gb6RYJmjO1M', duration: 19 },
+                // ===== الأسي (21 فيديو) =====
+                { unit: '📈 الأسي', subUnit: 'أساسيات', title: 'الدرس 1: تعريفه وخواصه', videoId: 'BWaedIHKPc8', duration: 21 },
+                { unit: '📈 الأسي', subUnit: 'معادلات', title: 'الدرس 2: حل معادلات ومتراجحات', videoId: 'GE0zWe2qwl8', duration: 22 },
+                { unit: '📈 الأسي', subUnit: 'معادلات', title: 'الدرس 3: حل معادلات أسية 2', videoId: 'Q6jEFs21SLw', duration: 14 },
+                { unit: '📈 الأسي', subUnit: 'تفاضلية', title: 'الدرس 4: المعادلات التفاضلية', videoId: 'pPZxwfUjXQc', duration: 18 },
+                { unit: '📈 الأسي', subUnit: 'جمل معادلات', title: 'الدرس 5: حل جملة معادلتين', videoId: 'Zi3SBJOQw3A', duration: 18 },
+                { unit: '📈 الأسي', subUnit: 'نهايات', title: 'الدرس 6: نهايات التابع الأسي', videoId: 'rSPvS40V13g', duration: 28 },
+                { unit: '📈 الأسي', subUnit: 'نهايات', title: 'الدرس 7: النهايات المميزة', videoId: 'AK_gQFoU9vE', duration: 21 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 8: التمرين 2 ص199', videoId: 'VR_XE-_yPa0', duration: 14 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 9: حل س10 ص210', videoId: 'FzWscLtBBzs', duration: 21 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 10: حل س11 ص210', videoId: 'KsxkDkSq9rU', duration: 17 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 11: حل 21ص214', videoId: 'qreg2OtIDlw', duration: 17 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 12: حل س9ص210', videoId: 'RS8Lg2g5GVM', duration: 16 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 13: حل 17ص213', videoId: '-UIJsGM5e1Q', duration: 24 },
+                { unit: '📈 الأسي', subUnit: 'أساس a', title: 'الدرس 14: تابع أسي أساسه a', videoId: 'cse7NuvQ7XQ', duration: 17 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 15: حل 16ص213', videoId: '-9lMNwsRSZA', duration: 23 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 16: حل 18ص213', videoId: 'hJuoM2ImCHA', duration: 18 },
+                { unit: '📈 الأسي', subUnit: 'مماس', title: 'الدرس 17: معادلة مماس يعامد مستقيم', videoId: 'lJ1xD3yDfnY', duration: 9 },
+                { unit: '📈 الأسي', subUnit: 'تعيين ثوابت', title: 'الدرس 18: تعيين ثوابت', videoId: '4yynougQF0k', duration: 11 },
+                { unit: '📈 الأسي', subUnit: 'دورة 2024', title: 'الدرس 19: سؤال الدورة الأولى 2024', videoId: 'H5SWl3kYRkQ', duration: 4 },
+                { unit: '📈 الأسي', subUnit: 'مسائل', title: 'الدرس 20: مسألة شاملة - دورة 2006', videoId: '4dBIrc1lfLs', duration: 14 },
+                { unit: '📈 الأسي', subUnit: 'رسم', title: 'الدرس 21: استنتاج رسم خط بياني', videoId: '5zd7YnI-8s0', duration: 16 },
+                // ===== التكامل (11 فيديو) =====
+                { unit: '∫ التكامل', subUnit: 'أساسيات', title: 'الدرس 1: حل أسئلة ص222', videoId: '3m3t0akVJ2c', duration: 19 },
+                { unit: '∫ التكامل', subUnit: 'دساتير', title: 'الدرس 2: دساتير إيجاد تابع أصلي', videoId: 'jZfG2qU7H-o', duration: 20 },
+                { unit: '∫ التكامل', subUnit: 'توابع أصلية', title: 'الدرس 3: إيجاد التابع الأصلي', videoId: 'Ht0_uYOfIzo', duration: 12 },
+                { unit: '∫ التكامل', subUnit: 'مثلثات', title: 'الدرس 4: توابع مثلثية', videoId: '-vyt6rjQYCs', duration: 17 },
+                { unit: '∫ التكامل', subUnit: 'محدود', title: 'الدرس 5: التكامل المحدود - حل س14', videoId: 'kHY_VKmMO5w', duration: 14 },
+                { unit: '∫ التكامل', subUnit: 'محدود', title: 'الدرس 6: التكامل المحدود', videoId: '5j2FLH3A9cg', duration: 11 },
+                { unit: '∫ التكامل', subUnit: 'كسور جزئية', title: 'الدرس 7: تفرقة كسر لكسور جزئية', videoId: 'wE6uy0RwsMg', duration: 21 },
+                { unit: '∫ التكامل', subUnit: 'بالتجزئة', title: 'الدرس 8: التكامل بالتجزئة', videoId: 'rMRTVIxRRig', duration: 14 },
+                { unit: '∫ التكامل', subUnit: 'مساحة', title: 'الدرس 9: حساب مساحة وحجم', videoId: '5aElY4MrIoA', duration: 20 },
+                { unit: '∫ التكامل', subUnit: 'مسائل', title: 'الدرس 10: حل س4+22 - إثبات متراجحة', videoId: 'He44KKMXJpI', duration: 14 },
+                { unit: '∫ التكامل', subUnit: 'مسائل', title: 'الدرس 11: حل س9 ص21', videoId: '8NjuOrXYEJI', duration: 10 },
+                // ===== الأشعة (56 فيديو) =====
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 1: العمليات على الأشعة', videoId: '1u-NPPiCQug', duration: 16 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 2: حل التمارين صفحة 16', videoId: '0Um1JzpcZY4', duration: 17 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 3: تكملة حل التمارين صفحة 16', videoId: 'UqvslFGGfSo', duration: 13 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - قوانين', title: 'الدرس 4: قوانين الأشعة', videoId: '2TwvtZpCqzY', duration: 22 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - إحداثيات', title: 'الدرس 5: إيجاد إحداثيات نقطة - تمارين ص24', videoId: '-F3I0mXpkzU', duration: 18 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - إحداثيات', title: 'الدرس 6: تكملة تمارين ص24 + المستوى المحوري', videoId: 'rMhciGMRlsc', duration: 23 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 7: الارتباط الخطي لشعاعين', videoId: 'zwmMDGAiE5o', duration: 21 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 8: الارتباط الخطي لثلاث أشعة', videoId: '5ooREksaRgY', duration: 26 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 9: حل التمرين 13 ص41', videoId: 'mOFBF8BetA8', duration: 19 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - معلم', title: 'الدرس 10: المعلم في الفراغ وإيجاد إحداثيات', videoId: '_3KNMbaNaBM', duration: 22 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مبرهنات', title: 'الدرس 11: مبرهنة في الارتباط الخطي لثلاث أشعة', videoId: 'WQS5szcGibc', duration: 17 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 12: حل السؤال 5 صفحة 20', videoId: 'iHo_8wigOvs', duration: 22 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 13: حل السؤالين 4 و 6 صفحة 20', videoId: 't4uBlZ4QN88', duration: 19 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 14: حل السؤال 20 صفحة 42', videoId: 'Lfb-SKbsu84', duration: 17 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 15: حل السؤال 8 صفحة 39', videoId: 'kJKlN5CFCQs', duration: 20 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - أسطوانة', title: 'الدرس 16: الأسطوانة', videoId: 'hQLRk6L7neE', duration: 13 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مخروط', title: 'الدرس 17: المخروط', videoId: '86oQaFNPa7k', duration: 10 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 18: حل السؤال 10 صفحة 41', videoId: 'rbJ-ZlCkbm0', duration: 15 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 19: حل السؤال 11 صفحة 41', videoId: '2LTU0IwV3IQ', duration: 16 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 20: حل السؤال 12 صفحة 41', videoId: 'Xv5S9Y1W-_o', duration: 13 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 21: حل السؤال 19 صفحة 42', videoId: 'OU-mXLkTTII', duration: 20 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 22: الجداء السلمي - الدرس الأول', videoId: '6G1YF4TOSbU', duration: 28 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 23: حل السؤال 4 صفحة 53', videoId: 'kFbSiOP68aE', duration: 19 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 24: حل س3 ص53 و 4 ص56', videoId: 'EVZsxhM0mmo', duration: 19 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 25: حل النشاط صفحة 61', videoId: 'vkJxQLA9UEE', duration: 18 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 26: حل س9 ص68 + دورة 2022', videoId: 'EDNmMGwXnRk', duration: 17 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 27: معادلة المستوي الحالات 1-2-3', videoId: 'XgC8HiExoLc', duration: 22 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 28: معادلة المستوي - الناظم غير معلوم', videoId: '-qb35BEQvCU', duration: 16 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 29: تكملة الحالة الرابعة + حل س4 ص65', videoId: 'pX3LegAuOSA', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 30: حل السؤال 14 صفحة 69', videoId: 'k1ArqiLuss4', duration: 8 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 31: الوضع النسبي لمستويين', videoId: 'Iq9W0nN7_CU', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 32: مستوي يمر بنقطة ويعامد مستويين', videoId: 'Eos4Gbu7eNA', duration: 8 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 33: معادلة الكرة', videoId: '0Cov6GHNWc4', duration: 16 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 34: تعيين مجموعات نقاط - حل س23 ص71', videoId: 'BA7N4mXGcqQ', duration: 10 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 35: مجموعات النقاط - حل س25 ص71', videoId: 'fJu5c89YINY', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 36: مجموعات النقاط - حل س24 ص71', videoId: 'yLRz5dxBX3w', duration: 9 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثانية - مسائل', title: 'الدرس 37: حل السؤال 5 ص66', videoId: '_nqOK9YxV-w', duration: 16 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 38: المستقيم في الفراغ', videoId: 'zfqPF9T79gA', duration: 15 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 39: تكملة التمثيلات الوسيطية', videoId: '-6HJmHMq5ZU', duration: 16 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 40: وضع نسبي لمستقيم ومستوي', videoId: 'rAsXtMYknlo', duration: 18 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 41: مسقط نقطة على مستوي', videoId: 'ogajzTO8owU', duration: 17 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 42: بعد نقطة عن مستقيم - فصل مشترك', videoId: '_NXhY-89yOY', duration: 13 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 43: الوضع النسبي لمستقيمين', videoId: 'n6vL6qxvzZU', duration: 20 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 44: بعد نقطة عن مستقيم - حل س12 ص69', videoId: 'lVRZ_CDfkUo', duration: 21 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 45: وضع نسبي لثلاثة مستويات', videoId: 'mRebhhDrLyc', duration: 27 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 46: تتمة الوضع النسبي لثلاثة مستويات', videoId: 'vIrTZxRy-ms', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 47: حل مسألة شاملة 11ص98', videoId: 'r-kO0ehybyA', duration: 22 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 48: مركز الأبعاد المتناسبة', videoId: 'w_Fy9TZCqwc', duration: 23 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 49: حل السؤال 21 صفحة 43', videoId: 'INdy0waAZ8w', duration: 14 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 50: حل السؤال 25 صفحة 44', videoId: 'cQnZR_E0ETI', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 51: حل السؤال 7 صفحة 96', videoId: 'Kvw0qKoN3EQ', duration: 12 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 52: تعيين أثقال مركز أبعاد', videoId: 'A8GxUGxkN_Q', duration: 10 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 53: إيجاد أثقال + حل س3 و7 ص81', videoId: 'L-9VrYJPngY', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 54: حل السؤالين 6 و8 ص81', videoId: '0Lr6OitmeV4', duration: 11 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 55: حل السؤال 1 صفحة 94', videoId: '-1tgPIuzkiY', duration: 12 },
+                { unit: '↗️ الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 56: حل السؤال 22 ص42', videoId: '9q5wShirvvk', duration: 24 },
+                // ===== الأعداد العقدية (30 فيديو) =====
+                { unit: '🔮 الأعداد العقدية', subUnit: 'شكل جبري', title: 'الدرس 1: الشكل الجبري', videoId: 'SIZxhTQr2UI', duration: 19 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مرافق', title: 'الدرس 2: مرافق العدد العقدي', videoId: 'z-UvC56Uakk', duration: 16 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'إثبات', title: 'الدرس 3: إثبات أن عدد حقيقي', videoId: 'ZEfmw9QupdE', duration: 35 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 4: الشكل المثلثي', videoId: 'gjJb9AiykEw', duration: 17 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 5: حل س1+3 ص113', videoId: 'yE3JXCk6Luk', duration: 27 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 6: حل س2 ص113', videoId: 'pXBw6E5m3GY', duration: 12 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'شكل أسي', title: 'الدرس 7: الشكل الأسي - حل س2 ص116', videoId: '3SWimFnOU9U', duration: 32 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'أويلر', title: 'الدرس 8: دستورا أويلر - حل س3 ص122', videoId: '8UwEJ4QyAXw', duration: 15 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 9: حل معادلات من الدرجة الأولى', videoId: '0UyZSDf38Jc', duration: 17 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 10: حل معادلات من الدرجة الثانية', videoId: 'shwwGDCj2AM', duration: 10 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 11: حل معادلات الدرجة الثانية - النوع الثاني', videoId: 'l1ICmoDe_DU', duration: 12 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 12: حل معادلات الدرجة الثانية - النوع الثالث', videoId: 'rc21JfBqod4', duration: 9 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'جمل معادلات', title: 'الدرس 13: حل معادلتين بمجهولين', videoId: 'nu1zAWQAg_4', duration: 7 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'ثوابت', title: 'الدرس 14: إيجاد الثوابت في معادلة درجة ثانية', videoId: 'jZT9FIZkoWw', duration: 6 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 15: حل معادلة من الدرجة الثالثة', videoId: 'TMLUETTVYag', duration: 19 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 16: معادلة درجة ثالثة - س11ص123', videoId: '3K_Acs6Xh5o', duration: 13 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 17: حل معادلات من الدرجة الرابعة', videoId: 'g8zmWuspJT8', duration: 13 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 18: دائرة القلب - حل س4 ص113', videoId: 'k1cFAKasu8w', duration: 16 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 19: حل س12 ص124', videoId: 'epXLvIJNtpk', duration: 21 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 20: حل س1 ص122', videoId: '2GhQnO-E1TY', duration: 19 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 21: حل س2 ص120', videoId: '5VCf0l-aKN0', duration: 35 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 22: مجموعة النقاط - حل س4 ص110', videoId: 'pUaKGdT1zrY', duration: 24 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 23: حل س16 ص124', videoId: 'YvwYQWV33gw', duration: 15 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 24: حل س15 ص124', videoId: 'F3DAnJ_LREA', duration: 17 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 25: حل س3 ص116', videoId: 'qUajuoHP1Lc', duration: 8 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 26: حل س3 ص110', videoId: 'H70EmQ67Su4', duration: 10 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 27: حل س7 ص122', videoId: 'dME51xx09gw', duration: 9 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 28: حل س13 ص124', videoId: 'POv6sis-RCY', duration: 12 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 29: حل معادلة مميزة 2ص118', videoId: 'J9T7nx6KuYM', duration: 2 },
+                { unit: '🔮 الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 30: حل التمرين 3 ص208', videoId: 'Uab_Cdt0cTA', duration: 24 },
+                // ===== تطبيقات العقدية (19 فيديو) =====
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'أساسيات', title: 'الدرس 1: تطبيقات - الدرس الأول', videoId: 'wVOWp_t-esw', duration: 18 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 2: حل س3 ص132', videoId: '_v3W2yVLVy8', duration: 13 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 3: حل س5 ص133', videoId: 'gBrzZbnqY48', duration: 7 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 4: حل س2 ص132', videoId: 'ESzB8TNKp7k', duration: 6 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'نسبة ذهبية', title: 'الدرس 5: النسبة الذهبية - س6 ص133', videoId: 'T7T4TjcefJk', duration: 19 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'تحويلات', title: 'الدرس 6: التحويلات الهندسية', videoId: 'ydh__B-8tko', duration: 28 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 7: حل س2 ص136', videoId: 'kIr1Cz1p9-Y', duration: 14 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'زاوية', title: 'الدرس 8: حساب قياس الزاوية - حل س3 ص136', videoId: 'LJa0IbrBizc', duration: 9 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 9: حل س3 ص141', videoId: 'wSBSXaiLhd8', duration: 21 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 10: حل س2 ص141', videoId: 'v-YtVLVu2FI', duration: 25 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 11: حل س10 ص143', videoId: 'WXJAxZr9tVs', duration: 18 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 12: حل س6 ص142', videoId: 'WwhwIqR86_o', duration: 16 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 13: حل س7ص142', videoId: 'GyVy1X_UbkY', duration: 13 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 14: حل س8ص123', videoId: 'X4GdQFtuUXc', duration: 9 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'جذور تكعيبية', title: 'الدرس 15: الجذور التكعيبية', videoId: 'CBRj-eETojY', duration: 11 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مجموعة نقاط', title: 'الدرس 16: مجموعة نقاط - حل س4 ص141', videoId: 'yxBBUmUj1og', duration: 18 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 17: حل س12 ص144', videoId: '7dHx7MMpmHo', duration: 21 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 18: حل س8 ص142', videoId: 'Ww8eZeNNszk', duration: 7 },
+                { unit: '⚡ تطبيقات العقدية', subUnit: 'نشاط', title: 'الدرس 19: نشاط ص138', videoId: 'O5z6qoz8PhE', duration: 11 },
+                // ===== التحليل التوافقي (16 فيديو) =====
+                { unit: '🎲 التحليل التوافقي', subUnit: 'عاملي', title: 'الدرس 1: العاملي', videoId: 'dAwhzChV4KE', duration: 17 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'تراتيب وتوافيق', title: 'الدرس 2: دساتير التراتيب والتوافيق', videoId: '-HmVza1OwDA', duration: 16 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 3: حل س3ص155 + 1ص164', videoId: 'VdQiTIdHBh0', duration: 14 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 4: حل س1+2 ص164', videoId: 'ffTHDdWbcFM', duration: 9 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مبدأ العد', title: 'الدرس 5: المبدأ الأساسي بالعد', videoId: 'm3qO06O2-EY', duration: 32 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مبدأ العد', title: 'الدرس 6: تمارين على المبدأ', videoId: 'dgt3New4woc', duration: 23 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'قانون التوافيق', title: 'الدرس 7: أسئلة على قانون التوافيق', videoId: 'zl1gz-0f8PM', duration: 35 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'منشور ذي الحدين', title: 'الدرس 8: منشور ثنائي الحد', videoId: 'LdW95NmJVUY', duration: 19 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مسائل سحب', title: 'الدرس 9: مسائل السحب - حل 16+17 ص167', videoId: 'Qgyz-wNnMpQ', duration: 36 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 10: حل س3ص159 + 9ص164', videoId: 'dvkr40bf1N4', duration: 6 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 11: حل س2ص162', videoId: 'I2IxbR9Do9E', duration: 12 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'دورات', title: 'الدرس 12: دورة 2024 + أمثلة خارجية', videoId: '0O5hG2fc0Og', duration: 10 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 13: حل س18 ص167', videoId: 'j9WPeyT7tU4', duration: 16 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'تحويل مثلثي', title: 'الدرس 14: تحويل العبارات المثلثية بأويلر', videoId: 'y-ibH8g21es', duration: 12 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'منشور', title: 'الدرس 15: مثال منشور ذي الحدين ص159', videoId: 'IVziwz0KcDg', duration: 7 },
+                { unit: '🎲 التحليل التوافقي', subUnit: 'آحاد وعشرات', title: 'الدرس 16: آحاد وعشرات 11^11', videoId: '8k_cxSyeTmQ', duration: 6 },
+                // ===== الاحتمالات (18 فيديو) =====
+                { unit: '🎯 الاحتمالات', subUnit: 'أساسيات', title: 'الدرس 1: مسألة توافيق', videoId: 'R1bv9S1KhaI', duration: 28 },
+                { unit: '🎯 الاحتمالات', subUnit: 'تتالي', title: 'الدرس 2: التتالي دون إعادة', videoId: 'TVNpuFmiykM', duration: 14 },
+                { unit: '🎯 الاحتمالات', subUnit: 'تتالي', title: 'الدرس 3: التتالي مع إعادة', videoId: 'jbQnaU0WF-4', duration: 21 },
+                { unit: '🎯 الاحتمالات', subUnit: 'قوانين', title: 'الدرس 4: قوانين عامة', videoId: '9WQv2RsGzUI', duration: 11 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مخطط شجري', title: 'الدرس 5: المخطط الشجري', videoId: 'W_yoa26SPJg', duration: 24 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مخطط شجري', title: 'الدرس 6: حل 5+6 ص180 و3ص208', videoId: 'R3HnXeLLEkM', duration: 23 },
+                { unit: '🎯 الاحتمالات', subUnit: 'متحول عشوائي', title: 'الدرس 7: المتحول العشوائي', videoId: 'JOsMMnDAQzE', duration: 25 },
+                { unit: '🎯 الاحتمالات', subUnit: 'متحول عشوائي', title: 'الدرس 8: حل 5ص184 + 2ص214', videoId: 'FY9kcMxcMiI', duration: 20 },
+                { unit: '🎯 الاحتمالات', subUnit: 'استقلال', title: 'الدرس 9: الاستقلال الاحتمالي', videoId: 'GbQpGAW9yrQ', duration: 14 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 10: حل س1+2 ص187', videoId: 'tIJG4_RMcHk', duration: 14 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 11: حل س10 ص201', videoId: 'XOhRgsebPeE', duration: 15 },
+                { unit: '🎯 الاحتمالات', subUnit: 'برنولي', title: 'الدرس 12: برنولي - حل 2+3 ص192 و14ص203', videoId: 'qwUDtGJLXZY', duration: 20 },
+                { unit: '🎯 الاحتمالات', subUnit: 'برنولي', title: 'الدرس 13: برنولي - حل 4+1 ص192', videoId: 'fbfIPI0XNMc', duration: 18 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 14: حل س3ص198', videoId: 'vs8DzX5Hix0', duration: 10 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 15: حل مسألة سعاد 18 ص204', videoId: 'm2-KWSm3D0k', duration: 20 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 16: مسألة ضربات الجزاء 2 ص211', videoId: '44K_BUEUJrE', duration: 25 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 17: حل المسألة 15 ص203', videoId: 's9P_gGc3NF0', duration: 15 },
+                { unit: '🎯 الاحتمالات', subUnit: 'مسائل', title: 'الدرس 18: حل السؤال 8 ص202', videoId: 'Ybpimo2EM6w', duration: 12 },
+                // ===== قراءة الخط البياني (5 فيديو) =====
+                { unit: '📉 قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 1: قراءة جدول التغيرات والخط البياني', videoId: '2vAkvLY44fo', duration: 15 },
+                { unit: '📉 قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 2: قراءة الخط البياني', videoId: 'thQiK8Wm2lk', duration: 18 },
+                { unit: '📉 قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 3: قراءة الخط البياني 2', videoId: 'ti587P96W14', duration: 22 },
+                { unit: '📉 قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 4: قراءة الخطوط البيانية والجداول', videoId: 'B0d_E1en4TE', duration: 16 },
+                { unit: '📉 قراءة الخط البياني', subUnit: 'مشتقات', title: 'الدرس 5: قراءة الخط البياني لمشتق التابع', videoId: 'Rba0AoMl4vA', duration: 20 },
+                // ===== دورات وحلول (32 فيديو تقريباً) =====
+                { unit: '📝 دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2018 ثانية', videoId: 'K0fOldLo70c', duration: 11 },
+                { unit: '📝 دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2022 أولى', videoId: 'GvHRXkXQkvs', duration: 21 },
+                { unit: '📝 دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2023 أولى', videoId: 'SYenxk3JvTM', duration: 11 },
+                { unit: '📝 دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2024 أولى', videoId: 'zSKQA64AUP4', duration: 13 },
+                { unit: '📝 دورات وحلول', subUnit: 'متتاليات', title: 'حل دورة 2017 متتاليات', videoId: 'obRDP8UwVVQ', duration: 15 },
+                { unit: '📝 دورات وحلول', subUnit: 'نهايات', title: 'حل دورة 2018 نهايات', videoId: 'zpSEzQt0gjM', duration: 17 },
             ];
 
-            // ========== نهايات واستمرار (34 فيديو) ==========
-            const limitsVideos = [
-                { unit: 'النهايات والاستمرار', subUnit: 'تعاريف', title: 'الدرس 1: التابع - أنواعه ومجموعة تعريفه', videoId: 'zpSEzQt0gjM', duration: 33 },
-                { unit: 'النهايات والاستمرار', subUnit: 'نهايات', title: 'الدرس 2: نهاية تابع كسري عند اللانهاية', videoId: 'XytxFFymEok', duration: 15 },
-                { unit: 'النهايات والاستمرار', subUnit: 'نهايات', title: 'الدرس 3: نهاية تابع كسري عند a', videoId: 'F50fzQ5u6vQ', duration: 16 },
-                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 4: حالة لانهاية/لانهاية', videoId: 'SPACCDaB2pY', duration: 26 },
-                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 5: حالة لانهاية - لانهاية', videoId: 'pC1k5k2wCVo', duration: 27 },
-                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 6: حالة 0/0 دون مثلثي', videoId: 'SUL7Mk0x2P0', duration: 28 },
-                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 7: حالة 0/0 مع مثلثي', videoId: 'j5rES_aH5EI', duration: 30 },
-                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 8: حل تمرين مميز', videoId: 'VZJoUy62Fuk', duration: 9 },
-                { unit: 'النهايات والاستمرار', subUnit: 'عدم تعيين', title: 'الدرس 9: حالة 0×∞', videoId: 'C52wzbs3Log', duration: 11 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مبرهنات', title: 'الدرس 10: مبرهنة الإحاطة (1)', videoId: 'lTOHPIChpAs', duration: 17 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مبرهنات', title: 'الدرس 11: مبرهنة الإحاطة (2 و3)', videoId: 'ISHQepRqhgw', duration: 11 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 12: حل س10 ص70', videoId: '7s4xVBm6mJM', duration: 14 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 13: حل س2 ص46 + دورة 2020', videoId: 'QgcXRstcJoc', duration: 19 },
-                { unit: 'النهايات والاستمرار', subUnit: 'تابع مركب', title: 'الدرس 14: نهاية تابع مركب', videoId: 'Mb7q_lCdHl8', duration: 13 },
-                { unit: 'النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 15: تعريف النهاية الحالة الأولى', videoId: 'w8TAiMPjhOc', duration: 16 },
-                { unit: 'النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 16: تعريف النهاية الحالة الثانية', videoId: 'ckVdw3qGjU0', duration: 16 },
-                { unit: 'النهايات والاستمرار', subUnit: 'تعريف', title: 'الدرس 17: تعريف النهاية الحالة الثالثة', videoId: 'rtJYoaaWuFw', duration: 9 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقاربات', title: 'الدرس 18: المقاربات الشاقولية والأفقية', videoId: 'R_SvWgKMdao', duration: 29 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 19: إثبات أن مستقيم مقارب مائل', videoId: 'x2WYCxAwiYg', duration: 12 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 20: حل س20 ص72 + 8 ص51', videoId: 'wQLs9Zoc8xQ', duration: 26 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 21: حالات إيجاد معادلة مقارب مائل', videoId: 's6l8uUTz9HU', duration: 12 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 22: الحالة 2 - حل مثال 19', videoId: 'vZyzGy-oTps', duration: 9 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 23: تكملة الحالة 2 - حل س7', videoId: '3A7X0jvlgnk', duration: 19 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 24: الحالة 3 - حل س18', videoId: 'w1Sgd0js2rk', duration: 14 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 25: الحالة 4', videoId: 'ZPpEeazXpvI', duration: 14 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مقارب مائل', title: 'الدرس 26: حل تمرين ص51', videoId: 'SYenxk3JvTM', duration: 20 },
-                { unit: 'النهايات والاستمرار', subUnit: 'استمرار', title: 'الدرس 27: الاستمرار', videoId: '31W2cdoN50o', duration: 20 },
-                { unit: 'النهايات والاستمرار', subUnit: 'استمرار', title: 'الدرس 28: حل س28+29 ص73', videoId: 'WiAB3-Pc-8Q', duration: 16 },
-                { unit: 'النهايات والاستمرار', subUnit: 'جزء صحيح', title: 'الدرس 29: تابع الجزء الصحيح - س31 ص73', videoId: '9_sb41-CqQ8', duration: 24 },
-                { unit: 'النهايات والاستمرار', subUnit: 'جزء صحيح', title: 'الدرس 30: تكملة - س30 ص73', videoId: '2qWFekKS0s4', duration: 15 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 31: حل س21 ص72', videoId: 'GvHRXkXQkvs', duration: 27 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 32: ملاحظة خطيرة وحل س17 ص71', videoId: 'K0fOldLo70c', duration: 12 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 33: حل س34 ص74', videoId: 'RM8KLOQb-ZE', duration: 16 },
-                { unit: 'النهايات والاستمرار', subUnit: 'مسائل', title: 'الدرس 34: حل س33 ص74', videoId: 'zSKQA64AUP4', duration: 6 },
-            ];
+            // ========== بيانات محمد رسول رياضيات (حوالي 300 فيديو) ==========
+const mohammadVideosRaw = [
+    // ===== النهايات والاستمرار (من القوائم المتعددة) =====
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهايات مثلثية', title: '#نهايات_مثلثية صعبة للطلاب المميزون وطلاب ال 600', videoId: 'cP70_h8ZbCQ', duration: 1287 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تعاريف', title: 'الدرس الأول : تعريف النهايات', videoId: 'FbyrqnkUbvc', duration: 2364 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهايات شهيرة', title: 'الدرس الثاني: نهاية التوابع الشهيرة ومجموعات تعريفها.', videoId: 'Qoo404k_Ybw', duration: 3915 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تدريبات', title: 'الدرس الثالث : حل تدريبات 1صفحة 34 & 1صفحة 38 & 1و2 صفحة 42', videoId: '-2bSpw8ieag', duration: 2137 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'إزالة عدم التعين', title: 'الدرس الرابع : إزالة حالات عدم التعين', videoId: 'b9HDf5vL82I', duration: 2302 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهايات مثلثية', title: 'الدرس الخامس : النهايات المثلثية وقواعدها', videoId: 'xJOq4aoq7JQ', duration: 1749 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهايات عند اللانهاية', title: 'الدرس السادس : استعمال x في غاية الكبر وحل تدريبات 2صفحة 34 & 2 صفحة 38 & 3و4صفحة 42', videoId: '6U5jkZRvLeE', duration: 2354 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'مبرهنة الإحاطة', title: 'الدرس السابع : مبرهنة الإحاطة وانواعها', videoId: 'HR6EX7UXUYo', duration: 1731 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'مبرهنة الإحاطة', title: 'الدرس الثامن: حل تدريبات صفحة 46 المتعلقة بمبرهنة الإحاطة', videoId: 'Kj2j3FbDAiE', duration: 1135 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تركيب تابعين', title: 'الدرس التاسع : تركيب تابعين وحل تدريب صفحة 49', videoId: 'Jr0BRT6rQ8Y', duration: 1538 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'مقاربات', title: 'الدرس العاشر ؛ المقاربات وانواعها', videoId: 'uIJNQ4eL9Vw', duration: 2926 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'مقاربات', title: 'الدرس الحادي عشر :الوضع النسبي للمقاربات', videoId: '9kLFhYqpmFU', duration: 1916 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'مقاربات', title: 'الدرس 12 : حل تدريبات صفحة 51', videoId: 'R89pwrjZC5c', duration: 2636 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'الاستمرار', title: 'الدرس 13 #الاستمرار', videoId: '9MuAoTewA4c', duration: 2097 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'مبرهنة القيمة الوسطى', title: 'الدرس 14 : حل معادلة من الشكل f(x)=? ومبرهنة القيمة الوسطى وحل تدريبات صفحة 61 ج(1)', videoId: '5uUZV_2yE_Y', duration: 2453 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تدريبات', title: 'الدرس 15: حل تدريبات صفحة 61الجزء الثاني', videoId: 'Ax-8d_2xfuI', duration: 2594 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 16 : حل تمارين الوحدة 1&2&3&4&5', videoId: 'nM624f4A-p8', duration: 2642 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 17 : حل التمارين ٦و٧و٨و٩', videoId: 'u8YyoYDiFB8', duration: 2276 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 19 :حل تمارين الوحدة 15&16&17&18&19&20', videoId: 'cg5bdfiPtL8', duration: 2469 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 18 : حل تمارين الوحدة 10&11&12&13&14', videoId: 'TGOCRw6ad58', duration: 2007 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 20 : حل التمارين 21&22&23', videoId: 'd3qe4S_Zeqc', duration: 3032 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 21 : حل التمارين 24&25&26&27&28&29', videoId: 'FqdITU5OxsQ', duration: 1985 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس 22 : حل التمارين 30&31&33&34&35 وتابع الجزء الصحيح', videoId: 'knlH0y4ZUOg', duration: 2975 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'تمارين عامة', title: 'الدرس ٢٣ : حل المسألتين الأضخم ببحث النهايات ٣٦ & ٣٧', videoId: 'u0zZJ4L8C6E', duration: 4257 },
+    // ===== نهايات متتالية (من قائمة منفصلة) =====
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس الأول', videoId: '5XAIWq-YopQ', duration: 2080 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس الثاني', videoId: 'aelfTvBVDDM', duration: 540 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس الثالث', videoId: 'AtOmxTxoM8E', duration: 935 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@متتاليات الدرس الرابع', videoId: 'CJspDjhCfRE', duration: 1209 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس الخامس', videoId: 'ykaV2l5ZryU', duration: 769 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس السادس', videoId: 'Zm7boZvFTmA', duration: 1468 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس السابع', videoId: '8Kc7BxCRKbA', duration: 801 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس الثامن', videoId: 'P-BjEXRm8vg', duration: 1314 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس التاسع', videoId: 'mcdrjV67mLM', duration: 1896 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'نهاية متتالية', title: '@نهاية متتالية الدرس العاشر', videoId: 'vCaIhNJOfmk', duration: 1373 },
+    { unit: '∞ النهايات والاستمرار', subUnit: 'رسم متتالية', title: '@رسم متتالية تدريجية', videoId: '-S-HsXLe75M', duration: 984 },
 
-            // ========== اشتقاق (21 فيديو) ==========
-            const derivativeVideos = [
-                { unit: 'الاشتقاق', subUnit: 'قواعد', title: 'الدرس 1: قواعد الاشتقاق', videoId: 'RFrSkMTMn7s', duration: 25 },
-                { unit: 'الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس 2: مشتق التابع المركب', videoId: 'iy1nUR_vtPU', duration: 17 },
-                { unit: 'الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس 3: مشتق تابع مركب - حل س17', videoId: 'n2YtRqC8J80', duration: 9 },
-                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 4: مشتق مراتب عليا والمشتق النوني', videoId: 'SRm6Ot0Zyjw', duration: 17 },
-                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 5: المشتق النوني 2', videoId: 'eLl0kvHJZrE', duration: 18 },
-                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 6: المشتق النوني 3 - حل س34', videoId: 'R6yCP0F7YzQ', duration: 14 },
-                { unit: 'الاشتقاق', subUnit: 'مراتب عليا', title: 'الدرس 7: مشتقات مراتب عليا 4 - حل س33', videoId: 'CHGp_ojXWEs', duration: 18 },
-                { unit: 'الاشتقاق', subUnit: 'مماس', title: 'الدرس 8: معادلة المماس', videoId: 'RFhpJ2TuVYM', duration: 24 },
-                { unit: 'الاشتقاق', subUnit: 'مماس', title: 'الدرس 9: معادلة المماس 2 - حل س2', videoId: '1ZWq4euN8f8', duration: 17 },
-                { unit: 'الاشتقاق', subUnit: 'قابلية اشتقاق', title: 'الدرس 10: دراسة قابلية الاشتقاق 1', videoId: 'LntfyAnjvn8', duration: 16 },
-                { unit: 'الاشتقاق', subUnit: 'قابلية اشتقاق', title: 'الدرس 11: حل تمارين - س9+10', videoId: 'PUMpFbfKJjw', duration: 14 },
-                { unit: 'الاشتقاق', subUnit: 'تعيين ثوابت', title: 'الدرس 12: تعيين الثوابت - س19', videoId: 'FjLAogfxclc', duration: 8 },
-                { unit: 'الاشتقاق', subUnit: 'تغيرات', title: 'الدرس 13: دراسة تغيرات تابع', videoId: '_1Wb9d9JEkU', duration: 23 },
-                { unit: 'الاشتقاق', subUnit: 'نهايات', title: 'الدرس 14: إيجاد النهاية حسب تعريف المشتق', videoId: '3TKlnvBYV68', duration: 13 },
-                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 15: حل س25 ص109', videoId: 'cvE95PaJD08', duration: 11 },
-                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 16: حل س27 ص110', videoId: 'teqFQaZMHls', duration: 39 },
-                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 17: حل س29 ص110', videoId: 'XegbIO-dS3c', duration: 14 },
-                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 18: حل التمرين 24 ص109', videoId: 'FIizdraxjQg', duration: 18 },
-                { unit: 'الاشتقاق', subUnit: 'تعيين ثوابت', title: 'الدرس 19: تعيين ثوابت - س20 و4', videoId: '8om3kXD2zIc', duration: 10 },
-                { unit: 'الاشتقاق', subUnit: 'مسائل', title: 'الدرس 20: حل س1+2', videoId: 'l0G4xxApqGI', duration: 11 },
-                { unit: 'الاشتقاق', subUnit: 'مثلثاتي', title: 'الدرس 21: دراسة تغيرات تابع مثلثاتي - س30', videoId: '3oSgDl1x-WM', duration: 27 },
-            ];
+    // ===== المتتاليات =====
+    { unit: '📈 المتتاليات', subUnit: 'حسابية', title: 'المتتالية الحسابية للمدرس محمد رسول صباغ', videoId: 'yaB2xSJpC40', duration: 1403 },
+    { unit: '📈 المتتاليات', subUnit: 'هندسية', title: 'المتتالية الهندسية للمدرس محمد رسول الصباغ', videoId: 'hQQ_6t0jBs4', duration: 2074 },
+    { unit: '📈 المتتاليات', subUnit: 'اطراد', title: 'حل تمارين اطراد متتالية للمدرس محمد رسول الصباغ', videoId: 'SonOEriXOFM', duration: 1399 },
+    { unit: '📈 المتتاليات', subUnit: 'الاستقراء', title: 'متتاليات - الإثبات بالتدريج - للمدرس محمد رسول الصباغ', videoId: '_8z3xgpBxV8', duration: 1146 },
+    { unit: '📈 المتتاليات', subUnit: 'ملخص', title: 'ملخص المتتاليات - للمدرس محمد رسول الصباغ', videoId: '4VgjoaGbu1k', duration: 331 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'تمرينات المتتاليات التمرين ٤ صفحة ٢٢', videoId: 'i2IgrJnCT5E', duration: 969 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: 'حل تدريبات المتتالية الحسابية والهندسة للمدرس محمد رسول الصباغ', videoId: 'nHhS4uP_UvY', duration: 1732 },
+    { unit: '📈 المتتاليات', subUnit: 'اطراد', title: 'دراسة اطراد متتالية الدرس الثاني للمدرس محمد رسول الصباغ', videoId: 'qNWItUsLt1A', duration: 1784 },
+    { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: 'المتتاليات تعريفها ومقارنة المتتالية بالتابع وكيف نكتب حدودها - للمدرس محمد رسول الصباغ.', videoId: 'u1rblAy0Xp8', duration: 1021 },
+    { unit: '📈 المتتاليات', subUnit: 'تخمين', title: '@التخمين في المتتاليات.. التمرين 2و3و7 في الصفحة 22و23 للمدرس محمد رسول الصباغ', videoId: 'zIYAAx4-4lM', duration: 1527 },
+    { unit: '📈 المتتاليات', subUnit: 'اطراد', title: '@متتاليات الدرس الثاني', videoId: 'v85dpKqelq0', duration: 1784 },
+    { unit: '📈 المتتاليات', subUnit: 'تعاريف', title: '#متتاليات الدرس الأول', videoId: 'NCWiMkArrLU', duration: 1021 },
+    { unit: '📈 المتتاليات', subUnit: 'حسابية', title: '#متتاليات الدرس الثالث', videoId: 'XkwEquBoKsQ', duration: 1403 },
+    { unit: '📈 المتتاليات', subUnit: 'هندسية', title: '#متتاليات الدرس الرابع', videoId: 'HyB-F6iJPPg', duration: 2074 },
+    { unit: '📈 المتتاليات', subUnit: 'اطراد', title: '@متتاليات الدرس الخامس', videoId: 'jqMGEzZ34rw', duration: 1399 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس السابع', videoId: 'Ae5KvuqRh4A', duration: 780 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس الثامن', videoId: '89KtMuIyAFs', duration: 780 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس السادس', videoId: 'KnssfEWwdDI', duration: 1732 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس التاسع', videoId: 'q8qJ8eFh_v0', duration: 828 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس العاشر', videoId: 'ENOe9M5sAKg', duration: 868 },
+    { unit: '📈 المتتاليات', subUnit: 'مقارنة', title: 'مقارنة المتتالية الحسابية والهندسية', videoId: '92_k8UYo7PI', duration: 780 },
+    { unit: '📈 المتتاليات', subUnit: 'تخمين', title: '@متتاليات الدرس 11 التخمين', videoId: 'zOsuAi1ucYc', duration: 1527 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس 13 حل التمرين 5و6', videoId: '9mhqvlwZmgo', duration: 889 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس 12 حل تمرين 4', videoId: 'PYYRjPqCsuE', duration: 969 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس 14', videoId: 'xIhN7Z0-p_g', duration: 1771 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس15', videoId: '8gLpA_97Pkc', duration: 947 },
+    { unit: '📈 المتتاليات', subUnit: 'مسائل', title: '@متتاليات الدرس 17والاخير', videoId: 'a2A_MeTDsWo', duration: 1993 },
+    { unit: '📈 المتتاليات', subUnit: 'ملخص', title: '@ملخص متتالية جزء٢', videoId: 'jWaL-2iRU5E', duration: 1146 },
+    { unit: '📈 المتتاليات', subUnit: 'ملخص', title: '@ملخص متتالية جزء 1', videoId: 'HEG-LuBMr1Y', duration: 1588 },
 
-            // ========== لوغاريتمي (26 فيديو) ==========
-            const logVideos = [
-                { unit: 'اللوغاريتمي', subUnit: 'أساسيات', title: 'الدرس 1: التابع اللوغاريتمي', videoId: '6jV2s96cGHM', duration: 19 },
-                { unit: 'اللوغاريتمي', subUnit: 'أساسيات', title: 'الدرس 2: حل تمارين خواص اللوغارتم', videoId: 'YaSaPxUOQlQ', duration: 10 },
-                { unit: 'اللوغاريتمي', subUnit: 'تعريف', title: 'الدرس 3: مجموعة تعريف اللوغاريتم', videoId: 'FkJweK_lj7g', duration: 14 },
-                { unit: 'اللوغاريتمي', subUnit: 'معادلات', title: 'الدرس 4: حل المعادلات اللوغارتمية', videoId: '2UDeZrCLpIo', duration: 23 },
-                { unit: 'اللوغاريتمي', subUnit: 'معادلات', title: 'الدرس 5: تكملة حل المعادلات', videoId: 't85y_W27FE0', duration: 27 },
-                { unit: 'اللوغاريتمي', subUnit: 'متراجحات', title: 'الدرس 6: حل متراجحات لوغارتمية', videoId: 'mBo-uvqkoew', duration: 17 },
-                { unit: 'اللوغاريتمي', subUnit: 'اشتقاق', title: 'الدرس 7: اشتقاق تابع لوغارتمي 1', videoId: 'nZUOB-S0yLQ', duration: 10 },
-                { unit: 'اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 8: النهايات في التابع اللوغارتمي 1', videoId: 'JSnoX1vqx8E', duration: 25 },
-                { unit: 'اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 9: النهايات 2', videoId: 'bC8LDg4JROg', duration: 20 },
-                { unit: 'اللوغاريتمي', subUnit: 'نهايات', title: 'الدرس 10: النهايات 3 - دورة 2017', videoId: 'GlQJxbI-y8Y', duration: 7 },
-                { unit: 'اللوغاريتمي', subUnit: 'تطبيقات', title: 'الدرس 11: تطبيقات على النهايات', videoId: 'kem1N3Xne1k', duration: 5 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 12: حل س7+6', videoId: 'pZ5RYvksnng', duration: 7 },
-                { unit: 'اللوغاريتمي', subUnit: 'دراسة تابع', title: 'الدرس 13: دراسة تغيرات - حل 21ص177', videoId: 'JenJkRwQT0Q', duration: 18 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 14: حل 19ص176', videoId: 'pswn7ZtQyYo', duration: 30 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 15: حل 26ص178', videoId: 'B4W0VbGjaJI', duration: 19 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 16: حل 27ص178', videoId: 'MW7K4wB-2Ww', duration: 27 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 17: حل س29ص178', videoId: 'jQ8udVlVdpI', duration: 23 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 18: حل 30ص179', videoId: '6KPNow7Qla4', duration: 23 },
-                { unit: 'اللوغاريتمي', subUnit: 'متراجحات', title: 'الدرس 19: إثبات متراجحة لوغاريتمية', videoId: 'oQMxDD_6xlk', duration: 12 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 20: حل 20ص176', videoId: 'bMRx33i-20c', duration: 20 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 21: حل 32ص179 (دورة 2017)', videoId: 'e8aGEzakeHE', duration: 30 },
-                { unit: 'اللوغاريتمي', subUnit: 'شامل', title: 'الدرس 22: مسألة شاملة', videoId: 'kSqignRgdeY', duration: 37 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 23: حل 33ص180', videoId: 'yPIrCkwAL8g', duration: 31 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 24: حل 10ص173', videoId: 'Up-OmChvXw8', duration: 8 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 25: حل س1+2 ص171', videoId: '2fHoKqCCIuE', duration: 15 },
-                { unit: 'اللوغاريتمي', subUnit: 'مسائل', title: 'الدرس 26: حل س29ص178 (تكملة)', videoId: 'Gb6RYJmjO1M', duration: 19 },
-            ];
+    // ===== الاشتقاق (من القوائم) =====
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#الاشتقاق رقم (1)', videoId: 'xj5E7IYqZT0', duration: 1539 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#الاشتقاق رقم (2)', videoId: 'TKm2AJL4-1s', duration: 1628 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#الاشتقاق رقم (3)', videoId: 'Om85jm93X_Y', duration: 1611 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#اشتقاق رقم (٤)', videoId: 'd4pwfWorU9Q', duration: 1432 },
+    { unit: '📐 الاشتقاق', subUnit: 'نهايات مثلثية', title: '#النهايات_المثلثية رقم (5)', videoId: 'KavGIPXW3L4', duration: 1335 },
+    { unit: '📐 الاشتقاق', subUnit: 'دائرة مثلثية', title: '#الدائرة_المثلثية رقم(6)', videoId: 'OK-fuI9_ICs', duration: 1380 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#اشتقاق رقم (7)', videoId: '2yQN1qpi9ns', duration: 1238 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#اشتقاق رقم (8)', videoId: '22q5D1o_9rw', duration: 1289 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: '#اشتقاق رقم (9)', videoId: 'XeeDoTKaX5I', duration: 1446 },
+    { unit: '📐 الاشتقاق', subUnit: 'تابع مركب', title: '#نهاية_تابع_مركب رقم (10)', videoId: '3usiS21q23U', duration: 891 },
+    { unit: '📐 الاشتقاق', subUnit: 'مبرهنة الإحاطة', title: '#مبرهنة_الإحاطة رقم (11)', videoId: 'LR50ulKGC3s', duration: 1312 },
+    { unit: '📐 الاشتقاق', subUnit: 'مبرهنة الإحاطة', title: '#مبرهنة_الإحاطة ج 2 رقم (12)', videoId: 'jHuZ8EGP5yc', duration: 1090 },
+    { unit: '📐 الاشتقاق', subUnit: 'مقاربات', title: '#المقاربات_وانواعها رقم (13)', videoId: 'L6wQMHWzICY', duration: 1064 },
+    { unit: '📐 الاشتقاق', subUnit: 'مجموعات عددية', title: '#المجموعات_العددية', videoId: '03v9eAmXHZc', duration: 1223 },
+    { unit: '📐 الاشتقاق', subUnit: 'مجموعة تعريف', title: '#مجموعة_التعريف', videoId: 'q8jw9Vq_IM0', duration: 667 },
+    { unit: '📐 الاشتقاق', subUnit: 'مقاربات', title: '#مقاربات_وانواعها رقم (14)', videoId: 'ztnl2k1cq3U', duration: 1064 },
+    { unit: '📐 الاشتقاق', subUnit: 'مقاربات', title: '#دراسة_الوضع_النسبي_للمقاربات رقم (15)', videoId: 'IeeZga99dAM', duration: 2229 },
+    { unit: '📐 الاشتقاق', subUnit: 'الاستمرار', title: '#الاستمرار رقم (16)', videoId: 'FtSAbnf-Vl0', duration: 2203 },
+    { unit: '📐 الاشتقاق', subUnit: 'مبرهنة القيمة الوسطى', title: 'اشتقاق (17) #مبرهنة_القيمة_الوسطى', videoId: 'MzhOVYDK1MY', duration: 1218 },
+    { unit: '📐 الاشتقاق', subUnit: 'تدريبات', title: 'اشتقاق(18) تدريبات ٦١', videoId: 'rj-NHLkU5kI', duration: 1518 },
+    { unit: '📐 الاشتقاق', subUnit: 'أنشطة', title: 'اشتقاق (19) #انشطة_نهايات', videoId: 'jez0_Lzy20Y', duration: 509 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'اشتقاق (20) #تمرين1', videoId: 'jFZctAna044', duration: 1217 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'اشتقاق (21) تمرينات ٢و٣و٤و٥و٦و٧', videoId: 'uXB-83-55oA', duration: 1184 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'اشتقاق (22) #تمرينات 9 10 11', videoId: 'IYUx-EFSoXs', duration: 2162 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'اشتقاق (٢٣) تمرينات ١٢ و١٣و١٤و١٥', videoId: 'J9SkFqvKios', duration: 1247 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'اشتقاق (٢٤) تمرينات ١٦ و ١٧', videoId: 'Rxh41SU8fYY', duration: 1610 },
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: 'الاشتقاق (١) قواعد الاشتقاق وقابلية الاشتقاق', videoId: 'J_dx2e0F55s', duration: 2166 },
+    { unit: '📐 الاشتقاق', subUnit: 'معادلة المماس', title: 'الاشتقاق(٢) # معادلة_المماس وحل تدريب صفحة 84', videoId: 'baVxUG9MdgQ', duration: 1759 },
+    { unit: '📐 الاشتقاق', subUnit: 'تدريبات', title: 'الاشتقاق(٣) #حل_تدريبات_صفحة_84_ج2', videoId: 'RXlxs2i0gds', duration: 821 },
+    { unit: '📐 الاشتقاق', subUnit: 'تابع مركب', title: 'الاشتقاق(٤) #اشتقاق التابع المركب وحل تمارين صفحة 94', videoId: '9p_lvtg6Sss', duration: 2069 },
+    { unit: '📐 الاشتقاق', subUnit: 'قيم حدية', title: 'الاشتقاق(5) #القيم_الحدية_وانواعها', videoId: 'T-4gRpO2Cw4', duration: 1881 },
+    { unit: '📐 الاشتقاق', subUnit: 'مراتب عليا', title: 'الاشتقاق(7) الاشتقاق من مراتب عليا', videoId: 'nsxDMFaCygY', duration: 1119 },
+    { unit: '📐 الاشتقاق', subUnit: 'قيم حدية', title: 'الاشتقاق(6) #تدريبات_القيم_الحدية', videoId: 'sjU6fEgH3FQ', duration: 2424 },
+    { unit: '📐 الاشتقاق', subUnit: 'أنشطة', title: 'الاشتقاق(8) الأنشطة ج 1', videoId: 'IwjXpyxkVKE', duration: 2471 },
+    { unit: '📐 الاشتقاق', subUnit: 'أنشطة', title: 'الاشتقاق(10) نشاط 2 صفحة 100', videoId: 'QTjzh3-9sTE', duration: 1981 },
+    { unit: '📐 الاشتقاق', subUnit: 'توابع مثلثية', title: 'الاشتقاق(9) #دراسة_توابع_مثلثية', videoId: '5WDqBsoFihM', duration: 838 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين مثلثية', title: 'الاشتقاق(11) تمرين رقم 30 مثلثي', videoId: 'nK2ghTsi-jw', duration: 1177 },
+    { unit: '📐 الاشتقاق', subUnit: 'تابع مركب', title: 'الاشتقاق(12) اشتقاق التابع المركب وحل تدريب 94', videoId: 'PNJAoUexr9Y', duration: 2069 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(13) تمرينات ١و٢و٣و٤و٥و٦', videoId: 'v5AZyf7i_dQ', duration: 1597 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(14) تمرينات ٨ و ٩ و ١٠ و ١٤', videoId: 'QenF-3R57Bc', duration: 1339 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(15) تمرينات ١٥ و ١٧ و ١٨', videoId: 'p4AlQ84U1Ck', duration: 1619 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(16) تمرين 13 متراجحة هويغنز', videoId: 'avTII_PzFVs', duration: 700 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(17) ايجاد نهاية تابع باستخدام المشتق تمرين 22', videoId: 'IiEz0snGQAg', duration: 645 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(18) ايجاد عدد حلول معادلة تمرين 23', videoId: 'rI-h9aTG3bg', duration: 423 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(19) تمرينات ٢٤ و ٢٥ و ٢٦', videoId: 'em-QhDB06-M', duration: 1960 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(20) تمرينات ٢٧ و ٢٨', videoId: 'jLSba_Vn_fc', duration: 2182 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(21) تمرين 29', videoId: 'puspLrYbel8', duration: 88 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الاشتقاق(22) تمرين 32 و 34', videoId: 'ZgKzIaP5w7I', duration: 943 },
+    // ===== اشتقاق من قائمة أخرى =====
+    { unit: '📐 الاشتقاق', subUnit: 'قواعد', title: 'الدرس الاول اشتقاق. ومعادلة المماس وانواعه', videoId: 'B2s59iC_txw', duration: 3918 },
+    { unit: '📐 الاشتقاق', subUnit: 'قيمة تقريبية', title: 'الدرس الثاني اشتقاق القيمة التقريبية (التقريب التآلفي ) و حل تدريبات صفحة 84', videoId: 'lriO3cycDT8', duration: 2896 },
+    { unit: '📐 الاشتقاق', subUnit: 'قيم حدية', title: 'الدرس الثالث اشتقاق ناااااار القيمة الحدية وتطبيقاتها', videoId: 'ALRh3sHTJ3w', duration: 3293 },
+    { unit: '📐 الاشتقاق', subUnit: 'تابع مركب', title: 'الدرس الرابع : اشتقاق (اشتقاق تابع مركب و الاشتقاق من مراتب عليا. )', videoId: 'RmwqbbwyN4M', duration: 2726 },
+    { unit: '📐 الاشتقاق', subUnit: 'توابع مثلثية', title: 'الدرس الخامس اشتقاق: التوابع المثلثية', videoId: '9kq8H35WpP0', duration: 2269 },
+    { unit: '📐 الاشتقاق', subUnit: 'أنشطة', title: 'الدرس السادس اشتقاق ناااااار #حل_الانشطة#نشاط', videoId: 'vD5gJI-ZBFE', duration: 3112 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الدرس السابع اشتقاق تمرينات الوحدة من 1 لل 15', videoId: 'Evy8oo28ywE', duration: 2371 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: '#الدرس الثامن : #اشتقاق #تمرينات_الوحدة. من 17لل 25', videoId: '43E8gBmJPIg', duration: 2341 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الدرس التاسع اشتقاق تمرين ٢٧ و ٢٩', videoId: 'nndqt1U_TII', duration: 2314 },
+    { unit: '📐 الاشتقاق', subUnit: 'تمارين', title: 'الدرس العاشر : اشتقاق', videoId: 'EL2YHbZN0i4', duration: 2770 },
 
-            // ========== الأسي (21 فيديو) ==========
-            const expVideos = [
-                { unit: 'الأسي', subUnit: 'أساسيات', title: 'الدرس 1: تعريفه وخواصه', videoId: 'BWaedIHKPc8', duration: 21 },
-                { unit: 'الأسي', subUnit: 'معادلات', title: 'الدرس 2: حل معادلات ومتراجحات', videoId: 'GE0zWe2qwl8', duration: 22 },
-                { unit: 'الأسي', subUnit: 'معادلات', title: 'الدرس 3: حل معادلات أسية 2', videoId: 'Q6jEFs21SLw', duration: 14 },
-                { unit: 'الأسي', subUnit: 'تفاضلية', title: 'الدرس 4: المعادلات التفاضلية', videoId: 'pPZxwfUjXQc', duration: 18 },
-                { unit: 'الأسي', subUnit: 'جمل معادلات', title: 'الدرس 5: حل جملة معادلتين', videoId: 'Zi3SBJOQw3A', duration: 18 },
-                { unit: 'الأسي', subUnit: 'نهايات', title: 'الدرس 6: نهايات التابع الأسي', videoId: 'rSPvS40V13g', duration: 28 },
-                { unit: 'الأسي', subUnit: 'نهايات', title: 'الدرس 7: النهايات المميزة', videoId: 'AK_gQFoU9vE', duration: 21 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 8: التمرين 2 ص199', videoId: 'VR_XE-_yPa0', duration: 14 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 9: حل س10 ص210', videoId: 'FzWscLtBBzs', duration: 21 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 10: حل س11 ص210', videoId: 'KsxkDkSq9rU', duration: 17 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 11: حل 21ص214', videoId: 'qreg2OtIDlw', duration: 17 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 12: حل س9ص210', videoId: 'RS8Lg2g5GVM', duration: 16 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 13: حل 17ص213', videoId: '-UIJsGM5e1Q', duration: 24 },
-                { unit: 'الأسي', subUnit: 'أساس a', title: 'الدرس 14: تابع أسي أساسه a', videoId: 'cse7NuvQ7XQ', duration: 17 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 15: حل 16ص213', videoId: '-9lMNwsRSZA', duration: 23 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 16: حل 18ص213', videoId: 'hJuoM2ImCHA', duration: 18 },
-                { unit: 'الأسي', subUnit: 'مماس', title: 'الدرس 17: معادلة مماس يعامد مستقيم', videoId: 'lJ1xD3yDfnY', duration: 9 },
-                { unit: 'الأسي', subUnit: 'تعيين ثوابت', title: 'الدرس 18: تعيين ثوابت', videoId: '4yynougQF0k', duration: 11 },
-                { unit: 'الأسي', subUnit: 'دورة 2024', title: 'الدرس 19: سؤال الدورة الأولى 2024', videoId: 'H5SWl3kYRkQ', duration: 4 },
-                { unit: 'الأسي', subUnit: 'مسائل', title: 'الدرس 20: مسألة شاملة - دورة 2006', videoId: '4dBIrc1lfLs', duration: 14 },
-                { unit: 'الأسي', subUnit: 'رسم', title: 'الدرس 21: استنتاج رسم خط بياني', videoId: '5zd7YnI-8s0', duration: 16 },
-            ];
+    // ===== اللوغاريتمي =====
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الأول *', videoId: '8xvzt45ht7c', duration: 2316 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الثاني*', videoId: '6cKxuvinjb4', duration: 2004 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الثالث *', videoId: '10OCLR3IqlQ', duration: 2091 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الرابع *', videoId: 'gIJGf2QC7JU', duration: 2292 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الخامس*', videoId: 'LckkGDm6SEw', duration: 1579 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس السادس*', videoId: 'zy6wIW9MZik', duration: 1848 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس السابع *', videoId: 'cZSxgTWQeCs', duration: 2007 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الثامن*', videoId: 'Ufe38SS_jD4', duration: 1259 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس التاسع *', videoId: 'NjZwl2h4KfU', duration: 1964 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس العاشر *', videoId: 'X-qDEXwYqLU', duration: 1322 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الحادي عشر *', videoId: 'TI3P-0DdVLw', duration: 1577 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الثاني عشر*', videoId: 'zAtm_4vTVrI', duration: 1720 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الثالث عشر*', videoId: 'kminjZikbo8', duration: 1700 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الرابع عشر*', videoId: 'O74hopU-vL0', duration: 1883 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الخامس عشر *', videoId: '7c1jSGfKlaQ', duration: 1913 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس السادس عشر *', videoId: 'g68vUshLpto', duration: 1137 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس السابع عشر *', videoId: 'A5B0Pe1JQSE', duration: 3159 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: '#التابع_اللوغارتمي *الدرس الثامن عشر والاخير *', videoId: 'xn7iBSSn1WE', duration: 1433 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: 'الدرس الأول لوغارتم 25 مؤتمت: تعريف اللوغارتم وقواعده ومجموعة تعريفه', videoId: 'hm3H3Iw3zFA', duration: 4024 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'دروس', title: 'ثاني لوغارتم25 مؤتمت : اشتقاق اللوغارتم ونهاياته ودراسة تغيراته واستنتاج رسم خط بياني من خط آخر', videoId: '89Mc06tVdag', duration: 3484 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'الدرس الثالث لوغارتم 25 مؤتمت : حل تدريبات صفحة 154 & 157 & 158', videoId: 'Hiww5kHU4iI', duration: 2904 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'الرابع لوغارتم 25 مؤتمت : حل تدريبات صفحة ١٥٨', videoId: 'JCk_5aCGx0M', duration: 3119 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'الدرس الخامس لوغارتم 25 مؤتمت حل تدريبات صفحة 162', videoId: 'iX5FJSU7U94', duration: 3727 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'السادس لوغارتم 25 مؤتمت تمارين الوحدة 1&2&3&4&4&5&6&7', videoId: 'XaEnV4bkbek', duration: 3524 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'السابع لوغارتم 25 مؤتمت حل المسألتين الاضخم 33&32', videoId: 'FpciX_49QTs', duration: 3134 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'الثامن لوغارتم 25 مؤتمت حل المسألتين 31&29', videoId: 'OQjnpGHCDJ4', duration: 4057 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'لوغارتم التاسع 25 مؤتمت : مسألة 30 & 20', videoId: 'ZYvKr8dUPGw', duration: 3398 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'لوغارتم حل التمارين 19&18&17&16&15', videoId: 'UyXcsiLAw_o', duration: 2965 },
+    { unit: '📊 اللوغاريتمي', subUnit: 'تمارين', title: 'لوغارتم حل التمارين 11&15&14&10&9', videoId: '1QmEFyWvam8', duration: 2727 },
 
-            // ========== تكامل (11 فيديو) ==========
-            const integralVideos = [
-                { unit: 'التكامل', subUnit: 'أساسيات', title: 'الدرس 1: حل أسئلة ص222', videoId: '3m3t0akVJ2c', duration: 19 },
-                { unit: 'التكامل', subUnit: 'دساتير', title: 'الدرس 2: دساتير إيجاد تابع أصلي', videoId: 'jZfG2qU7H-o', duration: 20 },
-                { unit: 'التكامل', subUnit: 'توابع أصلية', title: 'الدرس 3: إيجاد التابع الأصلي', videoId: 'Ht0_uYOfIzo', duration: 12 },
-                { unit: 'التكامل', subUnit: 'مثلثات', title: 'الدرس 4: توابع مثلثية', videoId: '-vyt6rjQYCs', duration: 17 },
-                { unit: 'التكامل', subUnit: 'محدود', title: 'الدرس 5: التكامل المحدود - حل س14', videoId: 'kHY_VKmMO5w', duration: 14 },
-                { unit: 'التكامل', subUnit: 'محدود', title: 'الدرس 6: التكامل المحدود', videoId: '5j2FLH3A9cg', duration: 11 },
-                { unit: 'التكامل', subUnit: 'كسور جزئية', title: 'الدرس 7: تفرقة كسر لكسور جزئية', videoId: 'wE6uy0RwsMg', duration: 21 },
-                { unit: 'التكامل', subUnit: 'بالتجزئة', title: 'الدرس 8: التكامل بالتجزئة', videoId: 'rMRTVIxRRig', duration: 14 },
-                { unit: 'التكامل', subUnit: 'مساحة', title: 'الدرس 9: حساب مساحة وحجم', videoId: '5aElY4MrIoA', duration: 20 },
-                { unit: 'التكامل', subUnit: 'مسائل', title: 'الدرس 10: حل س4+22 - إثبات متراجحة', videoId: 'He44KKMXJpI', duration: 14 },
-                { unit: 'التكامل', subUnit: 'مسائل', title: 'الدرس 11: حل س9 ص21', videoId: '8NjuOrXYEJI', duration: 10 },
-            ];
+    // ===== الأسي =====
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الأول', videoId: 'PtLG6I0mYCw', duration: 1960 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الثاني', videoId: 'UA0W1gzaTT4', duration: 2446 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الثالث', videoId: 'U3IhHYvgy4k', duration: 1858 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الرابع', videoId: 'MAwoXRjGg1E', duration: 1621 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الخامس', videoId: 'aNW9OOmTWME', duration: 1517 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس السادس', videoId: 'S-kELHiB2x0', duration: 1521 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس السابع', videoId: '_I2iVXDQwsA', duration: 1225 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الثامن', videoId: '3yxYyDgsEF0', duration: 1216 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس التاسع', videoId: 'oaB56P8gVLE', duration: 2374 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس العاشر', videoId: 'yQ-IArqxtiI', duration: 1102 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الحادي عاشر', videoId: 'iVQvf66Xz7g', duration: 2675 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: 'التابع الاسي الدرس الثاني عشر', videoId: 'jVYfKcN5keo', duration: 2859 },
+    { unit: '📈 الأسي', subUnit: 'ملخص', title: 'ملخص اسي١', videoId: 'J7ncM9OiQRs', duration: 514 },
+    { unit: '📈 الأسي', subUnit: 'ملخص', title: 'ملخص اسي ٢', videoId: 'IiDZbIE0iLQ', duration: 862 },
+    { unit: '📈 الأسي', subUnit: 'دروس', title: '٢٠ يونيو ٢٠٢٣', videoId: 'WmpEU9apl40', duration: 2065 },
 
-            // ========== الأشعة (56 فيديو) ==========
-            const vectorsVideos = [
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 1: العمليات على الأشعة', videoId: '1u-NPPiCQug', duration: 16 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 2: حل التمارين صفحة 16', videoId: '0Um1JzpcZY4', duration: 17 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أساسيات', title: 'الدرس 3: تكملة حل التمارين صفحة 16', videoId: 'UqvslFGGfSo', duration: 13 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - قوانين', title: 'الدرس 4: قوانين الأشعة', videoId: '2TwvtZpCqzY', duration: 22 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - إحداثيات', title: 'الدرس 5: إيجاد إحداثيات نقطة - تمارين ص24', videoId: '-F3I0mXpkzU', duration: 18 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - إحداثيات', title: 'الدرس 6: تكملة تمارين ص24 + المستوى المحوري', videoId: 'rMhciGMRlsc', duration: 23 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 7: الارتباط الخطي لشعاعين', videoId: 'zwmMDGAiE5o', duration: 21 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 8: الارتباط الخطي لثلاث أشعة', videoId: '5ooREksaRgY', duration: 26 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - ارتباط خطي', title: 'الدرس 9: حل التمرين 13 ص41', videoId: 'mOFBF8BetA8', duration: 19 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - معلم', title: 'الدرس 10: المعلم في الفراغ وإيجاد إحداثيات', videoId: '_3KNMbaNaBM', duration: 22 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مبرهنات', title: 'الدرس 11: مبرهنة في الارتباط الخطي لثلاث أشعة', videoId: 'WQS5szcGibc', duration: 17 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 12: حل السؤال 5 صفحة 20', videoId: 'iHo_8wigOvs', duration: 22 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 13: حل السؤالين 4 و 6 صفحة 20', videoId: 't4uBlZ4QN88', duration: 19 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 14: حل السؤال 20 صفحة 42', videoId: 'Lfb-SKbsu84', duration: 17 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 15: حل السؤال 8 صفحة 39', videoId: 'kJKlN5CFCQs', duration: 20 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - أسطوانة', title: 'الدرس 16: الأسطوانة', videoId: 'hQLRk6L7neE', duration: 13 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مخروط', title: 'الدرس 17: المخروط', videoId: '86oQaFNPa7k', duration: 10 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 18: حل السؤال 10 صفحة 41', videoId: 'rbJ-ZlCkbm0', duration: 15 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 19: حل السؤال 11 صفحة 41', videoId: '2LTU0IwV3IQ', duration: 16 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 20: حل السؤال 12 صفحة 41', videoId: 'Xv5S9Y1W-_o', duration: 13 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الأولى - مسائل', title: 'الدرس 21: حل السؤال 19 صفحة 42', videoId: 'OU-mXLkTTII', duration: 20 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 22: الجداء السلمي - الدرس الأول', videoId: '6G1YF4TOSbU', duration: 28 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 23: حل السؤال 4 صفحة 53', videoId: 'kFbSiOP68aE', duration: 19 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 24: حل س3 ص53 و 4 ص56', videoId: 'EVZsxhM0mmo', duration: 19 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 25: حل النشاط صفحة 61', videoId: 'vkJxQLA9UEE', duration: 18 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 26: حل س9 ص68 + دورة 2022', videoId: 'EDNmMGwXnRk', duration: 17 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 27: معادلة المستوي الحالات 1-2-3', videoId: 'XgC8HiExoLc', duration: 22 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 28: معادلة المستوي - الناظم غير معلوم', videoId: '-qb35BEQvCU', duration: 16 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 29: تكملة الحالة الرابعة + حل س4 ص65', videoId: 'pX3LegAuOSA', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 30: حل السؤال 14 صفحة 69', videoId: 'k1ArqiLuss4', duration: 8 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 31: الوضع النسبي لمستويين', videoId: 'Iq9W0nN7_CU', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 32: مستوي يمر بنقطة ويعامد مستويين', videoId: 'Eos4Gbu7eNA', duration: 8 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - جداء سلمي', title: 'الدرس 33: معادلة الكرة', videoId: '0Cov6GHNWc4', duration: 16 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 34: تعيين مجموعات نقاط - حل س23 ص71', videoId: 'BA7N4mXGcqQ', duration: 10 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 35: مجموعات النقاط - حل س25 ص71', videoId: 'fJu5c89YINY', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مجموعات نقاط', title: 'الدرس 36: مجموعات النقاط - حل س24 ص71', videoId: 'yLRz5dxBX3w', duration: 9 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثانية - مسائل', title: 'الدرس 37: حل السؤال 5 ص66', videoId: '_nqOK9YxV-w', duration: 16 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 38: المستقيم في الفراغ', videoId: 'zfqPF9T79gA', duration: 15 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 39: تكملة التمثيلات الوسيطية', videoId: '-6HJmHMq5ZU', duration: 16 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 40: وضع نسبي لمستقيم ومستوي', videoId: 'rAsXtMYknlo', duration: 18 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 41: مسقط نقطة على مستوي', videoId: 'ogajzTO8owU', duration: 17 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 42: بعد نقطة عن مستقيم - فصل مشترك', videoId: '_NXhY-89yOY', duration: 13 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستقيمات', title: 'الدرس 43: الوضع النسبي لمستقيمين', videoId: 'n6vL6qxvzZU', duration: 20 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 44: بعد نقطة عن مستقيم - حل س12 ص69', videoId: 'lVRZ_CDfkUo', duration: 21 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 45: وضع نسبي لثلاثة مستويات', videoId: 'mRebhhDrLyc', duration: 27 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مستويات', title: 'الدرس 46: تتمة الوضع النسبي لثلاثة مستويات', videoId: 'vIrTZxRy-ms', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'الوحدة الثالثة - مسائل', title: 'الدرس 47: حل مسألة شاملة 11ص98', videoId: 'r-kO0ehybyA', duration: 22 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 48: مركز الأبعاد المتناسبة', videoId: 'w_Fy9TZCqwc', duration: 23 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 49: حل السؤال 21 صفحة 43', videoId: 'INdy0waAZ8w', duration: 14 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 50: حل السؤال 25 صفحة 44', videoId: 'cQnZR_E0ETI', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 51: حل السؤال 7 صفحة 96', videoId: 'Kvw0qKoN3EQ', duration: 12 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 52: تعيين أثقال مركز أبعاد', videoId: 'A8GxUGxkN_Q', duration: 10 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 53: إيجاد أثقال + حل س3 و7 ص81', videoId: 'L-9VrYJPngY', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 54: حل السؤالين 6 و8 ص81', videoId: '0Lr6OitmeV4', duration: 11 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 55: حل السؤال 1 صفحة 94', videoId: '-1tgPIuzkiY', duration: 12 },
-                { unit: 'الأشعة', subUnit: 'مركز الأبعاد المتناسبة', title: 'الدرس 56: حل السؤال 22 ص42', videoId: '9q5wShirvvk', duration: 24 },
-            ];
+    // ===== التكامل =====
+    { unit: '∫ التكامل', subUnit: 'دروس', title: '#التكامل للمدرس محمد رسول الصباغ', videoId: 'NRswFkZ1QfE', duration: 972 },
+    { unit: '∫ التكامل', subUnit: 'دروس', title: 'الدرس الثاني #تكامل للمدرس محمد رسول الصباغ', videoId: 'UYd1EsgjdJI', duration: 2076 },
+    { unit: '∫ التكامل', subUnit: 'تمارين', title: 'الدرس الثالث تكامل حل تمارين صفحة ٢٢٢ و ٢٢٧', videoId: 'tPagds1STwI', duration: 2110 },
+    { unit: '∫ التكامل', subUnit: 'تكامل محدد', title: 'الدرس الرابع تكامل وفيه التكامل المحدد وخواصه وفيه التكامل المحدد للقيمة المطلقة والتكامل بالتجزئة', videoId: 'JByeqnl_csc', duration: 2112 },
+    { unit: '∫ التكامل', subUnit: 'دروس', title: '١٩ فبراير ٢٠٢٣', videoId: 'OBgPlwdfEuM', duration: 2480 },
+    { unit: '∫ التكامل', subUnit: 'مساحة وحجم', title: '@حساب_مساحة_سطح @حجم_مجسم @استنتاج_حجم_الكرة @تمرينات_التكامل1_2_3_4 @كيفية_التعامل_مع_الصغرى(min)', videoId: 'bMAyXCZd42w', duration: 3204 },
+    { unit: '∫ التكامل', subUnit: 'تمارين', title: 'الدرس الثامن من دروس التكامل وفيه حل تمارين التكامل 6و7و8و9و10و13و14و15', videoId: 'rJTfKB1IzRY', duration: 3203 },
+    { unit: '∫ التكامل', subUnit: 'دروس', title: '١ مارس ٢٠٢٣', videoId: 'TXntY8FfylE', duration: 2740 },
+    { unit: '∫ التكامل', subUnit: 'مساحة', title: 'الدرس العاشر تكامل وفيه حلى تمارين الوحدة وأهمها @المساحة', videoId: 'vndCnea7duQ', duration: 2952 },
+    { unit: '∫ التكامل', subUnit: 'دروس', title: '٦ مارس ٢٠٢٣', videoId: 'g2VQFtPO2FM', duration: 2301 },
 
-            // ========== الأعداد العقدية (30 فيديو) ==========
-            const complexVideos = [
-                { unit: 'الأعداد العقدية', subUnit: 'شكل جبري', title: 'الدرس 1: الشكل الجبري', videoId: 'SIZxhTQr2UI', duration: 19 },
-                { unit: 'الأعداد العقدية', subUnit: 'مرافق', title: 'الدرس 2: مرافق العدد العقدي', videoId: 'z-UvC56Uakk', duration: 16 },
-                { unit: 'الأعداد العقدية', subUnit: 'إثبات', title: 'الدرس 3: إثبات أن عدد حقيقي', videoId: 'ZEfmw9QupdE', duration: 35 },
-                { unit: 'الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 4: الشكل المثلثي', videoId: 'gjJb9AiykEw', duration: 17 },
-                { unit: 'الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 5: حل س1+3 ص113', videoId: 'yE3JXCk6Luk', duration: 27 },
-                { unit: 'الأعداد العقدية', subUnit: 'شكل مثلثي', title: 'الدرس 6: حل س2 ص113', videoId: 'pXBw6E5m3GY', duration: 12 },
-                { unit: 'الأعداد العقدية', subUnit: 'شكل أسي', title: 'الدرس 7: الشكل الأسي - حل س2 ص116', videoId: '3SWimFnOU9U', duration: 32 },
-                { unit: 'الأعداد العقدية', subUnit: 'أويلر', title: 'الدرس 8: دستورا أويلر - حل س3 ص122', videoId: '8UwEJ4QyAXw', duration: 15 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 9: حل معادلات من الدرجة الأولى', videoId: '0UyZSDf38Jc', duration: 17 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 10: حل معادلات من الدرجة الثانية', videoId: 'shwwGDCj2AM', duration: 10 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 11: حل معادلات الدرجة الثانية - النوع الثاني', videoId: 'l1ICmoDe_DU', duration: 12 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 12: حل معادلات الدرجة الثانية - النوع الثالث', videoId: 'rc21JfBqod4', duration: 9 },
-                { unit: 'الأعداد العقدية', subUnit: 'جمل معادلات', title: 'الدرس 13: حل معادلتين بمجهولين', videoId: 'nu1zAWQAg_4', duration: 7 },
-                { unit: 'الأعداد العقدية', subUnit: 'ثوابت', title: 'الدرس 14: إيجاد الثوابت في معادلة درجة ثانية', videoId: 'jZT9FIZkoWw', duration: 6 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 15: حل معادلة من الدرجة الثالثة', videoId: 'TMLUETTVYag', duration: 19 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 16: معادلة درجة ثالثة - س11ص123', videoId: '3K_Acs6Xh5o', duration: 13 },
-                { unit: 'الأعداد العقدية', subUnit: 'معادلات', title: 'الدرس 17: حل معادلات من الدرجة الرابعة', videoId: 'g8zmWuspJT8', duration: 13 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 18: دائرة القلب - حل س4 ص113', videoId: 'k1cFAKasu8w', duration: 16 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 19: حل س12 ص124', videoId: 'epXLvIJNtpk', duration: 21 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 20: حل س1 ص122', videoId: '2GhQnO-E1TY', duration: 19 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 21: حل س2 ص120', videoId: '5VCf0l-aKN0', duration: 35 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 22: مجموعة النقاط - حل س4 ص110', videoId: 'pUaKGdT1zrY', duration: 24 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 23: حل س16 ص124', videoId: 'YvwYQWV33gw', duration: 15 },
-                { unit: 'الأعداد العقدية', subUnit: 'مجموعات نقاط', title: 'الدرس 24: حل س15 ص124', videoId: 'F3DAnJ_LREA', duration: 17 },
-                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 25: حل س3 ص116', videoId: 'qUajuoHP1Lc', duration: 8 },
-                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 26: حل س3 ص110', videoId: 'H70EmQ67Su4', duration: 10 },
-                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 27: حل س7 ص122', videoId: 'dME51xx09gw', duration: 9 },
-                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 28: حل س13 ص124', videoId: 'POv6sis-RCY', duration: 12 },
-                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 29: حل معادلة مميزة 2ص118', videoId: 'J9T7nx6KuYM', duration: 2 },
-                { unit: 'الأعداد العقدية', subUnit: 'مسائل', title: 'الدرس 30: حل التمرين 3 ص208', videoId: 'Uab_Cdt0cTA', duration: 24 },
-            ];
+    // ===== الأشعة =====
+    { unit: '↗️ الأشعة', subUnit: 'دروس', title: 'اشعة الدرس رقم ١', videoId: '0eSS74TJ80A', duration: 963 },
+    { unit: '↗️ الأشعة', subUnit: 'دروس', title: 'اشعة الدرس الثاني', videoId: '7irXNVNJeOc', duration: 1154 },
+    { unit: '↗️ الأشعة', subUnit: 'تدريبات', title: 'اشعة حل تدريبات ص ١٦الفيديو ٣', videoId: 'pZq18uguAbg', duration: 1322 },
+    { unit: '↗️ الأشعة', subUnit: 'قوانين', title: 'اشعة قوانين الفيديو 4', videoId: 'eOsfyIN88yg', duration: 1821 },
+    { unit: '↗️ الأشعة', subUnit: 'تدريبات', title: 'اشعة حل تدريبات صفحة 24', videoId: 'aO69Heis-oQ', duration: 2123 },
+    { unit: '↗️ الأشعة', subUnit: 'دروس', title: 'اشعة الفيديو رقم 6', videoId: 'LEsNDzQU3yo', duration: 718 },
+    { unit: '↗️ الأشعة', subUnit: 'دروس', title: 'اشعة الفيديو 7', videoId: 'nzMNAZFEkj4', duration: 1470 },
+    { unit: '↗️ الأشعة', subUnit: 'دروس', title: 'اشعة الفيديو 8', videoId: 'JoQem6j4dFY', duration: 1645 },
+    { unit: '↗️ الأشعة', subUnit: 'دروس', title: 'اشعة الفيديو 9', videoId: '9kcf3WVva50', duration: 1844 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلة الكرة', title: 'اشعة الفيديو 10 @معادلة الكرة', videoId: 'SDFDfvyuJME', duration: 981 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلة اسطوانة ومخروط', title: '@اشعة الفيديو 11 @معادلة الاسطوانة والمخروط', videoId: 'TtiGtMHhOJo', duration: 1177 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلة الكرة والاسطوانة', title: '@اشعة الفيديو 12 #معادلة الكرة والاسطوانة والمخروط', videoId: 'SsUpOOGPsfw', duration: 675 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلة مستوي', title: '@اشعة الفيديو 13. #معادلة_المستوي الجزء الأول', videoId: 'HosYCfOBQGI', duration: 2046 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلة مستوي', title: '@اشعة الفيديو 14. @معادلة المستوي الجزء الثاني', videoId: 'HkK2MDpS054', duration: 561 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلات وسيطية', title: '@اشعة الفيديو 15. @المعادلات الوسيطية الجزء الأول', videoId: '4nHMCGXHOZk', duration: 908 },
+    { unit: '↗️ الأشعة', subUnit: 'معادلات وسيطية', title: '@اشعة الفيديو 16. #المعادلات_الوسيطية الجزء الثاني', videoId: 'HyBnIIuAV20', duration: 1072 },
+    { unit: '↗️ الأشعة', subUnit: 'وضع مستقيم ومستوي', title: '@اشعة الفيديو 17. #حل_تدريبات_صفحة_87 المتعلقة بوضع مستقيم ومستوي', videoId: 'kpFc1Ev_rZ4', duration: 1186 },
+    { unit: '↗️ الأشعة', subUnit: 'مركز أبعاد متناسبة', title: '@اشعة الفيديو 18. #مركز_الأبعاد_المتناسبة', videoId: 'd6r1HBdlkME', duration: 4049 },
+    { unit: '↗️ الأشعة', subUnit: 'تدريبات', title: '@اشعة الفيديو 19. #حل_تدريبات_صفحة 80 و 81', videoId: 'kY_A4sDBAeg', duration: 1789 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 20. #حل_تمارين الوحدة الأولى تمرين_1و2و3', videoId: 'hHVb2kTwu6c', duration: 1776 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 21. #حل_تمرين_4_من_الوحدة_الأولى', videoId: 'oVX71qSILlA', duration: 493 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 22. #حل_تمرين5و6_من_تمرينات_الوحدة الأولى', videoId: 'U8C1T-ExzFE', duration: 736 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 23. #حل_تمرين 8. من الوحدة الأولى', videoId: 'oe22GwmbhBo', duration: 499 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 24. #حل_تمارين9و10و13و14 من الوحدة الأولى', videoId: '_xafXM9-Aqo', duration: 1828 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 25. #حل_تمارين 16.17.18 من الوحدة الأولى', videoId: 'Ml9G8RX3KY0', duration: 716 },
+    { unit: '↗️ الأشعة', subUnit: 'بعد نقطة', title: '@اشعة الفيديو 26. #بعد_نقطة_عن....', videoId: 'jHHrOSZhuWU', duration: 1896 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@ اشعة الفيديو 27. #حل_تمارين_19.20.21.22.23', videoId: 'O3eO0bimM3U', duration: 2638 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 28. #حل_تمرين25 من تمارين الوحدة الأولى', videoId: 'USEBRv_M4WY', duration: 275 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة أولى', title: '@اشعة الفيديو 29. #حل_التمرين_7_24_من_الوحدة_الأولى #أخطر_تمرينين', videoId: 'P9ji27k7JCA', duration: 690 },
+    { unit: '↗️ الأشعة', subUnit: 'جداء سلمي', title: '@اشعة الفيديو 30. #الجداء_الشلمي وتدريبات صفحة 50و53و56', videoId: 'vw0kzZbv390', duration: 2211 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثانية', title: '@اشعة الفيديو 31. #تمرينات_الوحدة الثانية من 1 وحتى 21', videoId: 'kvIOiy6tBqk', duration: 3985 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثانية', title: '@اشعة الفيديو 32. #أشعة_الوحدة الثانية تمارين 22و23و24', videoId: 'GZ9RdNbLV3I', duration: 832 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثانية', title: '@اشعة الفيديو 33. #تمرين 25 وحدة ثانية', videoId: 'trDoKrMeXn0', duration: 363 },
+    { unit: '↗️ الأشعة', subUnit: 'غاوص', title: '@اشعة الفيديو 34. #غاوص_وتدريباته', videoId: 'p4QXBp3WHVc', duration: 2242 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثالثة', title: '@اشعة الفيديو 35. #تمرينات_الوحدة الثالثة 1و2و3و4و5', videoId: 'ROvh2Vzx3JQ', duration: 1286 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثالثة', title: '@اشعة الفيديو 36. #حل_تمرين_7_9_من_الوحدة_الثالثة', videoId: 'FqbBEiafzZo', duration: 1978 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثالثة', title: '@اشعة الفيديو 37. #حل_تمرين_10من تمرينات الوحدة الثالثة', videoId: '7esiTyqTbxU', duration: 744 },
+    { unit: '↗️ الأشعة', subUnit: 'تمارين وحدة ثالثة', title: '@اشعة الفيديو 38. #تمرين_11_اشعة الوحدة الثالثة.', videoId: '4nofl_EIt3w', duration: 1108 },
+    { unit: '↗️ الأشعة', subUnit: 'دورات', title: '#حل_الدورات_متعلقة_بالاشعة', videoId: 'jQ31GqPgH1g', duration: 6365 },
+    { unit: '↗️ الأشعة', subUnit: 'نماذج وزارية', title: '@اشعة الفيديو 40. #حل_النماذج_الوزارية_للأشعة', videoId: '49TvB6tyrX4', duration: 1963 },
 
-            // ========== تطبيقات العقدية (19 فيديو) ==========
-            const complexAppsVideos = [
-                { unit: 'تطبيقات العقدية', subUnit: 'أساسيات', title: 'الدرس 1: تطبيقات - الدرس الأول', videoId: 'wVOWp_t-esw', duration: 18 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 2: حل س3 ص132', videoId: '_v3W2yVLVy8', duration: 13 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 3: حل س5 ص133', videoId: 'gBrzZbnqY48', duration: 7 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 4: حل س2 ص132', videoId: 'ESzB8TNKp7k', duration: 6 },
-                { unit: 'تطبيقات العقدية', subUnit: 'نسبة ذهبية', title: 'الدرس 5: النسبة الذهبية - س6 ص133', videoId: 'T7T4TjcefJk', duration: 19 },
-                { unit: 'تطبيقات العقدية', subUnit: 'تحويلات', title: 'الدرس 6: التحويلات الهندسية', videoId: 'ydh__B-8tko', duration: 28 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 7: حل س2 ص136', videoId: 'kIr1Cz1p9-Y', duration: 14 },
-                { unit: 'تطبيقات العقدية', subUnit: 'زاوية', title: 'الدرس 8: حساب قياس الزاوية - حل س3 ص136', videoId: 'LJa0IbrBizc', duration: 9 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 9: حل س3 ص141', videoId: 'wSBSXaiLhd8', duration: 21 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 10: حل س2 ص141', videoId: 'v-YtVLVu2FI', duration: 25 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 11: حل س10 ص143', videoId: 'WXJAxZr9tVs', duration: 18 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 12: حل س6 ص142', videoId: 'WwhwIqR86_o', duration: 16 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 13: حل س7ص142', videoId: 'GyVy1X_UbkY', duration: 13 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 14: حل س8ص123', videoId: 'X4GdQFtuUXc', duration: 9 },
-                { unit: 'تطبيقات العقدية', subUnit: 'جذور تكعيبية', title: 'الدرس 15: الجذور التكعيبية', videoId: 'CBRj-eETojY', duration: 11 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مجموعة نقاط', title: 'الدرس 16: مجموعة نقاط - حل س4 ص141', videoId: 'yxBBUmUj1og', duration: 18 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 17: حل س12 ص144', videoId: '7dHx7MMpmHo', duration: 21 },
-                { unit: 'تطبيقات العقدية', subUnit: 'مسائل', title: 'الدرس 18: حل س8 ص142', videoId: 'Ww8eZeNNszk', duration: 7 },
-                { unit: 'تطبيقات العقدية', subUnit: 'نشاط', title: 'الدرس 19: نشاط ص138', videoId: 'O5z6qoz8PhE', duration: 11 },
-            ];
+    // ===== الأعداد العقدية =====
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم(1)', videoId: 'SLrpDVXDmXI', duration: 567 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (2)', videoId: 'G10a0SKEiTs', duration: 1820 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (4)', videoId: 'FNgobYi8Bwk', duration: 765 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (5)', videoId: 'AwY7eYpgc9M', duration: 688 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (6)', videoId: '6coRvC9xw6I', duration: 1265 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (7)', videoId: 'RGHZ5wyCXmI', duration: 2374 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (8)', videoId: 'nSJ8u6WkRzs', duration: 1733 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم ( 9)', videoId: 'NZ-b8LnRX98', duration: 920 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (11)', videoId: 'O0N7pqN7SFc', duration: 1553 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم ( 12)', videoId: 'kf9-oiwPCZo', duration: 1241 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (13)', videoId: 'llT2M0wwoFo', duration: 897 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (14)', videoId: '3TagYulrwUg', duration: 1900 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دروس', title: '#عقدية رقم (15)', videoId: 'G4p8SV3H5-A', duration: 1341 },
+    { unit: '🔮 الأعداد العقدية', subUnit: 'دورات', title: '#حل_دورات_عقدية رقم (١٦)', videoId: 'd2RaT1_bfGg', duration: 4557 },
 
-            // ========== التحليل التوافقي (16 فيديو) ==========
-            const combinatoricsVideos = [
-                { unit: 'التحليل التوافقي', subUnit: 'عاملي', title: 'الدرس 1: العاملي', videoId: 'dAwhzChV4KE', duration: 17 },
-                { unit: 'التحليل التوافقي', subUnit: 'تراتيب وتوافيق', title: 'الدرس 2: دساتير التراتيب والتوافيق', videoId: '-HmVza1OwDA', duration: 16 },
-                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 3: حل س3ص155 + 1ص164', videoId: 'VdQiTIdHBh0', duration: 14 },
-                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 4: حل س1+2 ص164', videoId: 'ffTHDdWbcFM', duration: 9 },
-                { unit: 'التحليل التوافقي', subUnit: 'مبدأ العد', title: 'الدرس 5: المبدأ الأساسي بالعد', videoId: 'm3qO06O2-EY', duration: 32 },
-                { unit: 'التحليل التوافقي', subUnit: 'مبدأ العد', title: 'الدرس 6: تمارين على المبدأ', videoId: 'dgt3New4woc', duration: 23 },
-                { unit: 'التحليل التوافقي', subUnit: 'قانون التوافيق', title: 'الدرس 7: أسئلة على قانون التوافيق', videoId: 'zl1gz-0f8PM', duration: 35 },
-                { unit: 'التحليل التوافقي', subUnit: 'منشور ذي الحدين', title: 'الدرس 8: منشور ثنائي الحد', videoId: 'LdW95NmJVUY', duration: 19 },
-                { unit: 'التحليل التوافقي', subUnit: 'مسائل سحب', title: 'الدرس 9: مسائل السحب - حل 16+17 ص167', videoId: 'Qgyz-wNnMpQ', duration: 36 },
-                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 10: حل س3ص159 + 9ص164', videoId: 'dvkr40bf1N4', duration: 6 },
-                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 11: حل س2ص162', videoId: 'I2IxbR9Do9E', duration: 12 },
-                { unit: 'التحليل التوافقي', subUnit: 'دورات', title: 'الدرس 12: دورة 2024 + أمثلة خارجية', videoId: '0O5hG2fc0Og', duration: 10 },
-                { unit: 'التحليل التوافقي', subUnit: 'مسائل', title: 'الدرس 13: حل س18 ص167', videoId: 'j9WPeyT7tU4', duration: 16 },
-                { unit: 'التحليل التوافقي', subUnit: 'تحويل مثلثي', title: 'الدرس 14: تحويل العبارات المثلثية بأويلر', videoId: 'y-ibH8g21es', duration: 12 },
-                { unit: 'التحليل التوافقي', subUnit: 'منشور', title: 'الدرس 15: مثال منشور ذي الحدين ص159', videoId: 'IVziwz0KcDg', duration: 7 },
-                { unit: 'التحليل التوافقي', subUnit: 'آحاد وعشرات', title: 'الدرس 16: آحاد وعشرات 11^11', videoId: '8k_cxSyeTmQ', duration: 6 },
-            ];
+    // ===== تطبيقات العقدية =====
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '#تطبيقات_الاعداد_العقدية رقم (١) @تطبيقات الأشعة في العقدية ج1', videoId: 'L0lGuNPRzqY', duration: 629 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '#تطبيقات_الاعداد_العقدية رقم (2) @تطبيقات الأشعة في العقدية ج2', videoId: '5cflvq89Tx4', duration: 1152 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '#تطبيقات_الاعداد_العقدية رقم (3) @تطبيقات الأشعة في العقدية ج3', videoId: 'vCyf_6fwTTw', duration: 1334 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '#تطبيقات_العقدية تطبيقات الأشعة في العقدية الدرس الأول', videoId: 'ytj_TwLChy8', duration: 1614 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '#تطبيقات_عقدية رقم (4)', videoId: '_hFVqNbaW8I', duration: 1382 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '@تطبيقات الاعداد العقدية رقم (5)', videoId: 'DUfwAlgpUnc', duration: 1915 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '@تطبيقات الاعداد العقدية رقم (7)', videoId: 'jn6MnwunAGY', duration: 1181 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '@تطبيقات عقدية رقم (8)', videoId: 'dsrSQMdO0ZE', duration: 1870 },
+    { unit: '⚡ تطبيقات العقدية', subUnit: 'تطبيقات', title: '@تطبيقات عقدية رقم (6)', videoId: '_AOKSMTvzTg', duration: 532 },
 
-            // ========== الاحتمالات (18 فيديو) ==========
-            const probabilityVideos = [
-                { unit: 'الاحتمالات', subUnit: 'أساسيات', title: 'الدرس 1: مسألة توافيق', videoId: 'R1bv9S1KhaI', duration: 28 },
-                { unit: 'الاحتمالات', subUnit: 'تتالي', title: 'الدرس 2: التتالي دون إعادة', videoId: 'TVNpuFmiykM', duration: 14 },
-                { unit: 'الاحتمالات', subUnit: 'تتالي', title: 'الدرس 3: التتالي مع إعادة', videoId: 'jbQnaU0WF-4', duration: 21 },
-                { unit: 'الاحتمالات', subUnit: 'قوانين', title: 'الدرس 4: قوانين عامة', videoId: '9WQv2RsGzUI', duration: 11 },
-                { unit: 'الاحتمالات', subUnit: 'مخطط شجري', title: 'الدرس 5: المخطط الشجري', videoId: 'W_yoa26SPJg', duration: 24 },
-                { unit: 'الاحتمالات', subUnit: 'مخطط شجري', title: 'الدرس 6: حل 5+6 ص180 و3ص208', videoId: 'R3HnXeLLEkM', duration: 23 },
-                { unit: 'الاحتمالات', subUnit: 'متحول عشوائي', title: 'الدرس 7: المتحول العشوائي', videoId: 'JOsMMnDAQzE', duration: 25 },
-                { unit: 'الاحتمالات', subUnit: 'متحول عشوائي', title: 'الدرس 8: حل 5ص184 + 2ص214', videoId: 'FY9kcMxcMiI', duration: 20 },
-                { unit: 'الاحتمالات', subUnit: 'استقلال', title: 'الدرس 9: الاستقلال الاحتمالي', videoId: 'GbQpGAW9yrQ', duration: 14 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 10: حل س1+2 ص187', videoId: 'tIJG4_RMcHk', duration: 14 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 11: حل س10 ص201', videoId: 'XOhRgsebPeE', duration: 15 },
-                { unit: 'الاحتمالات', subUnit: 'برنولي', title: 'الدرس 12: برنولي - حل 2+3 ص192 و14ص203', videoId: 'qwUDtGJLXZY', duration: 20 },
-                { unit: 'الاحتمالات', subUnit: 'برنولي', title: 'الدرس 13: برنولي - حل 4+1 ص192', videoId: 'fbfIPI0XNMc', duration: 18 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 14: حل س3ص198', videoId: 'vs8DzX5Hix0', duration: 10 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 15: حل مسألة سعاد 18 ص204', videoId: 'm2-KWSm3D0k', duration: 20 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 16: مسألة ضربات الجزاء 2 ص211', videoId: '44K_BUEUJrE', duration: 25 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 17: حل المسألة 15 ص203', videoId: 's9P_gGc3NF0', duration: 15 },
-                { unit: 'الاحتمالات', subUnit: 'مسائل', title: 'الدرس 18: حل السؤال 8 ص202', videoId: 'Ybpimo2EM6w', duration: 12 },
-            ];
+    // ===== التحليل التوافقي =====
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: '@تحليل توافقي الدرس الأول', videoId: 'ibx-Cw7Hwtk', duration: 2057 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'اذا اردت ان تفهم #التحليل_التوافقي مع المدرس محمد رسول الصباغ', videoId: 'M5bGlh5aFt0', duration: 2057 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي الدرس الثالث', videoId: 'uspJrRmoqZM', duration: 1364 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي الدرس الرابع', videoId: 'eqm7PSzE1sY', duration: 549 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي الدرس الخامس', videoId: 'JubKUywlruc', duration: 1770 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي الدرس السابع', videoId: 'LlutukIKxW8', duration: 1084 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي الدرس الثامن', videoId: 'aZZy875X6SQ', duration: 927 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي الدرس التاسع', videoId: 'qGfbpBTZQ0E', duration: 922 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'عاملي', title: 'الدرس الثاني تحليل توافقي ج١. حل تدريبات العاملة', videoId: 'TcvzqPhl-pM', duration: 1994 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'توافيق', title: 'الدرس الثاني تحليل توافقي ج٣. حل تدريبات التوافيق', videoId: 'yPeCGhqQynY', duration: 1226 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'توافيق', title: '#التوافيق', videoId: 'U0atkxNYBos', duration: 1379 },
+    { unit: '🎲 التحليل التوافقي', subUnit: 'دروس', title: 'تحليل توافقي(أتمتة) العاملة ! والتباديل الدرس الأول', videoId: 'P4Bh1twHu4M', duration: 2478 },
 
-            // ========== قراءة الخط البياني (5 فيديو) ==========
-            const graphReadingVideos = [
-                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 1: قراءة جدول التغيرات والخط البياني', videoId: '2vAkvLY44fo', duration: 15 },
-                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 2: قراءة الخط البياني', videoId: 'thQiK8Wm2lk', duration: 18 },
-                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 3: قراءة الخط البياني 2', videoId: 'ti587P96W14', duration: 22 },
-                { unit: 'قراءة الخط البياني', subUnit: 'أساسيات', title: 'الدرس 4: قراءة الخطوط البيانية والجداول', videoId: 'B0d_E1en4TE', duration: 16 },
-                { unit: 'قراءة الخط البياني', subUnit: 'مشتقات', title: 'الدرس 5: قراءة الخط البياني لمشتق التابع', videoId: 'Rba0AoMl4vA', duration: 20 },
-            ];
+    // ===== الاحتمالات =====
+    { unit: '🎯 الاحتمالات', subUnit: 'دروس', title: 'الدرس الأول: تعاريف', videoId: 'UdxM7j59LBc', duration: 2414 },
+    { unit: '🎯 الاحتمالات', subUnit: 'تمارين', title: 'الدرس الثاني حل تدريبات صفحة 180', videoId: 'QQYhD7bG9Us', duration: 1580 },
+    { unit: '🎯 الاحتمالات', subUnit: 'دروس', title: '#احتمالات #الدرس الثالث', videoId: 'k0hJHqE0W08', duration: 1502 },
+    { unit: '🎯 الاحتمالات', subUnit: 'متغير عشوائي', title: '#احتمالات الدرس الرابع حل تدريبات المتغير العشوائي', videoId: 'VRRhzD8NXT0', duration: 952 },
+    { unit: '🎯 الاحتمالات', subUnit: 'استقلال', title: '#الاحتمالات الدرس الخامس #الاستقلال الاحتمالي', videoId: 'gbOBS4v0uNI', duration: 460 },
+    { unit: '🎯 الاحتمالات', subUnit: 'استقلال', title: '#الاستقلال_الاحتمالي_لحدثين #مسألة_حادي_عشر. #هامة_جدا', videoId: 'TQaeaumjIDU', duration: 801 },
+    { unit: '🎯 الاحتمالات', subUnit: 'استقلال', title: '#احتمالات #الدرس_السابع #الاستقلال_الاحتمالي_لمتغيرين', videoId: 'QwiAlSYGMOo', duration: 1390 },
+];
 
-            // ========== دورات (32 فيديو) - عينة تمثيلية ==========
-            const examsVideos = [
-                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2018 ثانية', videoId: 'K0fOldLo70c', duration: 11 },
-                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2022 أولى', videoId: 'GvHRXkXQkvs', duration: 21 },
-                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2023 أولى', videoId: 'SYenxk3JvTM', duration: 11 },
-                { unit: 'دورات وحلول', subUnit: 'أشعة', title: 'أشعة دورة 2024 أولى', videoId: 'zSKQA64AUP4', duration: 13 },
-                { unit: 'دورات وحلول', subUnit: 'متتاليات', title: 'حل دورة 2017 متتاليات', videoId: 'obRDP8UwVVQ', duration: 15 },
-                { unit: 'دورات وحلول', subUnit: 'نهايات', title: 'حل دورة 2018 نهايات', videoId: 'zpSEzQt0gjM', duration: 17 },
-            ];
 
-            // دمج جميع الفيديوهات مع إضافة id تلقائي (تم حذف foundationVideos)
-            let allVideos = [
-                ...sequencesVideos,
-                ...limitsVideos,
-                ...derivativeVideos,
-                ...logVideos,
-                ...expVideos,
-                ...integralVideos,
-                ...vectorsVideos,
-                ...complexVideos,
-                ...complexAppsVideos,
-                ...combinatoricsVideos,
-                ...probabilityVideos,
-                ...graphReadingVideos,
-                ...examsVideos,
-            ];
-
-            // تحويل المدة إلى صيغة hh:mm:ss (المدة معطاة بالدقائق في الكود أعلاه)
-            allVideos = allVideos.map((v, index) => {
-                let dur = v.duration;
-                let hours = Math.floor(dur / 60);
-                let minutes = dur % 60;
-                let timeString = `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:00`;
-                return {
-                    id: index,
-                    title: v.title,
-                    youtubeId: v.videoId,
-                    unit: v.unit,
-                    subUnit: v.subUnit,
-                    duration: timeString,
-                    watched: false
-                };
+            // تحويل المدد وإضافة id
+            let mkVideos = mkVideosRaw.map((v, index) => {
+                let durStr;
+                if (typeof v.duration === 'number' && v.duration < 1000) {
+                    durStr = formatDurationFromMinutes(v.duration);
+                } else {
+                    durStr = formatDurationFromSeconds(v.duration);
+                }
+                return { id: index, ...v, duration: durStr };
             });
 
-            // ترتيب الوحدات للعرض (تم حذف تأسيس)
-            const unitsList = [
-                { id: 'المتتاليات', name: '📈 المتتاليات', icon: 'chart-line' },
-                { id: 'النهايات والاستمرار', name: '∞ النهايات والاستمرار', icon: 'infinity' },
-                { id: 'الاشتقاق', name: '📐 الاشتقاق', icon: 'chart-line' },
-                { id: 'اللوغاريتمي', name: '📊 اللوغاريتمي', icon: 'chart-line' },
-                { id: 'الأسي', name: '📈 الأسي', icon: 'chart-line' },
-                { id: 'التكامل', name: '∫ التكامل', icon: 'cubes' },
-                { id: 'الأشعة', name: '↗️ الأشعة', icon: 'vector-square' },
-                { id: 'الأعداد العقدية', name: '🔮 الأعداد العقدية', icon: 'square-root-alt' },
-                { id: 'تطبيقات العقدية', name: '⚡ تطبيقات العقدية', icon: 'bolt' },
-                { id: 'التحليل التوافقي', name: '🎲 التحليل التوافقي', icon: 'dice' },
-                { id: 'الاحتمالات', name: '🎯 الاحتمالات', icon: 'bullseye' },
-                { id: 'قراءة الخط البياني', name: '📉 قراءة الخط البياني', icon: 'chart-area' },
-                { id: 'دورات وحلول', name: '📝 دورات وحلول', icon: 'calendar-alt' },
-            ];
+            let mohammadVideos = mohammadVideosRaw.map((v, index) => ({
+                id: index + 10000,
+                ...v,
+                duration: formatDurationFromSeconds(v.duration)
+            }));
 
-            // متغيرات الحالة
-            let watchedVideos = JSON.parse(localStorage.getItem('mathWatched')) || [];
-            let currentVideo = allVideos[0];
+            // المتغيرات الأساسية
+            let currentSource = 'mk';
+            let allVideos = mkVideos;
+            let watchedVideos = JSON.parse(localStorage.getItem('mathWatched_mk')) || [];
+            let currentVideo = allVideos[0] || {};
 
-            // دوال مساعدة
+            function getUnitsList(videos) {
+                const units = [...new Set(videos.map(v => v.unit))];
+                return units.map(unit => ({ id: unit, name: unit }));
+            }
+            let unitsList = getUnitsList(allVideos);
+
             function saveWatched() {
-                localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
+                const key = currentSource === 'mk' ? 'mathWatched_mk' : 'mathWatched_mohammad';
+                localStorage.setItem(key, JSON.stringify(watchedVideos));
+            }
+            function loadWatched() {
+                const key = currentSource === 'mk' ? 'mathWatched_mk' : 'mathWatched_mohammad';
+                watchedVideos = JSON.parse(localStorage.getItem(key)) || [];
             }
             function saveLastWatched(id) {
-                localStorage.setItem('mathLast', id);
+                const key = currentSource === 'mk' ? 'mathLast_mk' : 'mathLast_mohammad';
+                localStorage.setItem(key, id);
             }
             function loadLastWatched() {
-                const last = localStorage.getItem('mathLast');
+                const key = currentSource === 'mk' ? 'mathLast_mk' : 'mathLast_mohammad';
+                const last = localStorage.getItem(key);
                 if (last !== null) {
                     const idx = allVideos.findIndex(v => v.id == last);
                     if (idx >= 0) currentVideo = allVideos[idx];
                 }
             }
 
+            function switchSource(source) {
+                currentSource = source;
+                allVideos = source === 'mk' ? mkVideos : mohammadVideos;
+                unitsList = getUnitsList(allVideos);
+                loadWatched();
+                loadLastWatched();
+                if (!currentVideo || !allVideos.find(v => v.id === currentVideo.id)) {
+                    currentVideo = allVideos[0] || {};
+                }
+                setVideoByIndex(allVideos.findIndex(v => v.id === currentVideo.id));
+                buildUnits();
+                updateAllStats();
+                updateCountdown();
+                updateLastWatched();
+                document.getElementById('source-mk').classList.toggle('active', source === 'mk');
+                document.getElementById('source-mohammad').classList.toggle('active', source === 'mohammad');
+            }
+
             function setVideoByIndex(index) {
                 const v = allVideos[index];
                 if (!v) return;
                 currentVideo = v;
-                document.getElementById('youtube-player').src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                document.getElementById('youtube-player').src = `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1`;
                 document.getElementById('current-video-title').innerText = v.title;
                 document.getElementById('current-unit').innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
                 document.getElementById('current-duration').innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
                 buildUnits();
+                document.querySelector('.video-player-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             function calcStats() {
@@ -1051,7 +1415,7 @@
                     const v = allVideos.find(v => v.id === id);
                     if (v) {
                         const parts = v.duration.split(':');
-                        totalSeconds += parseInt(parts[0])*3600 + parseInt(parts[1])*60 + parseInt(parts[2]);
+                        totalSeconds += parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
                     }
                 });
                 const hours = Math.round(totalSeconds / 3600 * 10) / 10;
@@ -1066,6 +1430,7 @@
                 document.getElementById('total-hours').innerText = hours;
                 document.getElementById('overall-percent').innerText = percent + '%';
                 document.getElementById('overall-progress').style.width = percent + '%';
+                document.getElementById('total-videos-count').innerText = total;
 
                 const badge5 = document.getElementById('badge5');
                 const badge25 = document.getElementById('badge25');
@@ -1111,7 +1476,7 @@
                             const isActive = currentVideo?.id === v.id;
                             lessonsHtml += `
                                 <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${v.id}">
-                                    <div class="lesson-watch ${isWatched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check" style="opacity:${isWatched?1:0};"></i></div>
+                                    <div class="lesson-watch-circle ${isWatched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check"></i></div>
                                     <div class="lesson-info" data-id="${v.id}">${v.title}</div>
                                     <div class="lesson-duration">${v.duration}</div>
                                 </li>
@@ -1119,8 +1484,11 @@
                         });
                         subHtml += `
                             <div class="sub-unit">
-                                <div class="sub-unit-title">${sub}</div>
-                                <ul class="lesson-list">${lessonsHtml}</ul>
+                                <div class="sub-unit-header" onclick="toggleSubUnit(this)">
+                                    <i class="fas fa-chevron-left"></i>
+                                    <span class="sub-unit-title">${sub}</span>
+                                </div>
+                                <ul class="lesson-list" style="display: none;">${lessonsHtml}</ul>
                             </div>
                         `;
                     });
@@ -1128,28 +1496,26 @@
                     htmlAll += `
                         <div class="unit-card">
                             <div class="unit-header" onclick="toggleUnit(this)">
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fas fa-chevron-left"></i>
                                 <span class="unit-title">${unit.name}</span>
                                 <span class="unit-progress">${watchedU}/${unitVideos.length}</span>
                             </div>
-                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                            <div class="sub-units" style="display: none;">${subHtml}</div>
                         </div>
                     `;
                 });
                 container.innerHTML = htmlAll;
 
-                document.querySelectorAll('.lesson-watch').forEach(el => {
+                document.querySelectorAll('.lesson-watch-circle').forEach(el => {
                     el.addEventListener('click', (e) => {
                         e.stopPropagation();
                         const id = parseInt(el.dataset.id);
                         if (watchedVideos.includes(id)) {
                             watchedVideos = watchedVideos.filter(w => w !== id);
                             el.classList.remove('watched');
-                            el.querySelector('i').style.opacity = 0;
                         } else {
                             watchedVideos.push(id);
                             el.classList.add('watched');
-                            el.querySelector('i').style.opacity = 1;
                         }
                         saveWatched();
                         updateAllStats();
@@ -1172,6 +1538,7 @@
                         const index = allVideos.findIndex(v => v.id === id);
                         if (index !== -1) {
                             setVideoByIndex(index);
+                            saveLastWatched(id);
                         }
                     });
                 });
@@ -1179,14 +1546,28 @@
 
             window.toggleUnit = function(header) {
                 const sub = header.nextElementSibling;
+                const icon = header.querySelector('i');
                 if (sub.style.display === 'none') {
                     sub.style.display = 'block';
-                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
-                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
                 } else {
                     sub.style.display = 'none';
-                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
-                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
+            window.toggleSubUnit = function(header) {
+                const lessonList = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                if (lessonList.style.display === 'none') {
+                    lessonList.style.display = 'block';
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    lessonList.style.display = 'none';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
                 }
             };
 
@@ -1201,7 +1582,7 @@
                     document.getElementById('daily-plan-detail').innerText = 'انتهى';
                     return;
                 }
-                const days = Math.floor(diff / (1000*60*60*24));
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 document.getElementById('countdown-days').innerText = days;
                 document.getElementById('countdown-large').innerText = days;
                 const remaining = allVideos.length - watchedVideos.length;
@@ -1211,7 +1592,8 @@
             }
 
             function updateLastWatched() {
-                const lastId = localStorage.getItem('mathLast');
+                const key = currentSource === 'mk' ? 'mathLast_mk' : 'mathLast_mohammad';
+                const lastId = localStorage.getItem(key);
                 if (lastId) {
                     const v = allVideos.find(v => v.id == lastId);
                     if (v) document.getElementById('last-watched').innerText = v.title;
@@ -1233,9 +1615,10 @@
             }
 
             function init() {
-                const stored = localStorage.getItem('mathWatched');
-                if (stored) watchedVideos = JSON.parse(stored);
-                loadLastWatched();
+                switchSource('mk');
+                document.getElementById('source-mk').addEventListener('click', () => switchSource('mk'));
+                document.getElementById('source-mohammad').addEventListener('click', () => switchSource('mohammad'));
+
                 setVideoByIndex(allVideos.findIndex(v => v.id === currentVideo.id));
                 buildUnits();
                 updateAllStats();
