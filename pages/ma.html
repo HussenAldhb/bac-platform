@@ -514,8 +514,7 @@
             font-size: 13px;
         }
 
-<!-- بداية: إضافة الزر الزجاجي العصري -->
-    <style>
+        /* الزر الزجاجي للعودة للرئيسية */
         .glass-home-btn {
             position: fixed;
             top: 20px;
@@ -544,16 +543,11 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
-
-        .glass-home-btn:active {
-            transform: translateY(0);
-        }
     </style>
-    <!-- نهاية الزر الزجاجي -->
 </head>
 <body>
     <!-- الزر الزجاجي -->
-    <a href="../index.html" class="glass-home-btn" title="العودة للرئيسية">
+    <a href="#" class="glass-home-btn" title="العودة للرئيسية" onclick="window.location.reload(); return false;">
         <i class="fas fa-home"></i>
     </a>
 
