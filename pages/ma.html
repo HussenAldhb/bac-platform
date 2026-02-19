@@ -1391,6 +1391,7 @@ const mohammadVideosRaw = [
 
     function saveWatched() {
         localStorage.setItem(getStorageKey(), JSON.stringify(watchedVideos));
+        localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
     }
     
     function loadWatched() {
@@ -1445,6 +1446,7 @@ const mohammadVideosRaw = [
         currentSource = 'mk';
         allVideos = [...mkVideos];
         loadWatched();
+        localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
         const lastVideo = loadLastWatched();
         if (lastVideo) {
             updateVideoPlayer(lastVideo);
@@ -1461,6 +1463,7 @@ const mohammadVideosRaw = [
         currentSource = 'mohammad';
         allVideos = [...mohammadVideos];
         loadWatched();
+        localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
         const lastVideo = loadLastWatched();
         if (lastVideo) {
             updateVideoPlayer(lastVideo);
@@ -1771,6 +1774,7 @@ const mohammadVideosRaw = [
 </script>
 </body>
 </html>
+
 
 
 
