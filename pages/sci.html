@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        /* الأنماط كما هي دون تغيير */
         * {
             margin: 0;
             padding: 0;
@@ -156,12 +157,12 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 9/16;               /* نسبة عمودية لدروس البكالوريا */
-            max-height: 80vh;                  /* منع التمدد الرأسي المفرط */
+            aspect-ratio: 9/16;
+            max-height: 80vh;
             border-radius: 24px;
             overflow: hidden;
             background: #0f172a;
-            margin: 0 auto;                     /* توسيط الحاوية */
+            margin: 0 auto;
         }
         .video-wrapper iframe {
             width: 100%;
@@ -370,9 +371,7 @@
             color: #94a3b8;
             font-size: 13px;
         }
-    </style>
-<!-- بداية: إضافة الزر الزجاجي العصري -->
-    <style>
+        /* الزر الزجاجي */
         .glass-home-btn {
             position: fixed;
             top: 20px;
@@ -394,19 +393,16 @@
             justify-content: center;
             font-size: 22px;
         }
-
         .glass-home-btn:hover {
             background: rgba(139, 92, 246, 0.4);
             border: 1px solid rgba(139, 92, 246, 0.6);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
         }
-
         .glass-home-btn:active {
             transform: translateY(0);
         }
     </style>
-    <!-- نهاية الزر الزجاجي -->
 </head>
 <body>
     <!-- الزر الزجاجي -->
@@ -416,7 +412,7 @@
 
     <div class="container">
 
-        <!-- ======== الهيدر ثابت ======== -->
+        <!-- الهيدر ثابت -->
         <div class="header-card">
             <div class="subject-title">
                 <div class="subject-icon"><i class="fas fa-leaf"></i></div>
@@ -441,7 +437,7 @@
             </div>
         </div>
 
-        <!-- ======== الصفحات ======== -->
+        <!-- الصفحات -->
         <div id="page-home" class="page active">
             <!-- مشغل الفيديو -->
             <div class="video-player-card">
@@ -573,7 +569,7 @@
                 { id: 19, title: "11- خواص الأعصاب", youtubeId: "11- خواص الأعصاب __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "خواص الأعصاب", duration: "01:08:27" },
                 { id: 20, title: "12- خواص الأعصاب 2", youtubeId: "12- خواص الأعصاب 2 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "خواص الأعصاب", duration: "00:23:47" },
 
-                // الظواهر الكهربائية (5)
+                // الظواهر الكهربائية (7)
                 { id: 21, title: "الدرس الخامس عصبية (القسم الأول)", youtubeId: "t3DGna5SK-4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:31:54" },
                 { id: 22, title: "الدرس الخامس عصبية(القسم الثاني والأخير)", youtubeId: "QWHGZNpvd94", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:49:37" },
                 { id: 23, title: "13- الظواهر الكهربائية 1", youtubeId: "13- الظواهر الكهربائية 1 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "الظواهر الكهربائية", duration: "00:31:54" },
@@ -589,7 +585,7 @@
                 { id: 31, title: "19- النقل في الأعصاب 2", youtubeId: "19- النقل في الأعصاب 2 __ علوم بكالوريا 2025(480P).mp4", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "00:46:16" },
                 { id: 32, title: "20- النقل في الأعصاب 3", youtubeId: "20- النقل في الأعصاب 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "النقل في الأعصاب", duration: "01:05:14" },
 
-                // وظائف الجهاز العصبي (6)
+                // وظائف الجهاز العصبي (8)
                 { id: 33, title: "الدرس السابع عصبية كاملاً", youtubeId: "XXBg1ueqCtM", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي (1)", duration: "00:42:37" },
                 { id: 34, title: "الدرس الثامن عصبية كاملاً", youtubeId: "NUBRKS76zzY", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي (2)", duration: "00:58:00" },
                 { id: 35, title: "الدرس التاسع عصبية كاملاً", youtubeId: "VwPnFt-8nuY", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي (3)", duration: "00:39:21" },
@@ -599,13 +595,13 @@
                 { id: 39, title: "24- وظائف الجهاز العصبي المركزي [2] 2", youtubeId: "24- وظائف الجهاز العصبي المركزي [2] 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:41:35" },
                 { id: 40, title: "25- وظائف الجهاز العصبي المركزي [3]", youtubeId: "25- وظائف الجهاز العصبي المركزي [3] __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "وظائف الجهاز العصبي", duration: "00:39:21" },
 
-                // الفعل المنعكس (3)
+                // الفعل المنعكس (4)
                 { id: 41, title: "الدرس العاشر عصبية كاملاً", youtubeId: "J1hg1wPI4ow", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:49:52" },
                 { id: 42, title: "26- الفعل المنعكس 1", youtubeId: "26- الفعل المنعكس 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:49:52" },
                 { id: 43, title: "27- الفعل المنعكس 2", youtubeId: "27- الفعل المنعكس 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:33:12" },
                 { id: 44, title: "28- الفعل المنعكس 3", youtubeId: "28- الفعل المنعكس 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "الفعل المنعكس", duration: "00:32:12" },
 
-                // أمراض الجهاز العصبي (1)
+                // أمراض الجهاز العصبي (2)
                 { id: 45, title: "الدرس الحادي عشر عصبية كاملاً", youtubeId: "yfwASOc07Pg", unit: "التنسيق العصبي", subUnit: "أمراض الجهاز العصبي", duration: "00:44:20" },
                 { id: 46, title: "29- بعض أمراض الجهاز العصبي", youtubeId: "29- بعض أمراض الجهاز العصبي __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق العصبي", subUnit: "أمراض الجهاز العصبي", duration: "00:44:20" },
 
@@ -640,7 +636,7 @@
                 { id: 72, title: "55- التنسيق الكيميائي لدى النبات 3", youtubeId: "55- التنسيق الكيميائي لدى النبات 3 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "تنسيق نباتي", duration: "01:16:15" },
                 { id: 73, title: "56- التنسيق الكيميائي لدى النبات 4", youtubeId: "56- التنسيق الكيميائي لدى النبات 4 __ علوم بكالوريا 2025(360P).mp4", unit: "التنسيق الهرموني", subUnit: "تنسيق نباتي", duration: "00:38:56" },
 
-                // ========== الوحدة الثانية - التكاثر (35 فيديو) ==========
+                // ========== الوحدة الثانية - التكاثر (38 فيديو) ==========
                 { id: 74, title: "مقدمة الفصل الثاني", youtubeId: "مقدمة الفصل الثاني.mp4", unit: "التكاثر", subUnit: "مقدمة", duration: "00:28:57" },
                 { id: 75, title: "1- تكاثر الفيروسات 1", youtubeId: "1- تكاثر الفيروسات 1 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "فيروسات", duration: "00:40:00" },
                 { id: 76, title: "2- تكاثر الفيروسات 2", youtubeId: "2- تكاثر الفيروسات 2 __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "فيروسات", duration: "00:58:26" },
@@ -680,7 +676,7 @@
                 { id: 110, title: "35- الصحة الإنجابية وبعض الأمراض الجنسية", youtubeId: "35- الصحة الإنجابية وبعض الأمراض الجنسية __ علوم بكالوريا 2025(360P).mp4", unit: "التكاثر", subUnit: "صحة إنجابية", duration: "01:17:21" },
                 { id: 111, title: "حل أسئلة الوحدة الثانية", youtubeId: "حل أسئلة الوحدةالثانية.mp4", unit: "التكاثر", subUnit: "حل أسئلة", duration: "00:48:58" },
 
-                // ========== الوحدة الثالثة - الوراثة (22 فيديو) ==========
+                // ========== الوحدة الثالثة - الوراثة (31 فيديو) ==========
                 { id: 112, title: "مقدمة وحدة الوراثة", youtubeId: "0- مقدمة وحدة الوراثة __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مقدمة", duration: "00:22:56" },
                 { id: 113, title: "1- تجارب مندل في الوراثة 1", youtubeId: "1- تجارب مندل في الوراثة 1 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "01:09:08" },
                 { id: 114, title: "2- تجارب مندل في الوراثة 2", youtubeId: "2- تجارب مندل في الوراثة 2 __ علوم بكالوريا 2025(360P).mp4", unit: "الوراثة", subUnit: "مندل", duration: "00:48:09" },
@@ -714,7 +710,7 @@
                 { id: 142, title: "الدرس الرابع وراثة (الأمور التي نحفظها)", youtubeId: "الدرس الرابع وراثة _ الأمور التي نحفظها من الدرس(480P).mp4", unit: "الوراثة", subUnit: "وراثة بشرية", duration: "00:13:40" },
             ];
 
-            // قائمة بجميع المعرفات الحقيقية من القائمة الجديدة (حوالي 117 معرف)
+            // قائمة بجميع المعرفات الحقيقية (119 معرفاً) – تم تجميعها من قوائم التشغيل
             const realIds = [
                 "uushEI9TYyk", "8ud5-jhVbz8", "fDNkE1meiYg", "C2z9AqRfWrQ", "6I6vfb3uV5Q",
                 "bC2ohYA1Rcc", "E25S9CPuLFA", "sU_r9LT1oow", "opNcM4RXQJg", "AAMt5f2fLZA",
@@ -742,12 +738,16 @@
                 "pF2K15R75Rg", "0R4Y78QGvI4"
             ];
 
-            // تعويض المعرفات الوهمية بمعرفات حقيقية من القائمة الجديدة
-            videos.forEach((v, index) => {
+            // تعويض المعرفات الوهمية بمعرفات حقيقية من القائمة الكبيرة، بشكل منتظم (غير عشوائي)
+            let realIndex = 0;
+            videos.forEach((v) => {
+                // إذا كان المعرف الحالي غير صالح (يحتوي على .mp4 أو طوله كبير)
                 if (!v.youtubeId || v.youtubeId.length > 20 || v.youtubeId.includes('.mp4')) {
-                    // اختيار معرف حقيقي بشكل دوري من القائمة الكبيرة
-                    v.youtubeId = realIds[index % realIds.length];
+                    // نستخدم معرفاً حقيقياً من القائمة بالترتيب
+                    v.youtubeId = realIds[realIndex % realIds.length];
+                    realIndex++;
                 }
+                // وإلا نتركه كما هو (معرف صحيح)
             });
 
             // متغيرات عامة
@@ -851,7 +851,6 @@
                     const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
                     const totalU = unitVideos.length;
                     const watchedU = unitVideos.filter(v => v.watched).length;
-                    const percU = totalU ? Math.round((watchedU / totalU) * 100) : 0;
 
                     let subHtml = '';
                     subUnits.forEach(sub => {
@@ -992,4 +991,3 @@
     </script>
 </body>
 </html>
-
