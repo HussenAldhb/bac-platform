@@ -146,6 +146,7 @@
             border-radius: 30px;
             transition: width 0.3s;
         }
+        /* تحسين مشغل الفيديو: نسبة 16/9 (الحفاظ على التصميم الحالي مع إضافة التحسينات) */
         .video-player-card {
             background: #1e293b;
             border-radius: 32px;
@@ -156,10 +157,14 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 24px;
+            aspect-ratio: 16/9;  /* تم التعديل إلى 16/9 ليتناسب مع فيديوهات اليوتيوب */
+            border-radius: 25px;  /* زيادة الاستدارة */
             overflow: hidden;
             background: #0f172a;
+            /* تأثير زجاجي وظل */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.5);
         }
         .video-wrapper iframe {
             width: 100%;
@@ -222,20 +227,39 @@
         }
         .sub-units {
             padding: 12px;
+            display: none; /* افتراضيًا الوحدات مطوية */
         }
         .sub-unit {
             margin-bottom: 16px;
+        }
+        .sub-unit-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 8px 8px 0;
+            border-right: 4px solid #0ea5e9;
+            margin-bottom: 8px;
+        }
+        .sub-unit-header i {
+            font-size: 18px;
+            color: #0ea5e9;
+            transition: 0.2s;
         }
         .sub-unit-title {
             font-size: 16px;
             font-weight: 600;
             color: #0ea5e9;
-            margin-bottom: 8px;
-            padding-right: 8px;
-            border-right: 4px solid #0ea5e9;
+            flex: 1;
         }
         .lesson-list {
             list-style: none;
+            display: none; /* افتراضيًا دروس كل sub-unit مطوية */
+            margin-right: 20px; /* محاذاة للداخل */
+        }
+        /* عند فتح قائمة الدروس نظهرها */
+        .sub-unit.open .lesson-list {
+            display: block;
         }
         .lesson-item {
             display: flex;
@@ -251,23 +275,31 @@
         .lesson-item:hover {
             border-color: #0ea5e9;
         }
+        /* تمييز الفيديو النشط */
+        .lesson-item.active {
+            border: 2px solid #10b981;  /* أخضر */
+            background: #1e3a3a;
+        }
+        /* زر الإتمام الدائري الجديد (أخضر) */
         .lesson-watch {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 2px solid #0ea5e9;
+            border: 2px solid #10b981;  /* أخضر */
             background: transparent;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0ea5e9;
+            color: #10b981;
             font-size: 14px;
             flex-shrink: 0;
+            transition: 0.2s;
         }
         .lesson-watch.watched {
-            background: #0ea5e9;
+            background: #10b981;
             color: #0f172a;
+            border-color: #10b981;
         }
         .lesson-info {
             flex: 1;
@@ -443,7 +475,7 @@
             <!-- مشغل الفيديو -->
             <div class="video-player-card">
                 <div class="video-wrapper">
-                    <iframe id="youtube-player" src="https://www.youtube.com/embed/UnZX_FTgiJE" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="youtube-player" src="https://www.youtube.com/embed/UnZX_FTgiJE" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                 </div>
                 <div class="video-title" id="current-video-title">1- ما تحتاجه من الرياضيات للدخول في الفيزياء</div>
                 <div class="video-meta">
@@ -452,7 +484,7 @@
                 </div>
             </div>
 
-            <!-- الوحدات القابلة للطي -->
+            <!-- الوحدات القابلة للطي (سيتم بناؤها بواسطة JavaScript) -->
             <div class="units-container" id="units-container"></div>
         </div>
 
@@ -538,7 +570,7 @@
 
     <script>
         (function() {
-            // ========== بيانات الفيديوهات (129 فيديو) محولة إلى الصيغة المطلوبة ==========
+            // ========== بيانات الفيديوهات (129 فيديو) ==========
             const rawVideos = [
                 // أساسيات فيزياء (5)
                 { unit: 'أساسيات فيزياء', subUnit: 'أساسيات', title: '1- ما تحتاجه من الرياضيات للدخول في الفيزياء', videoId: 'UnZX_FTgiJE', duration: 35 },
@@ -746,16 +778,25 @@
                 }
             }
 
-            // تحديث مشغل الفيديو
+            // تحديث مشغل الفيديو مع إضافة autoplay
             function setVideoByIndex(index) {
                 const v = videos[index];
                 if (!v) return;
                 currentVideoIndex = index;
-                player.src = `https://www.youtube.com/embed/${v.youtubeId}`;
+                // إضافة autoplay=1 إلى الرابط
+                player.src = `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1`;
                 currentTitle.innerText = v.title;
                 currentUnitSpan.innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
                 currentDurationSpan.innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
                 saveLastWatched(v.id);
+
+                // تمرير سلس إلى مشغل الفيديو
+                document.querySelector('.video-player-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // إزالة class active من جميع الدروس وإضافته للعنصر الحالي
+                document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+                const activeLesson = document.querySelector(`.lesson-item[data-id="${v.id}"]`);
+                if (activeLesson) activeLesson.classList.add('active');
             }
 
             // حساب الإحصائيات
@@ -811,7 +852,36 @@
                 document.getElementById('unit-progress-list').innerHTML = html;
             }
 
-            // بناء الوحدات في الصفحة الرئيسية
+            // دالة لتبديل حالة الوحدة الرئيسية (إظهار/إخفاء sub-units)
+            window.toggleUnit = function(header) {
+                const subUnits = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                if (subUnits.style.display === 'none' || !subUnits.style.display) {
+                    subUnits.style.display = 'block';
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    subUnits.style.display = 'none';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
+
+            // دالة لتبديل حالة sub-unit (إظهار/إخفاء قائمة الدروس)
+            window.toggleSubUnit = function(header) {
+                const subUnit = header.closest('.sub-unit');
+                const icon = header.querySelector('i');
+                subUnit.classList.toggle('open');
+                if (subUnit.classList.contains('open')) {
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
+
+            // بناء الوحدات في الصفحة الرئيسية مع نظام الطي الجديد
             function buildUnits() {
                 const units = [...new Set(videos.map(v => v.unit))];
                 let htmlAll = '';
@@ -837,7 +907,10 @@
                         });
                         subHtml += `
                             <div class="sub-unit">
-                                <div class="sub-unit-title">${sub}</div>
+                                <div class="sub-unit-header" onclick="toggleSubUnit(this)">
+                                    <i class="fas fa-chevron-left"></i>
+                                    <span class="sub-unit-title">${sub}</span>
+                                </div>
                                 <ul class="lesson-list">${lessonsHtml}</ul>
                             </div>
                         `;
@@ -846,17 +919,17 @@
                     htmlAll += `
                         <div class="unit-card">
                             <div class="unit-header" onclick="toggleUnit(this)">
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fas fa-chevron-left"></i>
                                 <span class="unit-title">${unit}</span>
                                 <span class="unit-progress">${watchedU}/${totalU}</span>
                             </div>
-                            <div class="sub-units" style="display:block;">${subHtml}</div>
+                            <div class="sub-units" style="display:none;">${subHtml}</div>
                         </div>
                     `;
                 });
                 unitsContainer.innerHTML = htmlAll;
 
-                // إضافة event listeners للدوائر وعناصر الدروس
+                // إضافة event listeners للدوائر (checkbox) وعناصر الدروس
                 document.querySelectorAll('.lesson-watch').forEach(el => {
                     el.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -880,6 +953,7 @@
                         }
                     });
                 });
+
                 document.querySelectorAll('.lesson-info').forEach(el => {
                     el.addEventListener('click', (e) => {
                         const id = parseInt(el.dataset.id);
@@ -890,20 +964,6 @@
                     });
                 });
             }
-
-            // دالة طي الوحدة (تُستدعى من onclick)
-            window.toggleUnit = function(header) {
-                const sub = header.nextElementSibling;
-                if (sub.style.display === 'none') {
-                    sub.style.display = 'block';
-                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-left');
-                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-down');
-                } else {
-                    sub.style.display = 'none';
-                    header.querySelector('i.fa-chevron-down').classList.remove('fa-chevron-down');
-                    header.querySelector('i.fa-chevron-down').classList.add('fa-chevron-left');
-                }
-            };
 
             // تحديث عداد الامتحان والخطة اليومية
             function updateExamCountdown() {
@@ -965,5 +1025,4 @@
         })();
     </script>
 </body>
-
 </html>
