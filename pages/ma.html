@@ -1397,7 +1397,7 @@ const mohammadVideosRaw = [
                 const v = allVideos[index];
                 if (!v) return;
                 currentVideo = v;
-                document.getElementById('youtube-player').src = `https://www.youtube-nocookie.com/embed/${v.youtubeId}`;
+                document.getElementById('youtube-player').src = `https://www.youtube-nocookie.com/embed/${v.videoId}`;
                 document.getElementById('current-video-title').innerText = v.title;
                 document.getElementById('current-unit').innerHTML = `<i class="fas fa-folder-open"></i> ${v.unit} / ${v.subUnit}`;
                 document.getElementById('current-duration').innerHTML = `<i class="far fa-clock"></i> ${v.duration}`;
@@ -1637,4 +1637,5 @@ const mohammadVideosRaw = [
     </script>
 </body>
 </html>
+
 
