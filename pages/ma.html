@@ -547,7 +547,7 @@
 </head>
 <body>
     <!-- الزر الزجاجي -->
-    <a href="../index.html" class="glass-home-btn" title="العودة للرئيسية">
+    <a href="#" class="glass-home-btn" title="العودة للرئيسية" onclick="window.location.reload(); return false;">
         <i class="fas fa-home"></i>
     </a>
 
@@ -668,12 +668,14 @@
         (function() {
             // ========== دوال تحويل المدة ==========
             function formatDurationFromSeconds(seconds) {
+                if (!seconds) return "00:00:00";
                 const h = Math.floor(seconds / 3600);
                 const m = Math.floor((seconds % 3600) / 60);
                 const s = seconds % 60;
                 return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             }
             function formatDurationFromMinutes(min) {
+                if (!min) return "00:00:00";
                 const h = Math.floor(min / 60);
                 const m = min % 60;
                 return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:00`;
@@ -1324,446 +1326,421 @@ const mohammadVideosRaw = [
     { unit: '🎯 الاحتمالات', subUnit: 'استقلال', title: '#احتمالات #الدرس_السابع #الاستقلال_الاحتمالي_لمتغيرين', videoId: 'QwiAlSYGMOo', duration: 1390 },
 ];
 
+            // ========== تجهيز البيانات ==========
+            let mkVideos = mkVideosRaw.map((v, index) => {
+                let durStr;
+                if (typeof v.duration === 'number' && v.duration < 1000) {
+                    durStr = formatDurationFromMinutes(v.duration);
+                } else {
+                    durStr = formatDurationFromSeconds(v.duration);
+                }
+                return { 
+                    id: `mk_${index}`, // تغيير لجعل المعرف فريد
+                    ...v, 
+                    duration: durStr 
+                };
+            });
 
-           <script>
-(function() {
-    // ========== دوال تحويل المدة ==========
-    function formatDurationFromSeconds(seconds) {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    }
-    function formatDurationFromMinutes(min) {
-        const h = Math.floor(min / 60);
-        const m = min % 60;
-        return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:00`;
-    }
+            let mohammadVideos = mohammadVideosRaw.map((v, index) => ({
+                id: `moh_${index}`, // تغيير لجعل المعرف فريد
+                ...v,
+                duration: formatDurationFromSeconds(v.duration)
+            }));
 
-    // ========== تجهيز البيانات ==========
-    let mkVideos = mkVideosRaw.map((v, index) => {
-        let durStr;
-        if (typeof v.duration === 'number' && v.duration < 1000) {
-            durStr = formatDurationFromMinutes(v.duration);
-        } else {
-            durStr = formatDurationFromSeconds(v.duration);
-        }
-        return { 
-            id: `mk_${index}`, // تغيير لجعل المعرف فريد
-            ...v, 
-            duration: durStr 
-        };
-    });
+            // ========== المتغيرات الأساسية ==========
+            let currentSource = 'mk';
+            let allVideos = [...mkVideos]; // نسخة جديدة
+            let watchedVideos = [];
+            let currentVideo = null;
 
-    let mohammadVideos = mohammadVideosRaw.map((v, index) => ({
-        id: `moh_${index}`, // تغيير لجعل المعرف فريد
-        ...v,
-        duration: formatDurationFromSeconds(v.duration)
-    }));
-
-    // ========== المتغيرات الأساسية ==========
-    let currentSource = 'mk';
-    let allVideos = [...mkVideos]; // نسخة جديدة
-    let watchedVideos = [];
-    let currentVideo = null;
-
-    // ========== دوال الحفظ والتحميل ==========
-    function getStorageKey() {
-        return `mathWatched_${currentSource}`;
-    }
-    
-    function getLastKey() {
-        return `mathLast_${currentSource}`;
-    }
-
-    function saveWatched() {
-        localStorage.setItem(getStorageKey(), JSON.stringify(watchedVideos));
-        localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
-    }
-    
-    function loadWatched() {
-        const saved = localStorage.getItem(getStorageKey());
-        watchedVideos = saved ? JSON.parse(saved) : [];
-    }
-    
-    function saveLastWatched(id) {
-        localStorage.setItem(getLastKey(), id);
-    }
-    
-    function loadLastWatched() {
-        const last = localStorage.getItem(getLastKey());
-        if (last) {
-            const found = allVideos.find(v => v.id === last);
-            if (found) return found;
-        }
-        return allVideos.length > 0 ? allVideos[0] : null;
-    }
-
-    // ========== دالة تحديث مشغل الفيديو ==========
-    function updateVideoPlayer(video) {
-        if (!video) {
-            console.error('لا يوجد فيديو محدد');
-            return;
-        }
-        
-        console.log('جاري تشغيل الفيديو:', video); // للتأكد من البيانات
-        
-        const player = document.getElementById('youtube-player');
-        if (player) {
-            // المشكلة هنا كانت v.youtubeId بدلاً من v.videoId
-            player.src = `https://www.youtube.com/embed/${video.videoId}?autoplay=1`; // أضفنا autoplay=1 للتشغيل التلقائي
-        }
-        
-        // تحديث معلومات الفيديو
-        const titleEl = document.getElementById('current-video-title');
-        const unitEl = document.getElementById('current-unit');
-        const durationEl = document.getElementById('current-duration');
-        
-        if (titleEl) titleEl.innerText = video.title;
-        if (unitEl) unitEl.innerHTML = `<i class="fas fa-folder-open"></i> ${video.unit} / ${video.subUnit}`;
-        if (durationEl) durationEl.innerHTML = `<i class="far fa-clock"></i> ${video.duration}`;
-        
-        currentVideo = video;
-        saveLastWatched(video.id);
-    }
-
-    // ========== دوال تبديل المصادر ==========
-    function switchToMK() {
-        console.log('التبديل إلى مصدر MK Academy');
-        currentSource = 'mk';
-        allVideos = [...mkVideos];
-        loadWatched();
-        localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
-        const lastVideo = loadLastWatched();
-        if (lastVideo) {
-            updateVideoPlayer(lastVideo);
-        } else if (allVideos.length > 0) {
-            updateVideoPlayer(allVideos[0]);
-        }
-        buildUnits();
-        updateAllStats();
-        updateButtons();
-    }
-    
-    function switchToMohammad() {
-        console.log('التبديل إلى مصدر محمد رسول');
-        currentSource = 'mohammad';
-        allVideos = [...mohammadVideos];
-        loadWatched();
-        localStorage.setItem('mathWatched', JSON.stringify(watchedVideos));
-        const lastVideo = loadLastWatched();
-        if (lastVideo) {
-            updateVideoPlayer(lastVideo);
-        } else if (allVideos.length > 0) {
-            updateVideoPlayer(allVideos[0]);
-        }
-        buildUnits();
-        updateAllStats();
-        updateButtons();
-    }
-    
-    function updateButtons() {
-        const mkBtn = document.getElementById('source-mk');
-        const mohBtn = document.getElementById('source-mohammad');
-        if (mkBtn && mohBtn) {
-            mkBtn.classList.toggle('active', currentSource === 'mk');
-            mohBtn.classList.toggle('active', currentSource === 'mohammad');
-        }
-    }
-
-    // ========== دوال بناء الواجهة ==========
-    function getUnitsList() {
-        const units = [...new Set(allVideos.map(v => v.unit))];
-        return units.map(unit => ({ id: unit, name: unit }));
-    }
-
-    function buildUnits() {
-        const container = document.getElementById('units-container');
-        if (!container) return;
-        
-        const unitsList = getUnitsList();
-        let htmlAll = '';
-        
-        unitsList.forEach(unit => {
-            const unitVideos = allVideos.filter(v => v.unit === unit.id);
-            if (unitVideos.length === 0) return;
+            // ========== دوال الحفظ والتحميل ==========
+            function getStorageKey() {
+                return `mathWatched_${currentSource}`;
+            }
             
-            const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
-            const watchedU = unitVideos.filter(v => watchedVideos.includes(v.id)).length;
+            function getLastKey() {
+                return `mathLast_${currentSource}`;
+            }
 
-            let subHtml = '';
-            subUnits.forEach(sub => {
-                const subVideos = unitVideos.filter(v => v.subUnit === sub);
-                let lessonsHtml = '';
-                subVideos.forEach(v => {
-                    const isWatched = watchedVideos.includes(v.id);
-                    const isActive = currentVideo?.id === v.id;
-                    lessonsHtml += `
-                        <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${v.id}">
-                            <div class="lesson-watch-circle ${isWatched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check"></i></div>
-                            <div class="lesson-info" data-id="${v.id}">${v.title}</div>
-                            <div class="lesson-duration">${v.duration}</div>
-                        </li>
+            function saveWatched() {
+                localStorage.setItem(getStorageKey(), JSON.stringify(watchedVideos));
+            }
+            
+            function loadWatched() {
+                const saved = localStorage.getItem(getStorageKey());
+                watchedVideos = saved ? JSON.parse(saved) : [];
+            }
+            
+            function saveLastWatched(id) {
+                localStorage.setItem(getLastKey(), id);
+            }
+            
+            function loadLastWatched() {
+                const last = localStorage.getItem(getLastKey());
+                if (last) {
+                    const found = allVideos.find(v => v.id === last);
+                    if (found) return found;
+                }
+                return allVideos.length > 0 ? allVideos[0] : null;
+            }
+
+            // ========== دالة تحديث مشغل الفيديو ==========
+            function updateVideoPlayer(video) {
+                if (!video) {
+                    console.error('لا يوجد فيديو محدد');
+                    return;
+                }
+                
+                console.log('جاري تشغيل الفيديو:', video); // للتأكد من البيانات
+                
+                const player = document.getElementById('youtube-player');
+                if (player) {
+                    player.src = `https://www.youtube.com/embed/${video.videoId}?autoplay=1&rel=0`;
+                }
+                
+                // تحديث معلومات الفيديو
+                const titleEl = document.getElementById('current-video-title');
+                const unitEl = document.getElementById('current-unit');
+                const durationEl = document.getElementById('current-duration');
+                
+                if (titleEl) titleEl.innerText = video.title;
+                if (unitEl) unitEl.innerHTML = `<i class="fas fa-folder-open"></i> ${video.unit} / ${video.subUnit}`;
+                if (durationEl) durationEl.innerHTML = `<i class="far fa-clock"></i> ${video.duration}`;
+                
+                currentVideo = video;
+                saveLastWatched(video.id);
+            }
+
+            // ========== دوال تبديل المصادر ==========
+            function switchToMK() {
+                console.log('التبديل إلى مصدر MK Academy');
+                currentSource = 'mk';
+                allVideos = [...mkVideos];
+                loadWatched();
+                const lastVideo = loadLastWatched();
+                if (lastVideo) {
+                    updateVideoPlayer(lastVideo);
+                } else if (allVideos.length > 0) {
+                    updateVideoPlayer(allVideos[0]);
+                }
+                buildUnits();
+                updateAllStats();
+                updateButtons();
+            }
+            
+            function switchToMohammad() {
+                console.log('التبديل إلى مصدر محمد رسول');
+                currentSource = 'mohammad';
+                allVideos = [...mohammadVideos];
+                loadWatched();
+                const lastVideo = loadLastWatched();
+                if (lastVideo) {
+                    updateVideoPlayer(lastVideo);
+                } else if (allVideos.length > 0) {
+                    updateVideoPlayer(allVideos[0]);
+                }
+                buildUnits();
+                updateAllStats();
+                updateButtons();
+            }
+            
+            function updateButtons() {
+                const mkBtn = document.getElementById('source-mk');
+                const mohBtn = document.getElementById('source-mohammad');
+                if (mkBtn && mohBtn) {
+                    mkBtn.classList.toggle('active', currentSource === 'mk');
+                    mohBtn.classList.toggle('active', currentSource === 'mohammad');
+                }
+            }
+
+            // ========== دوال بناء الواجهة ==========
+            function getUnitsList() {
+                const units = [...new Set(allVideos.map(v => v.unit))];
+                return units.map(unit => ({ id: unit, name: unit }));
+            }
+
+            function buildUnits() {
+                const container = document.getElementById('units-container');
+                if (!container) return;
+                
+                const unitsList = getUnitsList();
+                let htmlAll = '';
+                
+                unitsList.forEach(unit => {
+                    const unitVideos = allVideos.filter(v => v.unit === unit.id);
+                    if (unitVideos.length === 0) return;
+                    
+                    const subUnits = [...new Set(unitVideos.map(v => v.subUnit))];
+                    const watchedU = unitVideos.filter(v => watchedVideos.includes(v.id)).length;
+
+                    let subHtml = '';
+                    subUnits.forEach(sub => {
+                        const subVideos = unitVideos.filter(v => v.subUnit === sub);
+                        let lessonsHtml = '';
+                        subVideos.forEach(v => {
+                            const isWatched = watchedVideos.includes(v.id);
+                            const isActive = currentVideo?.id === v.id;
+                            lessonsHtml += `
+                                <li class="lesson-item ${isActive ? 'active' : ''}" data-id="${v.id}">
+                                    <div class="lesson-watch-circle ${isWatched ? 'watched' : ''}" data-id="${v.id}"><i class="fas fa-check"></i></div>
+                                    <div class="lesson-info" data-id="${v.id}">${v.title}</div>
+                                    <div class="lesson-duration">${v.duration}</div>
+                                </li>
+                            `;
+                        });
+                        subHtml += `
+                            <div class="sub-unit">
+                                <div class="sub-unit-header" onclick="toggleSubUnit(this)">
+                                    <i class="fas fa-chevron-left"></i>
+                                    <span class="sub-unit-title">${sub}</span>
+                                </div>
+                                <ul class="lesson-list" style="display: none;">${lessonsHtml}</ul>
+                            </div>
+                        `;
+                    });
+
+                    htmlAll += `
+                        <div class="unit-card">
+                            <div class="unit-header" onclick="toggleUnit(this)">
+                                <i class="fas fa-chevron-left"></i>
+                                <span class="unit-title">${unit.name}</span>
+                                <span class="unit-progress">${watchedU}/${unitVideos.length}</span>
+                            </div>
+                            <div class="sub-units" style="display: none;">${subHtml}</div>
+                        </div>
                     `;
                 });
-                subHtml += `
-                    <div class="sub-unit">
-                        <div class="sub-unit-header" onclick="toggleSubUnit(this)">
-                            <i class="fas fa-chevron-left"></i>
-                            <span class="sub-unit-title">${sub}</span>
-                        </div>
-                        <ul class="lesson-list" style="display: none;">${lessonsHtml}</ul>
-                    </div>
-                `;
-            });
-
-            htmlAll += `
-                <div class="unit-card">
-                    <div class="unit-header" onclick="toggleUnit(this)">
-                        <i class="fas fa-chevron-left"></i>
-                        <span class="unit-title">${unit.name}</span>
-                        <span class="unit-progress">${watchedU}/${unitVideos.length}</span>
-                    </div>
-                    <div class="sub-units" style="display: none;">${subHtml}</div>
-                </div>
-            `;
-        });
-        
-        container.innerHTML = htmlAll;
-        attachLessonEvents();
-    }
-
-    function attachLessonEvents() {
-        // أحداث الدوائر (مشاهدة/عدم مشاهدة)
-        document.querySelectorAll('.lesson-watch-circle').forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = el.dataset.id;
-                if (watchedVideos.includes(id)) {
-                    watchedVideos = watchedVideos.filter(w => w !== id);
-                    el.classList.remove('watched');
-                } else {
-                    watchedVideos.push(id);
-                    el.classList.add('watched');
-                }
-                saveWatched();
-                updateAllStats();
-                updateUnitProgress();
-            });
-        });
-
-        // أحداث اختيار الدرس
-        document.querySelectorAll('.lesson-info').forEach(el => {
-            el.addEventListener('click', (e) => {
-                const id = el.dataset.id;
-                const video = allVideos.find(v => v.id === id);
-                if (video) {
-                    updateVideoPlayer(video);
-                    // تحديث الحالة النشطة
-                    document.querySelectorAll('.lesson-item').forEach(item => {
-                        item.classList.toggle('active', item.dataset.id === id);
-                    });
-                }
-            });
-        });
-    }
-
-    function updateUnitProgress() {
-        document.querySelectorAll('.unit-card').forEach(card => {
-            const unitName = card.querySelector('.unit-title')?.innerText;
-            if (!unitName) return;
-            const unitVids = allVideos.filter(v => v.unit === unitName);
-            const w = unitVids.filter(v => watchedVideos.includes(v.id)).length;
-            const progressEl = card.querySelector('.unit-progress');
-            if (progressEl) progressEl.innerText = `${w}/${unitVids.length}`;
-        });
-    }
-
-    // ========== دوال الإحصائيات ==========
-    function calcStats() {
-        const total = allVideos.length;
-        const watchedCount = watchedVideos.length;
-        const remaining = total - watchedCount;
-        const percent = total ? Math.round((watchedCount / total) * 100) : 0;
-        
-        let totalSeconds = 0;
-        watchedVideos.forEach(id => {
-            const v = allVideos.find(v => v.id === id);
-            if (v) {
-                const parts = v.duration.split(':');
-                totalSeconds += parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+                
+                container.innerHTML = htmlAll;
+                attachLessonEvents();
             }
-        });
-        const hours = Math.round(totalSeconds / 3600 * 10) / 10;
-        
-        return { watchedCount, remaining, percent, hours, total };
-    }
 
-    function updateAllStats() {
-        const { watchedCount, remaining, percent, hours, total } = calcStats();
-        
-        const elements = {
-            'watched-count': watchedCount,
-            'remaining-count': remaining,
-            'completion-percent': percent + '%',
-            'total-hours': hours,
-            'overall-percent': percent + '%',
-            'total-videos-count': total
-        };
-        
-        Object.entries(elements).forEach(([id, value]) => {
-            const el = document.getElementById(id);
-            if (el) el.innerText = value;
-        });
-        
-        const progressFill = document.getElementById('overall-progress');
-        if (progressFill) progressFill.style.width = percent + '%';
+            function attachLessonEvents() {
+                // أحداث الدوائر (مشاهدة/عدم مشاهدة)
+                document.querySelectorAll('.lesson-watch-circle').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const id = el.dataset.id;
+                        if (watchedVideos.includes(id)) {
+                            watchedVideos = watchedVideos.filter(w => w !== id);
+                            el.classList.remove('watched');
+                        } else {
+                            watchedVideos.push(id);
+                            el.classList.add('watched');
+                        }
+                        saveWatched();
+                        updateAllStats();
+                        updateUnitProgress();
+                    });
+                });
 
-        // تحديث الشارات
-        const badges = {
-            'badge5': 5,
-            'badge25': 25,
-            'badge50': 50,
-            'badge100': 100,
-            'badge339': total
-        };
-        
-        Object.entries(badges).forEach(([id, limit]) => {
-            const el = document.getElementById(id);
-            if (el) el.classList.toggle('achieved', watchedCount >= limit);
-        });
+                // أحداث اختيار الدرس
+                document.querySelectorAll('.lesson-info').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        const id = el.dataset.id;
+                        const video = allVideos.find(v => v.id === id);
+                        if (video) {
+                            updateVideoPlayer(video);
+                            // تحديث الحالة النشطة
+                            document.querySelectorAll('.lesson-item').forEach(item => {
+                                item.classList.toggle('active', item.dataset.id === id);
+                            });
+                        }
+                    });
+                });
+            }
 
-        // تحديث تقدم الوحدات
-        const unitProgressDiv = document.getElementById('unit-progress-list');
-        if (unitProgressDiv) {
-            const unitsList = getUnitsList();
-            let html = '';
-            unitsList.forEach(u => {
-                const unitVids = allVideos.filter(v => v.unit === u.id);
-                if (unitVids.length === 0) return;
-                const watchedU = unitVids.filter(v => watchedVideos.includes(v.id)).length;
-                const percU = Math.round((watchedU / unitVids.length) * 100) || 0;
-                html += `
-                    <div style="margin-bottom:12px;">
-                        <div style="display:flex; justify-content:space-between;">
-                            <span>${u.name}</span>
-                            <span>${watchedU}/${unitVids.length}</span>
-                        </div>
-                        <div class="progress-bar-bg" style="height:10px;">
-                            <div class="progress-fill" style="width:${percU}%;"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            unitProgressDiv.innerHTML = html;
-        }
-    }
+            function updateUnitProgress() {
+                document.querySelectorAll('.unit-card').forEach(card => {
+                    const unitName = card.querySelector('.unit-title')?.innerText;
+                    if (!unitName) return;
+                    const unitVids = allVideos.filter(v => v.unit === unitName);
+                    const w = unitVids.filter(v => watchedVideos.includes(v.id)).length;
+                    const progressEl = card.querySelector('.unit-progress');
+                    if (progressEl) progressEl.innerText = `${w}/${unitVids.length}`;
+                });
+            }
 
-    // ========== العد التنازلي ==========
-    function updateCountdown() {
-        const exam = new Date('2026-06-13T00:00:00');
-        const now = new Date();
-        const diff = exam - now;
-        
-        if (diff <= 0) {
-            document.getElementById('countdown-days').innerText = '0';
-            document.getElementById('countdown-large').innerText = '0';
-            document.getElementById('daily-plan-text').innerText = 'انتهى';
-            document.getElementById('daily-plan-detail').innerText = 'انتهى';
-            return;
-        }
-        
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        document.getElementById('countdown-days').innerText = days;
-        document.getElementById('countdown-large').innerText = days;
-        
-        const remaining = allVideos.length - watchedVideos.length;
-        const perDay = Math.ceil(remaining / days);
-        document.getElementById('daily-plan-text').innerText = `${perDay} فيديو/يوم`;
-        document.getElementById('daily-plan-detail').innerText = `${perDay} فيديو يومياً`;
-    }
+            // ========== دوال الإحصائيات ==========
+            function calcStats() {
+                const total = allVideos.length;
+                const watchedCount = watchedVideos.length;
+                const remaining = total - watchedCount;
+                const percent = total ? Math.round((watchedCount / total) * 100) : 0;
+                
+                let totalSeconds = 0;
+                watchedVideos.forEach(id => {
+                    const v = allVideos.find(v => v.id === id);
+                    if (v) {
+                        const parts = v.duration.split(':');
+                        totalSeconds += parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+                    }
+                });
+                const hours = Math.round(totalSeconds / 3600 * 10) / 10;
+                
+                return { watchedCount, remaining, percent, hours, total };
+            }
 
-    function updateLastWatched() {
-        const lastId = localStorage.getItem(getLastKey());
-        if (lastId) {
-            const v = allVideos.find(v => v.id === lastId);
-            if (v) document.getElementById('last-watched').innerText = v.title;
-        }
-    }
+            function updateAllStats() {
+                const { watchedCount, remaining, percent, hours, total } = calcStats();
+                
+                const elements = {
+                    'watched-count': watchedCount,
+                    'remaining-count': remaining,
+                    'completion-percent': percent + '%',
+                    'total-hours': hours,
+                    'overall-percent': percent + '%',
+                    'total-videos-count': total
+                };
+                
+                Object.entries(elements).forEach(([id, value]) => {
+                    const el = document.getElementById(id);
+                    if (el) el.innerText = value;
+                });
+                
+                const progressFill = document.getElementById('overall-progress');
+                if (progressFill) progressFill.style.width = percent + '%';
 
-    // ========== دوال toggle (معرّفة كدوال عامة) ==========
-    window.toggleUnit = function(header) {
-        const sub = header.nextElementSibling;
-        const icon = header.querySelector('i');
-        if (sub.style.display === 'none') {
-            sub.style.display = 'block';
-            icon.classList.remove('fa-chevron-left');
-            icon.classList.add('fa-chevron-down');
-        } else {
-            sub.style.display = 'none';
-            icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-left');
-        }
-    };
+                // تحديث الشارات
+                const badges = {
+                    'badge5': 5,
+                    'badge25': 25,
+                    'badge50': 50,
+                    'badge100': 100,
+                    'badge339': total
+                };
+                
+                Object.entries(badges).forEach(([id, limit]) => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.toggle('achieved', watchedCount >= limit);
+                });
 
-    window.toggleSubUnit = function(header) {
-        const lessonList = header.nextElementSibling;
-        const icon = header.querySelector('i');
-        if (lessonList.style.display === 'none') {
-            lessonList.style.display = 'block';
-            icon.classList.remove('fa-chevron-left');
-            icon.classList.add('fa-chevron-down');
-        } else {
-            lessonList.style.display = 'none';
-            icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-left');
-        }
-    };
+                // تحديث تقدم الوحدات
+                const unitProgressDiv = document.getElementById('unit-progress-list');
+                if (unitProgressDiv) {
+                    const unitsList = getUnitsList();
+                    let html = '';
+                    unitsList.forEach(u => {
+                        const unitVids = allVideos.filter(v => v.unit === u.id);
+                        if (unitVids.length === 0) return;
+                        const watchedU = unitVids.filter(v => watchedVideos.includes(v.id)).length;
+                        const percU = Math.round((watchedU / unitVids.length) * 100) || 0;
+                        html += `
+                            <div style="margin-bottom:12px;">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span>${u.name}</span>
+                                    <span>${watchedU}/${unitVids.length}</span>
+                                </div>
+                                <div class="progress-bar-bg" style="height:10px;">
+                                    <div class="progress-fill" style="width:${percU}%;"></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    unitProgressDiv.innerHTML = html;
+                }
+            }
 
-    // ========== تهيئة التنقل بين الصفحات ==========
-    function initTabs() {
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const page = item.dataset.page;
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                item.classList.add('active');
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById(`page-${page}`).classList.add('active');
-                if (page === 'progress') updateAllStats();
-                if (page === 'profile') updateLastWatched();
-            });
-        });
-    }
+            // ========== العد التنازلي ==========
+            function updateCountdown() {
+                const exam = new Date('2026-06-13T00:00:00');
+                const now = new Date();
+                const diff = exam - now;
+                
+                if (diff <= 0) {
+                    document.getElementById('countdown-days').innerText = '0';
+                    document.getElementById('countdown-large').innerText = '0';
+                    document.getElementById('daily-plan-text').innerText = 'انتهى';
+                    document.getElementById('daily-plan-detail').innerText = 'انتهى';
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('countdown-days').innerText = days;
+                document.getElementById('countdown-large').innerText = days;
+                
+                const remaining = allVideos.length - watchedVideos.length;
+                const perDay = Math.ceil(remaining / days);
+                document.getElementById('daily-plan-text').innerText = `${perDay} فيديو/يوم`;
+                document.getElementById('daily-plan-detail').innerText = `${perDay} فيديو يومياً`;
+            }
 
-    // ========== التهيئة الرئيسية ==========
-    function init() {
-        console.log('جاري تهيئة التطبيق...');
-        
-        // ربط أزرار المصادر
-        document.getElementById('source-mk').addEventListener('click', switchToMK);
-        document.getElementById('source-mohammad').addEventListener('click', switchToMohammad);
-        
-        // بدأ بمصدر MK
-        switchToMK();
-        
-        // تهيئة التنقل
-        initTabs();
-        
-        // تحديث العد التنازلي كل دقيقة
-        setInterval(updateCountdown, 60000);
-        
-        console.log('تمت التهيئة بنجاح');
-    }
+            function updateLastWatched() {
+                const lastId = localStorage.getItem(getLastKey());
+                if (lastId) {
+                    const v = allVideos.find(v => v.id === lastId);
+                    if (v) document.getElementById('last-watched').innerText = v.title;
+                }
+            }
 
-    // بدأ التشغيل بعد تحميل الصفحة بالكامل
-    window.addEventListener('load', init);
-})();
-</script>
+            // ========== دوال toggle (معرّفة كدوال عامة) ==========
+            window.toggleUnit = function(header) {
+                const sub = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                if (sub.style.display === 'none') {
+                    sub.style.display = 'block';
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    sub.style.display = 'none';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
+
+            window.toggleSubUnit = function(header) {
+                const lessonList = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                if (lessonList.style.display === 'none') {
+                    lessonList.style.display = 'block';
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    lessonList.style.display = 'none';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            };
+
+            // ========== تهيئة التنقل بين الصفحات ==========
+            function initTabs() {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const page = item.dataset.page;
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        item.classList.add('active');
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById(`page-${page}`).classList.add('active');
+                        if (page === 'progress') updateAllStats();
+                        if (page === 'profile') updateLastWatched();
+                    });
+                });
+            }
+
+            // ========== التهيئة الرئيسية ==========
+            function init() {
+                console.log('جاري تهيئة التطبيق...');
+                
+                // ربط أزرار المصادر
+                document.getElementById('source-mk').addEventListener('click', switchToMK);
+                document.getElementById('source-mohammad').addEventListener('click', switchToMohammad);
+                
+                // بدأ بمصدر MK
+                switchToMK();
+                
+                // تهيئة التنقل
+                initTabs();
+                
+                // تحديث العد التنازلي كل دقيقة
+                updateCountdown();
+                setInterval(updateCountdown, 60000);
+                
+                console.log('تمت التهيئة بنجاح');
+            }
+
+            // بدأ التشغيل بعد تحميل الصفحة بالكامل
+            window.addEventListener('load', init);
+        })();
+    </script>
 </body>
 </html>
-
-
-
-
-
-
