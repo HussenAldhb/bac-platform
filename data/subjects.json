@@ -5,26 +5,57 @@
     "icon": "🧪",
     "file": "pages/che.html",
     "totalVideos": 57,
+    "avgDuration": 35,
+    "examDate": "2026-06-28",
     "color": "#6b21a5",
-    "storageKey": "chem_watched"
+    "storageKey": "chem_watched",
+    "units": [
+      { "name": "الكيمياء النووية", "count": 5 },
+      { "name": "الغازات", "count": 6 },
+      { "name": "حركية التفاعلات", "count": 11 },
+      { "name": "الكيمياء التحليلية", "count": 16 },
+      { "name": "الكيمياء العضوية", "count": 19 }
+    ]
   },
   {
     "id": "phy",
     "name": "الفيزياء",
     "icon": "⚛️",
     "file": "pages/phy.html",
-    "totalVideos": 129,
+    "totalVideos": 122,
+    "avgDuration": 35,
+    "examDate": "2026-06-06",
     "color": "#0b4f6c",
-    "storageKey": "phys_watched"
+    "storageKey": "phys_watched",
+    "units": [
+      { "name": "أساسيات", "count": 5 },
+      { "name": "الحركة والتحريك", "count": 25 },
+      { "name": "الكهرباء والمغناطيسية", "count": 70 },
+      { "name": "الأمواج المستقرة", "count": 10 },
+      { "name": "الإلكترونيات", "count": 12 },
+      { "name": "الفيزياء الفلكية", "count": 4 }
+    ]
   },
   {
     "id": "ar",
     "name": "العربية",
     "icon": "📚",
     "file": "pages/ar.html",
-    "totalVideos": 75,
+    "totalVideos": 74,
+    "avgDuration": 30,
+    "examDate": "2026-06-25",
     "color": "#2e7d32",
-    "storageKey": "arabic_watched"
+    "storageKey": "arabic_watched",
+    "units": [
+      { "name": "قضايا وطنية", "count": 3 },
+      { "name": "الغربة والاغتراب", "count": 5 },
+      { "name": "فن الرواية", "count": 4 },
+      { "name": "ظواهر وجدانية", "count": 5 },
+      { "name": "أدب اجتماعي", "count": 4 },
+      { "name": "نصوص إثرائية", "count": 5 },
+      { "name": "قواعد (نحو وصرف)", "count": 40 },
+      { "name": "بلاغة وإملاء", "count": 8 }
+    ]
   },
   {
     "id": "sci",
@@ -32,8 +63,17 @@
     "icon": "🔬",
     "file": "pages/sci.html",
     "totalVideos": 133,
+    "avgDuration": 35,
+    "examDate": "2026-06-16",
     "color": "#b45309",
-    "storageKey": "sci_watched"
+    "storageKey": "sci_watched",
+    "units": [
+      { "name": "التنسيق العصبي", "count": 58 },
+      { "name": "المستقبلات الحسية", "count": 16 },
+      { "name": "التنسيق الهرموني", "count": 12 },
+      { "name": "التكاثر", "count": 38 },
+      { "name": "الوراثة", "count": 31 }
+    ]
   },
   {
     "id": "isl",
@@ -41,8 +81,22 @@
     "icon": "🕌",
     "file": "pages/isl.html",
     "totalVideos": 100,
+    "avgDuration": 30,
+    "examDate": "2026-06-21",
     "color": "#7b2c2c",
-    "storageKey": "deen_watched"
+    "storageKey": "deen_watched",
+    "units": [
+      { "name": "التلاوة", "count": 7 },
+      { "name": "التفسير والاستحفاظ", "count": 4 },
+      { "name": "الحديث الشريف", "count": 6 },
+      { "name": "سورة النحل (تفسير + تجويد)", "count": 43 },
+      { "name": "التربية الإنسانية", "count": 3 },
+      { "name": "التربية الأسرية", "count": 8 },
+      { "name": "التربية الاقتصادية", "count": 2 },
+      { "name": "العلاقات الدولية", "count": 3 },
+      { "name": "السيرة والأعلام", "count": 3 },
+      { "name": "حفظ الآيات", "count": 10 }
+    ]
   },
   {
     "id": "en",
@@ -50,8 +104,26 @@
     "icon": "🇬🇧",
     "file": "pages/en.html",
     "totalVideos": 62,
+    "avgDuration": 20,
+    "examDate": "2026-06-09",
     "color": "#7e22ce",
-    "storageKey": "engWatched"
+    "storageKey": "engWatched",
+    "units": [
+      { "name": "أساسيات وقواعد", "count": 26 },
+      { "name": "Unit 1 Life Choices", "count": 8 },
+      { "name": "Unit 2 Success", "count": 8 },
+      { "name": "Unit 3 Medicine", "count": 8 },
+      { "name": "Unit 4 Engineering", "count": 8 },
+      { "name": "Unit 5 Civil Rights", "count": 8 },
+      { "name": "Unit 6 United Nations", "count": 8 },
+      { "name": "Unit 7 Microorganisms", "count": 8 },
+      { "name": "Unit 8 Human Body", "count": 8 },
+      { "name": "Unit 9 Citizenship", "count": 8 },
+      { "name": "Unit 10 Culture Shock", "count": 8 },
+      { "name": "Unit 11 AI", "count": 8 },
+      { "name": "Unit 12 Digital Literacy", "count": 8 },
+      { "name": "تحريري", "count": 6 }
+    ]
   },
   {
     "id": "fr",
@@ -59,8 +131,19 @@
     "icon": "🇫🇷",
     "file": "pages/fr.html",
     "totalVideos": 150,
+    "avgDuration": 15,
+    "examDate": "2026-06-18",
     "color": "#1e3a8a",
-    "storageKey": "french_ultime_progress"
+    "storageKey": "french_ultime_progress",
+    "units": [
+      { "name": "Unité 1 – On fête ensemble", "count": 25 },
+      { "name": "Unité 2 – Chacun pour tous", "count": 20 },
+      { "name": "Unité 3 – Le salon", "count": 20 },
+      { "name": "Unité 4 – La femme", "count": 20 },
+      { "name": "Unité 5 – IA", "count": 20 },
+      { "name": "Unité 6 – Espace", "count": 20 },
+      { "name": "Révisions", "count": 25 }
+    ]
   },
   {
     "id": "math",
@@ -68,7 +151,24 @@
     "icon": "📐",
     "file": "pages/ma.html",
     "totalVideos": 339,
+    "avgDuration": 25,
+    "examDate": "2026-06-13",
     "color": "#854d0e",
-    "storageKey": "mathWatched"
+    "storageKey": "mathWatched",
+    "units": [
+      { "name": "المتتاليات", "count": 42 },
+      { "name": "النهايات والاستمرار", "count": 34 },
+      { "name": "الاشتقاق", "count": 21 },
+      { "name": "اللوغاريتمي", "count": 26 },
+      { "name": "الأسي", "count": 21 },
+      { "name": "التكامل", "count": 11 },
+      { "name": "الأشعة", "count": 56 },
+      { "name": "الأعداد العقدية", "count": 30 },
+      { "name": "تطبيقات العقدية", "count": 19 },
+      { "name": "التحليل التوافقي", "count": 16 },
+      { "name": "الاحتمالات", "count": 18 },
+      { "name": "قراءة الخط البياني", "count": 5 },
+      { "name": "دورات وحلول", "count": 32 }
+    ]
   }
 ]
