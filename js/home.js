@@ -1,19 +1,53 @@
+// home.js - نسخة محسنة مع تصحيح الأخطاء
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ تم تحميل home.js');
     displayOverallStats();
     displaySubjectCards();
     displayLastUpdate();
 });
 
 function displayOverallStats() {
+    console.log('⚙️ displayOverallStats is running');
     const stats = ProgressTracker.getOverallStats();
-    document.getElementById('totalLessons').textContent = stats.totalVideos;
-    document.getElementById('watchedLessons').textContent = stats.totalWatched;
-    document.getElementById('overallProgress').textContent = stats.percent + '%';
+    console.log('📊 الإحصائيات العامة:', stats);
+    
+    const totalEl = document.getElementById('totalLessons');
+    const watchedEl = document.getElementById('watchedLessons');
+    const progressEl = document.getElementById('overallProgress');
+    
+    if (totalEl) {
+        totalEl.textContent = stats.totalVideos;
+        console.log('totalLessons set to', stats.totalVideos);
+    } else console.error('❌ totalLessons not found');
+    
+    if (watchedEl) {
+        watchedEl.textContent = stats.totalWatched;
+        console.log('watchedLessons set to', stats.totalWatched);
+    } else console.error('❌ watchedLessons not found');
+    
+    if (progressEl) {
+        progressEl.textContent = stats.percent + '%';
+        console.log('overallProgress set to', stats.percent + '%');
+    } else console.error('❌ overallProgress not found');
 }
 
 function displaySubjectCards() {
+    console.log('⚙️ displaySubjectCards is running');
     const subjectsProgress = ProgressTracker.getSubjectsProgress();
+    console.log('📚 تقدم المواد:', subjectsProgress);
+    
     const grid = document.getElementById('cardsGrid');
+    if (!grid) {
+        console.error('❌ cardsGrid not found');
+        return;
+    }
+    
+    if (!subjectsProgress || subjectsProgress.length === 0) {
+        console.warn('⚠️ لا توجد بيانات للمواد');
+        grid.innerHTML = '<p class="error-msg">حدث خطأ في تحميل المواد</p>';
+        return;
+    }
+    
     let html = '';
     subjectsProgress.forEach(sub => {
         html += `
@@ -31,7 +65,9 @@ function displaySubjectCards() {
             </a>
         `;
     });
+    
     grid.innerHTML = html;
+    console.log('✅ تم إنشاء بطاقات المواد، العدد:', subjectsProgress.length);
 }
 
 function displayLastUpdate() {
