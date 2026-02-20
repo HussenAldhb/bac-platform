@@ -1,123 +1,24 @@
 {
   "name": "منصة البكالوريا الذكية",
   "short_name": "بكالوريا+",
-  "description": "تطبيق تفاعلي لتنظيم محتوى البكالوريا السورية مع إحصائيات حقيقية وإشعارات مخصصة",
-  "start_url": "/bac-platform/app.html",
-  "scope": "/bac-platform/",
+  "description": "منصة تفاعلية لتنظيم محتوى البكالوريا السورية",
+  "start_url": "app.html",
+  "scope": ".",
   "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#7c3aed",
-  "orientation": "portrait",
-  "categories": ["education", "productivity"],
-  "lang": "ar",
-  "dir": "rtl",
+  "background_color": "#0a0a1f",
+  "theme_color": "#3c6e71",
   "icons": [
     {
-      "src": "/bac-platform/assets/icons/icon-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/bac-platform/assets/icons/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/bac-platform/assets/icons/icon-128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/bac-platform/assets/icons/icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/bac-platform/assets/icons/icon-152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/bac-platform/assets/icons/icon-192.png",
+      "src": "assets/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/bac-platform/assets/icons/icon-384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/bac-platform/assets/icons/icon-512.png",
+      "src": "assets/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "/bac-platform/assets/screenshots/home.jpg",
-      "sizes": "1080x1920",
-      "type": "image/jpeg",
-      "platform": "wide",
-      "label": "الصفحة الرئيسية للتطبيق"
-    },
-    {
-      "src": "/bac-platform/assets/screenshots/subject.jpg",
-      "sizes": "1080x1920",
-      "type": "image/jpeg",
-      "platform": "wide",
-      "label": "صفحة المادة الدراسية"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "الرياضيات",
-      "short_name": "رياضيات",
-      "description": "اذهب مباشرة للرياضيات",
-      "url": "/bac-platform/pages/ma.html",
-      "icons": [
-        {
-          "src": "/bac-platform/assets/icons/math-shortcut.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "الفيزياء",
-      "short_name": "فيزياء",
-      "description": "اذهب مباشرة للفيزياء",
-      "url": "/bac-platform/pages/phy.html",
-      "icons": [
-        {
-          "src": "/bac-platform/assets/icons/physics-shortcut.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "الكيمياء",
-      "short_name": "كيمياء",
-      "url": "/bac-platform/pages/che.html"
-    },
-    {
-      "name": "إضافة تذكير",
-      "short_name": "تذكير",
-      "description": "أضف تذكيراً جديداً للدراسة",
-      "url": "/bac-platform/app.html#add-reminder"
-    }
-  ],
-  "prefer_related_applications": false,
-  "related_applications": [],
-  "display_override": ["standalone", "fullscreen"],
-  "edge_side_panel": {
-    "preferred_width": 400
-  }
+  ]
 }
