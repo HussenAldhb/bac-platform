@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>📱 منصة البكالوريا - التطبيق</title>
     
     <!-- Fonts & Icons -->
@@ -17,7 +17,7 @@
     <script src="js/subjects-data.js"></script>
     
     <style>
-        /* ========== نفس التصميم السابق مع بعض التعديلات ========== */
+        /* ... كل الأنماط السابقة ... */
         * {
             margin: 0;
             padding: 0;
@@ -34,7 +34,6 @@
             overflow-x: hidden;
         }
 
-        /* خلفية متحركة */
         .app-bg {
             position: fixed;
             top: 0;
@@ -46,7 +45,6 @@
                         radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1), transparent 60%);
         }
 
-        /* الهيدر */
         .app-header {
             display: flex;
             justify-content: space-between;
@@ -124,7 +122,6 @@
             font-weight: 700;
         }
 
-        /* بطاقة الترحيب */
         .welcome-card {
             background: rgba(255,255,255,0.03);
             backdrop-filter: blur(10px);
@@ -178,7 +175,6 @@
             font-size: 0.9rem;
         }
 
-        /* الإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -220,7 +216,6 @@
             font-size: 0.8rem;
         }
 
-        /* شريط التقدم */
         .progress-card {
             background: rgba(255,255,255,0.03);
             backdrop-filter: blur(10px);
@@ -291,7 +286,6 @@
             color: #94a3b8;
         }
 
-        /* المواد */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -393,7 +387,6 @@
             justify-content: space-between;
         }
 
-        /* الإشعارات المخصصة */
         .custom-reminder {
             background: rgba(124, 58, 237, 0.1);
             backdrop-filter: blur(10px);
@@ -496,8 +489,7 @@
         }
 
         .reminder-info {
-            display: flex;
-            flex-direction: column;
+            flex: 1;
         }
 
         .reminder-message {
@@ -512,14 +504,39 @@
             gap: 5px;
         }
 
-        .delete-reminder {
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 5px;
+        .reminder-actions {
+            display: flex;
+            gap: 8px;
         }
 
-        /* شريط التنقل */
+        .reminder-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 17.5px;
+            border: none;
+            background: rgba(255,255,255,0.05);
+            color: #94a3b8;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reminder-btn:hover {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .reminder-btn.active {
+            background: #10b981;
+            color: white;
+        }
+
+        .reminder-btn.delete:hover {
+            background: #ef4444;
+        }
+
         .app-nav {
             position: fixed;
             bottom: 0;
@@ -543,6 +560,7 @@
             font-size: 0.7rem;
             transition: 0.3s;
             flex: 1;
+            cursor: pointer;
         }
 
         .nav-item i {
@@ -572,6 +590,28 @@
             font-size: 1.5rem;
             margin-bottom: 2px;
         }
+
+        #toast-container {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(100px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -594,7 +634,7 @@
                     <i class="fas fa-bell"></i>
                     <span class="badge" id="notification-count">0</span>
                 </button>
-                <button class="action-btn" onclick="refreshStats()">
+                <button class="action-btn" onclick="refreshAllData()">
                     <i class="fas fa-sync-alt"></i>
                 </button>
             </div>
@@ -609,7 +649,7 @@
                 <i class="fas fa-fire" style="color: #f59e0b;"></i>
                 استمر في التعلم، النجاح قريب
             </div>
-            <div class="streak-box" id="streak-container">
+            <div class="streak-box">
                 <div class="streak-icon">
                     <i class="fas fa-fire"></i>
                 </div>
@@ -620,7 +660,7 @@
             </div>
         </div>
 
-        <!-- الإحصائيات الحقيقية -->
+        <!-- الإحصائيات -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">
@@ -688,7 +728,7 @@
             </div>
         </div>
 
-        <!-- المواد الدراسية (حقيقية) -->
+        <!-- المواد -->
         <div class="section-header">
             <div class="section-title">
                 <i class="fas fa-book-open" style="color: #7c3aed;"></i>
@@ -698,10 +738,10 @@
         </div>
 
         <div class="subjects-grid" id="subjects-grid">
-            <!-- يتم تعبئتها بـ JavaScript -->
+            <!-- يتم تعبئتها بالجافاسكربت -->
         </div>
 
-        <!-- قسم الإشعارات المخصصة -->
+        <!-- الإشعارات المخصصة -->
         <div class="custom-reminder">
             <div class="reminder-title">
                 <i class="fas fa-bell" style="color: #7c3aed;"></i>
@@ -734,370 +774,39 @@
             </div>
 
             <div class="reminders-list" id="reminders-list">
-                <!-- التذكيرات المحفوظة تظهر هنا -->
+                <!-- التذكيرات تظهر هنا -->
             </div>
         </div>
     </div>
 
-    <!-- شريط التنقل -->
+    <!-- شريط التنقل السفلي -->
     <div class="app-nav">
-        <a href="#" class="nav-item active">
+        <div class="nav-item active" data-target="home">
             <i class="fas fa-home"></i>
             <span>الرئيسية</span>
-        </a>
-        <a href="#" class="nav-item">
+        </div>
+        <div class="nav-item" data-target="progress">
             <i class="fas fa-chart-bar"></i>
             <span>التقدم</span>
-        </a>
-        <a href="#" class="nav-item nav-center">
+        </div>
+        <div class="nav-item nav-center" data-target="watch">
             <i class="fas fa-play"></i>
             <span>شاهد</span>
-        </a>
-        <a href="#" class="nav-item">
+        </div>
+        <div class="nav-item" data-target="reminders">
             <i class="fas fa-bell"></i>
             <span>التذكيرات</span>
-        </a>
-        <a href="#" class="nav-item">
+        </div>
+        <div class="nav-item" data-target="settings">
             <i class="fas fa-cog"></i>
             <span>الإعدادات</span>
-        </a>
+        </div>
     </div>
 
-    <script>
-        // ========== دوال الإحصائيات الحقيقية ==========
-        
-        // دالة حساب عدد المشاهدات لكل مادة
-        function getWatchedCount(subject) {
-            try {
-                const stored = localStorage.getItem(subject.storageKey);
-                if (!stored) return 0;
-                
-                if (subject.id === 'fr') {
-                    const data = JSON.parse(stored);
-                    return data.watched ? data.watched.length : 0;
-                }
-                
-                const arr = JSON.parse(stored);
-                return Array.isArray(arr) ? arr.length : 0;
-            } catch (e) {
-                return 0;
-            }
-        }
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
 
-        // دالة حساب الإحصائيات الكلية
-        function calculateStats() {
-            let totalVideos = 0;
-            let watchedVideos = 0;
-            let completedSubjects = 0;
-            let inProgress = 0;
-            let notStarted = 0;
-            
-            SUBJECTS.forEach(sub => {
-                totalVideos += sub.totalVideos;
-                const watched = getWatchedCount(sub);
-                watchedVideos += watched;
-                
-                if (watched === 0) {
-                    notStarted++;
-                } else if (watched >= sub.totalVideos) {
-                    completedSubjects++;
-                } else {
-                    inProgress++;
-                }
-            });
-            
-            const percent = totalVideos ? Math.round((watchedVideos / totalVideos) * 100) : 0;
-            const remaining = totalVideos - watchedVideos;
-            const hours = Math.round(watchedVideos * 0.5); // متوسط 30 دقيقة لكل درس
-            
-            return {
-                totalVideos,
-                watchedVideos,
-                percent,
-                remaining,
-                hours,
-                completedSubjects,
-                inProgress,
-                notStarted
-            };
-        }
-
-        // تحديث واجهة الإحصائيات
-        function updateStats() {
-            const stats = calculateStats();
-            
-            document.getElementById('total-lessons').textContent = stats.totalVideos;
-            document.getElementById('watched-lessons').textContent = stats.watchedVideos;
-            document.getElementById('total-hours').textContent = stats.hours;
-            document.getElementById('remaining-lessons').textContent = stats.remaining;
-            document.getElementById('overall-percent').textContent = stats.percent + '%';
-            document.getElementById('progress-bar').style.width = stats.percent + '%';
-            
-            document.getElementById('completed-subjects').textContent = stats.completedSubjects;
-            document.getElementById('in-progress').textContent = stats.inProgress;
-            document.getElementById('not-started').textContent = stats.notStarted;
-            
-            // تحديث streak (محسوب تقريباً)
-            const streak = calculateStreak();
-            document.getElementById('streak-count').textContent = streak;
-            
-            // تحديث بطاقات المواد
-            renderSubjectCards();
-            
-            // تحديث عداد الإشعارات
-            updateNotificationBadge();
-        }
-
-        // دالة streak (محاكاة منطقية)
-        function calculateStreak() {
-            let streak = 0;
-            const today = new Date().toDateString();
-            
-            // نحاول نجد آخر يوم شاهد فيه فيديو
-            let lastWatchDate = localStorage.getItem('lastWatchDate');
-            
-            if (lastWatchDate === today) {
-                // شاهد اليوم
-                const savedStreak = localStorage.getItem('streak');
-                streak = savedStreak ? parseInt(savedStreak) : 1;
-            } else {
-                // ما شاهدش اليوم
-                streak = 0;
-            }
-            
-            return streak;
-        }
-
-        // رسم بطاقات المواد
-        function renderSubjectCards() {
-            const grid = document.getElementById('subjects-grid');
-            grid.innerHTML = '';
-            
-            SUBJECTS.forEach(sub => {
-                const watched = getWatchedCount(sub);
-                const percent = sub.totalVideos ? Math.round((watched / sub.totalVideos) * 100) : 0;
-                
-                // ألوان مختلفة لكل مادة
-                const colors = ['#7c3aed', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#14b8a6'];
-                const color = colors[SUBJECTS.indexOf(sub) % colors.length];
-                
-                const card = document.createElement('a');
-                card.className = 'subject-card';
-                card.href = sub.file;  // الرابط الأصلي
-                card.innerHTML = `
-                    <div class="card-header">
-                        <div class="card-icon" style="color: ${color};">
-                            <i class="${sub.icon}"></i>
-                        </div>
-                        <span class="card-badge">${percent}%</span>
-                    </div>
-                    <div class="card-title">${sub.name}</div>
-                    <div class="card-stats">
-                        <span><i class="fas fa-video"></i> ${sub.totalVideos}</span>
-                        <span><i class="fas fa-check-circle"></i> ${watched}</span>
-                    </div>
-                    <div class="card-progress-bg">
-                        <div class="card-progress-fill" style="width: ${percent}%; background: ${color};"></div>
-                    </div>
-                    <div class="card-progress-text">
-                        <span>${percent}%</span>
-                        <span>${sub.totalVideos - watched} متبقي</span>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // ========== نظام الإشعارات المخصص ==========
-        
-        let notificationsEnabled = false;
-        let customReminders = [];
-
-        // تحميل التذكيرات المحفوظة
-        function loadReminders() {
-            const saved = localStorage.getItem('customReminders');
-            if (saved) {
-                customReminders = JSON.parse(saved);
-            }
-            renderRemindersList();
-            updateNotificationBadge();
-        }
-
-        // حفظ التذكيرات
-        function saveReminders() {
-            localStorage.setItem('customReminders', JSON.stringify(customReminders));
-            renderRemindersList();
-            updateNotificationBadge();
-        }
-
-        // إضافة تذكير جديد
-        window.addCustomReminder = function() {
-            const message = document.getElementById('reminder-message').value.trim();
-            const time = document.getElementById('reminder-time').value;
-            
-            if (!message || !time) {
-                alert('الرجاء إدخال نص التذكير والوقت');
-                return;
-            }
-            
-            // طلب إذن الإشعارات
-            if ('Notification' in window && Notification.permission !== 'granted') {
-                Notification.requestPermission();
-            }
-            
-            const reminder = {
-                id: Date.now(),
-                message: message,
-                time: time,
-                active: true
-            };
-            
-            customReminders.push(reminder);
-            saveReminders();
-            
-            // جدولة الإشعار
-            scheduleNotification(reminder);
-            
-            alert('✅ تم تفعيل التذكير اليومي');
-        };
-
-        // جدولة إشعار
-        function scheduleNotification(reminder) {
-            if (!reminder.active) return;
-            
-            // حساب وقت الإشعار
-            const [hours, minutes] = reminder.time.split(':');
-            const now = new Date();
-            const scheduled = new Date();
-            scheduled.setHours(parseInt(hours), parseInt(minutes), 0);
-            
-            // إذا كان الوقت مضى، نجدول لبكرة
-            if (scheduled <= now) {
-                scheduled.setDate(scheduled.getDate() + 1);
-            }
-            
-            const timeUntilNotification = scheduled - now;
-            
-            setTimeout(() => {
-                sendNotification(reminder);
-                // نعيد الجدولة كل يوم
-                setInterval(() => sendNotification(reminder), 24 * 60 * 60 * 1000);
-            }, timeUntilNotification);
-        }
-
-        // إرسال الإشعار
-        function sendNotification(reminder) {
-            if (Notification.permission === 'granted' && reminder.active) {
-                new Notification('📚 منصة البكالوريا', {
-                    body: reminder.message,
-                    icon: 'assets/icons/icon-192.png',
-                    badge: 'assets/icons/icon-192.png',
-                    vibrate: [200, 100, 200],
-                    requireInteraction: true
-                });
-                
-                // تحديث آخر إشعار
-                localStorage.setItem('lastNotification', JSON.stringify({
-                    time: new Date().toISOString(),
-                    message: reminder.message
-                }));
-            }
-        }
-
-        // حذف تذكير
-        window.deleteReminder = function(id) {
-            customReminders = customReminders.filter(r => r.id !== id);
-            saveReminders();
-        };
-
-        // تبديل حالة التذكير
-        window.toggleReminder = function(id) {
-            const reminder = customReminders.find(r => r.id === id);
-            if (reminder) {
-                reminder.active = !reminder.active;
-                saveReminders();
-                if (reminder.active) {
-                    scheduleNotification(reminder);
-                }
-            }
-        };
-
-        // عرض قائمة التذكيرات
-        function renderRemindersList() {
-            const list = document.getElementById('reminders-list');
-            
-            if (customReminders.length === 0) {
-                list.innerHTML = `
-                    <div style="text-align: center; color: #94a3b8; padding: 20px;">
-                        <i class="fas fa-bell-slash" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                        <p>لا توجد تذكيرات مفعلة</p>
-                        <p style="font-size: 0.8rem;">أضف تذكيراً ليصلك إشعار يومي</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            list.innerHTML = customReminders.map(reminder => `
-                <div class="reminder-item">
-                    <div class="reminder-info">
-                        <div class="reminder-message">${reminder.message}</div>
-                        <div class="reminder-time">
-                            <i class="fas fa-clock"></i>
-                            ${reminder.time}
-                            ${reminder.active ? 
-                                '<span style="color: #10b981; margin-right: 10px;">● مفعل</span>' : 
-                                '<span style="color: #94a3b8; margin-right: 10px;">○ متوقف</span>'}
-                        </div>
-                    </div>
-                    <div>
-                        <span class="delete-reminder" onclick="toggleReminder(${reminder.id})">
-                            <i class="fas fa-${reminder.active ? 'pause' : 'play'}"></i>
-                        </span>
-                        <span class="delete-reminder" onclick="deleteReminder(${reminder.id})" style="margin-right: 10px;">
-                            <i class="fas fa-trash"></i>
-                        </span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // تحديث عداد الإشعارات
-        function updateNotificationBadge() {
-            const count = customReminders.filter(r => r.active).length;
-            document.getElementById('notification-count').textContent = count;
-        }
-
-        // طلب إذن الإشعارات عند البداية
-        if ('Notification' in window) {
-            Notification.requestPermission();
-        }
-
-        // دوال إضافية
-        window.showNotificationPanel = function() {
-            alert(`🔔 لديك ${customReminders.filter(r => r.active).length} تذكير مفعل`);
-        };
-
-        window.refreshStats = function() {
-            updateStats();
-            loadReminders();
-            alert('🔄 تم تحديث الإحصائيات');
-        };
-
-        // بدء التشغيل
-        window.onload = function() {
-            updateStats();
-            loadReminders();
-            
-            // جدولة كل التذكيرات المحفوظة
-            customReminders.forEach(reminder => {
-                if (reminder.active) {
-                    scheduleNotification(reminder);
-                }
-            });
-            
-            // تحديث الإحصائيات كل دقيقة
-            setInterval(updateStats, 60000);
-        };
-    </script>
+    <!-- كود التطبيق -->
+    <script src="js/app.js"></script>
 </body>
 </html>
