@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>📱 منصة البكالوريا - التطبيق</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7c3aed">
+    
+    <!-- ملف البيانات المشترك -->
+    <script src="js/subjects-data.js"></script>
+    
+    <style>
+        /* ========== نفس التصميم السابق مع بعض التعديلات ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #020617;
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 20px 16px 100px 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* خلفية متحركة */
+        .app-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15), transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1), transparent 60%);
+        }
+
+        /* الهيدر */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .app-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .app-title h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .app-title p {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 22.5px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .action-btn:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: #7c3aed;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f59e0b;
+            color: #020617;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* بطاقة الترحيب */
+        .welcome-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 35px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .greeting {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .greeting span {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .motivation {
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .streak-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .streak-icon {
+            color: #f59e0b;
+            font-size: 1.8rem;
+        }
+
+        .streak-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #f59e0b;
+            line-height: 1;
+        }
+
+        .streak-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* الإحصائيات */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 25px;
+            padding: 20px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 22.5px;
+            background: rgba(124, 58, 237, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #7c3aed;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        /* شريط التقدم */
+        .progress-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .progress-percent {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .progress-bar-bg {
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 30px;
+            width: 0%;
+            transition: width 1s;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .progress-stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .progress-stat-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #a78bfa;
+        }
+
+        .progress-stat-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        /* المواد */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .subject-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 25px;
+            padding: 20px 15px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-3px);
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 22.5px;
+            background: rgba(124, 58, 237, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .card-progress-bg {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .card-progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+
+        .card-progress-text {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* الإشعارات المخصصة */
+        .custom-reminder {
+            background: rgba(124, 58, 237, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid #7c3aed;
+            border-radius: 35px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .reminder-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reminder-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .time-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .time-input {
+            flex: 1;
+        }
+
+        .add-reminder-btn {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .add-reminder-btn:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .reminders-list {
+            margin-top: 20px;
+        }
+
+        .reminder-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reminder-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reminder-message {
+            font-weight: 600;
+        }
+
+        .reminder-time {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .delete-reminder {
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+
+        /* شريط التنقل */
+        .app-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 4px 20px;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: 0.3s;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7c3aed;
+        }
+
+        .nav-center {
+            background: #7c3aed;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 27.5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: -20px;
+            box-shadow: 0 10px 30px #7c3aed;
+        }
+
+        .nav-center i {
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bg"></div>
+
+    <div class="app-container">
+        <!-- الهيدر -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="app-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="app-title">
+                    <h1>بكالوريا+</h1>
+                    <p><i class="fas fa-bolt" style="color: #f59e0b;"></i> تقدم حقيقي</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn" onclick="showNotificationPanel()">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge" id="notification-count">0</span>
+                </button>
+                <button class="action-btn" onclick="refreshStats()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- الترحيب -->
+        <div class="welcome-card">
+            <div class="greeting">
+                مرحباً <span>بالطالب</span> 👋
+            </div>
+            <div class="motivation">
+                <i class="fas fa-fire" style="color: #f59e0b;"></i>
+                استمر في التعلم، النجاح قريب
+            </div>
+            <div class="streak-box" id="streak-container">
+                <div class="streak-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div>
+                    <span class="streak-number" id="streak-count">0</span>
+                    <span class="streak-label">يوم متتالي</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الإحصائيات الحقيقية -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="total-lessons">0</div>
+                    <div class="stat-label">إجمالي الدروس</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="watched-lessons">0</div>
+                    <div class="stat-label">دروس شوهدت</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="total-hours">0</div>
+                    <div class="stat-label">ساعة مشاهدة</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-hourglass-half"></i>
+                </div>
+                <div>
+                    <div class="stat-value" id="remaining-lessons">0</div>
+                    <div class="stat-label">دروس متبقية</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط التقدم -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <div class="progress-title">
+                    <i class="fas fa-chart-line" style="color: #7c3aed;"></i>
+                    تقدمك العام
+                </div>
+                <div class="progress-percent" id="overall-percent">0%</div>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-bar" style="width: 0%;"></div>
+            </div>
+            <div class="progress-stats">
+                <div class="progress-stat-item">
+                    <span class="progress-stat-number" id="completed-subjects">0</span>
+                    <span class="progress-stat-label">مواد كاملة</span>
+                </div>
+                <div class="progress-stat-item">
+                    <span class="progress-stat-number" id="in-progress">0</span>
+                    <span class="progress-stat-label">قيد الدراسة</span>
+                </div>
+                <div class="progress-stat-item">
+                    <span class="progress-stat-number" id="not-started">0</span>
+                    <span class="progress-stat-label">لم تبدأ</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- المواد الدراسية (حقيقية) -->
+        <div class="section-header">
+            <div class="section-title">
+                <i class="fas fa-book-open" style="color: #7c3aed;"></i>
+                موادك
+            </div>
+            <span class="progress-stat-label" id="total-progress-indicator"></span>
+        </div>
+
+        <div class="subjects-grid" id="subjects-grid">
+            <!-- يتم تعبئتها بـ JavaScript -->
+        </div>
+
+        <!-- قسم الإشعارات المخصصة -->
+        <div class="custom-reminder">
+            <div class="reminder-title">
+                <i class="fas fa-bell" style="color: #7c3aed;"></i>
+                تذكير مخصص
+            </div>
+            
+            <div class="reminder-form">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-pencil-alt"></i>
+                        ماذا تريد أن تتذكر؟
+                    </label>
+                    <input type="text" class="form-input" id="reminder-message" placeholder="مثال: حل تمارين الرياضيات" value="حان وقت الدراسة 📚">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-clock"></i>
+                        متى تريد التذكير؟
+                    </label>
+                    <div class="time-input-group">
+                        <input type="time" class="form-input time-input" id="reminder-time" value="21:00">
+                    </div>
+                </div>
+                
+                <button class="add-reminder-btn" onclick="addCustomReminder()">
+                    <i class="fas fa-plus-circle"></i>
+                    تفعيل التذكير اليومي
+                </button>
+            </div>
+
+            <div class="reminders-list" id="reminders-list">
+                <!-- التذكيرات المحفوظة تظهر هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <div class="app-nav">
+        <a href="#" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>التقدم</span>
+        </a>
+        <a href="#" class="nav-item nav-center">
+            <i class="fas fa-play"></i>
+            <span>شاهد</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-bell"></i>
+            <span>التذكيرات</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>الإعدادات</span>
+        </a>
+    </div>
+
+    <script>
+        // ========== دوال الإحصائيات الحقيقية ==========
+        
+        // دالة حساب عدد المشاهدات لكل مادة
+        function getWatchedCount(subject) {
+            try {
+                const stored = localStorage.getItem(subject.storageKey);
+                if (!stored) return 0;
+                
+                if (subject.id === 'fr') {
+                    const data = JSON.parse(stored);
+                    return data.watched ? data.watched.length : 0;
+                }
+                
+                const arr = JSON.parse(stored);
+                return Array.isArray(arr) ? arr.length : 0;
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        // دالة حساب الإحصائيات الكلية
+        function calculateStats() {
+            let totalVideos = 0;
+            let watchedVideos = 0;
+            let completedSubjects = 0;
+            let inProgress = 0;
+            let notStarted = 0;
+            
+            SUBJECTS.forEach(sub => {
+                totalVideos += sub.totalVideos;
+                const watched = getWatchedCount(sub);
+                watchedVideos += watched;
+                
+                if (watched === 0) {
+                    notStarted++;
+                } else if (watched >= sub.totalVideos) {
+                    completedSubjects++;
+                } else {
+                    inProgress++;
+                }
+            });
+            
+            const percent = totalVideos ? Math.round((watchedVideos / totalVideos) * 100) : 0;
+            const remaining = totalVideos - watchedVideos;
+            const hours = Math.round(watchedVideos * 0.5); // متوسط 30 دقيقة لكل درس
+            
+            return {
+                totalVideos,
+                watchedVideos,
+                percent,
+                remaining,
+                hours,
+                completedSubjects,
+                inProgress,
+                notStarted
+            };
+        }
+
+        // تحديث واجهة الإحصائيات
+        function updateStats() {
+            const stats = calculateStats();
+            
+            document.getElementById('total-lessons').textContent = stats.totalVideos;
+            document.getElementById('watched-lessons').textContent = stats.watchedVideos;
+            document.getElementById('total-hours').textContent = stats.hours;
+            document.getElementById('remaining-lessons').textContent = stats.remaining;
+            document.getElementById('overall-percent').textContent = stats.percent + '%';
+            document.getElementById('progress-bar').style.width = stats.percent + '%';
+            
+            document.getElementById('completed-subjects').textContent = stats.completedSubjects;
+            document.getElementById('in-progress').textContent = stats.inProgress;
+            document.getElementById('not-started').textContent = stats.notStarted;
+            
+            // تحديث streak (محسوب تقريباً)
+            const streak = calculateStreak();
+            document.getElementById('streak-count').textContent = streak;
+            
+            // تحديث بطاقات المواد
+            renderSubjectCards();
+            
+            // تحديث عداد الإشعارات
+            updateNotificationBadge();
+        }
+
+        // دالة streak (محاكاة منطقية)
+        function calculateStreak() {
+            let streak = 0;
+            const today = new Date().toDateString();
+            
+            // نحاول نجد آخر يوم شاهد فيه فيديو
+            let lastWatchDate = localStorage.getItem('lastWatchDate');
+            
+            if (lastWatchDate === today) {
+                // شاهد اليوم
+                const savedStreak = localStorage.getItem('streak');
+                streak = savedStreak ? parseInt(savedStreak) : 1;
+            } else {
+                // ما شاهدش اليوم
+                streak = 0;
+            }
+            
+            return streak;
+        }
+
+        // رسم بطاقات المواد
+        function renderSubjectCards() {
+            const grid = document.getElementById('subjects-grid');
+            grid.innerHTML = '';
+            
+            SUBJECTS.forEach(sub => {
+                const watched = getWatchedCount(sub);
+                const percent = sub.totalVideos ? Math.round((watched / sub.totalVideos) * 100) : 0;
+                
+                // ألوان مختلفة لكل مادة
+                const colors = ['#7c3aed', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#14b8a6'];
+                const color = colors[SUBJECTS.indexOf(sub) % colors.length];
+                
+                const card = document.createElement('a');
+                card.className = 'subject-card';
+                card.href = sub.file;  // الرابط الأصلي
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon" style="color: ${color};">
+                            <i class="${sub.icon}"></i>
+                        </div>
+                        <span class="card-badge">${percent}%</span>
+                    </div>
+                    <div class="card-title">${sub.name}</div>
+                    <div class="card-stats">
+                        <span><i class="fas fa-video"></i> ${sub.totalVideos}</span>
+                        <span><i class="fas fa-check-circle"></i> ${watched}</span>
+                    </div>
+                    <div class="card-progress-bg">
+                        <div class="card-progress-fill" style="width: ${percent}%; background: ${color};"></div>
+                    </div>
+                    <div class="card-progress-text">
+                        <span>${percent}%</span>
+                        <span>${sub.totalVideos - watched} متبقي</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ========== نظام الإشعارات المخصص ==========
+        
+        let notificationsEnabled = false;
+        let customReminders = [];
+
+        // تحميل التذكيرات المحفوظة
+        function loadReminders() {
+            const saved = localStorage.getItem('customReminders');
+            if (saved) {
+                customReminders = JSON.parse(saved);
+            }
+            renderRemindersList();
+            updateNotificationBadge();
+        }
+
+        // حفظ التذكيرات
+        function saveReminders() {
+            localStorage.setItem('customReminders', JSON.stringify(customReminders));
+            renderRemindersList();
+            updateNotificationBadge();
+        }
+
+        // إضافة تذكير جديد
+        window.addCustomReminder = function() {
+            const message = document.getElementById('reminder-message').value.trim();
+            const time = document.getElementById('reminder-time').value;
+            
+            if (!message || !time) {
+                alert('الرجاء إدخال نص التذكير والوقت');
+                return;
+            }
+            
+            // طلب إذن الإشعارات
+            if ('Notification' in window && Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+            
+            const reminder = {
+                id: Date.now(),
+                message: message,
+                time: time,
+                active: true
+            };
+            
+            customReminders.push(reminder);
+            saveReminders();
+            
+            // جدولة الإشعار
+            scheduleNotification(reminder);
+            
+            alert('✅ تم تفعيل التذكير اليومي');
+        };
+
+        // جدولة إشعار
+        function scheduleNotification(reminder) {
+            if (!reminder.active) return;
+            
+            // حساب وقت الإشعار
+            const [hours, minutes] = reminder.time.split(':');
+            const now = new Date();
+            const scheduled = new Date();
+            scheduled.setHours(parseInt(hours), parseInt(minutes), 0);
+            
+            // إذا كان الوقت مضى، نجدول لبكرة
+            if (scheduled <= now) {
+                scheduled.setDate(scheduled.getDate() + 1);
+            }
+            
+            const timeUntilNotification = scheduled - now;
+            
+            setTimeout(() => {
+                sendNotification(reminder);
+                // نعيد الجدولة كل يوم
+                setInterval(() => sendNotification(reminder), 24 * 60 * 60 * 1000);
+            }, timeUntilNotification);
+        }
+
+        // إرسال الإشعار
+        function sendNotification(reminder) {
+            if (Notification.permission === 'granted' && reminder.active) {
+                new Notification('📚 منصة البكالوريا', {
+                    body: reminder.message,
+                    icon: 'assets/icons/icon-192.png',
+                    badge: 'assets/icons/icon-192.png',
+                    vibrate: [200, 100, 200],
+                    requireInteraction: true
+                });
+                
+                // تحديث آخر إشعار
+                localStorage.setItem('lastNotification', JSON.stringify({
+                    time: new Date().toISOString(),
+                    message: reminder.message
+                }));
+            }
+        }
+
+        // حذف تذكير
+        window.deleteReminder = function(id) {
+            customReminders = customReminders.filter(r => r.id !== id);
+            saveReminders();
+        };
+
+        // تبديل حالة التذكير
+        window.toggleReminder = function(id) {
+            const reminder = customReminders.find(r => r.id === id);
+            if (reminder) {
+                reminder.active = !reminder.active;
+                saveReminders();
+                if (reminder.active) {
+                    scheduleNotification(reminder);
+                }
+            }
+        };
+
+        // عرض قائمة التذكيرات
+        function renderRemindersList() {
+            const list = document.getElementById('reminders-list');
+            
+            if (customReminders.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; color: #94a3b8; padding: 20px;">
+                        <i class="fas fa-bell-slash" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>لا توجد تذكيرات مفعلة</p>
+                        <p style="font-size: 0.8rem;">أضف تذكيراً ليصلك إشعار يومي</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            list.innerHTML = customReminders.map(reminder => `
+                <div class="reminder-item">
+                    <div class="reminder-info">
+                        <div class="reminder-message">${reminder.message}</div>
+                        <div class="reminder-time">
+                            <i class="fas fa-clock"></i>
+                            ${reminder.time}
+                            ${reminder.active ? 
+                                '<span style="color: #10b981; margin-right: 10px;">● مفعل</span>' : 
+                                '<span style="color: #94a3b8; margin-right: 10px;">○ متوقف</span>'}
+                        </div>
+                    </div>
+                    <div>
+                        <span class="delete-reminder" onclick="toggleReminder(${reminder.id})">
+                            <i class="fas fa-${reminder.active ? 'pause' : 'play'}"></i>
+                        </span>
+                        <span class="delete-reminder" onclick="deleteReminder(${reminder.id})" style="margin-right: 10px;">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // تحديث عداد الإشعارات
+        function updateNotificationBadge() {
+            const count = customReminders.filter(r => r.active).length;
+            document.getElementById('notification-count').textContent = count;
+        }
+
+        // طلب إذن الإشعارات عند البداية
+        if ('Notification' in window) {
+            Notification.requestPermission();
+        }
+
+        // دوال إضافية
+        window.showNotificationPanel = function() {
+            alert(`🔔 لديك ${customReminders.filter(r => r.active).length} تذكير مفعل`);
+        };
+
+        window.refreshStats = function() {
+            updateStats();
+            loadReminders();
+            alert('🔄 تم تحديث الإحصائيات');
+        };
+
+        // بدء التشغيل
+        window.onload = function() {
+            updateStats();
+            loadReminders();
+            
+            // جدولة كل التذكيرات المحفوظة
+            customReminders.forEach(reminder => {
+                if (reminder.active) {
+                    scheduleNotification(reminder);
+                }
+            });
+            
+            // تحديث الإحصائيات كل دقيقة
+            setInterval(updateStats, 60000);
+        };
+    </script>
+</body>
+</html>
