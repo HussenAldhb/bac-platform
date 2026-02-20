@@ -406,62 +406,49 @@
             color: #94a3b8;
             font-size: 13px;
         }
-   </style>
-<!-- بداية: الزر الذكي - حافظ على شكله الحالي تماماً -->
-   <style>
-    /* نفس الاستايل الموجود - لا تغير شيئاً */
-    .glass-home-btn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        background: rgba(139, 92, 246, 0.2);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        color: white;
-        width: 50px;
-        height: 50px;
-        border-radius: 25px;
-        text-decoration: none;
-        z-index: 9999;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-    }
+    </style>
+<!-- بداية: إضافة الزر الزجاجي العصري -->
+    <style>
+        .glass-home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            text-decoration: none;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
 
-    .glass-home-btn:hover {
-        background: rgba(139, 92, 246, 0.4);
-        border: 1px solid rgba(139, 92, 246, 0.6);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
-    }
-</style>
+        .glass-home-btn:hover {
+            background: rgba(139, 92, 246, 0.4);
+            border: 1px solid rgba(139, 92, 246, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
 
-<script>
-    // كود الذكاء - يحدد المصدر تلقائياً
-    (function() {
-        // انتظر حتى تحميل الصفحة
-        window.addEventListener('load', function() {
-            const homeBtn = document.querySelector('.glass-home-btn');
-            if (homeBtn) {
-                // هل نحن في التطبيق المثبت؟
-                const isInApp = window.matchMedia('(display-mode: standalone)').matches || 
-                               window.navigator.standalone === true ||
-                               document.referrer.includes('app.html');
-                
-                // الرابط الذكي
-                homeBtn.href = isInApp ? '../app.html' : '../index.html';
-                homeBtn.title = isInApp ? 'العودة للتطبيق' : 'العودة للرئيسية';
-                
-                console.log('📱 وضع التشغيل:', isInApp ? 'تطبيق' : 'موقع');
-            }
-        });
-    })();
-</script>
-<!-- نهاية الزر الذكي -->
+        .glass-home-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+    <!-- نهاية الزر الزجاجي -->
+</head>
+<body>
+    <!-- الزر الزجاجي -->
+    <a href="../index.html" class="glass-home-btn" title="العودة للرئيسية">
+        <i class="fas fa-home"></i>
+    </a>
 
         <!-- ======== الهيدر ثابت في كل الصفحات ======== -->
         <div class="header-card">
@@ -951,4 +938,3 @@
     </script>
 </body>
 </html>
-
