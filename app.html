@@ -1401,6 +1401,19 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
+        // عرض اسم المستخدم من تيليجرام
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            const user = tg.initDataUnsafe?.user;
+            if (user && user.first_name) {
+                const nameElement = document.querySelector('.greeting-text span');
+                if (nameElement) {
+                    nameElement.textContent = user.first_name;
+                }
+            }
+        }
         // ========== بيانات المواد المصححة ==========
         const SUBJECTS = [
             { id: 'chem', name: 'الكيمياء', icon: 'fas fa-flask', file: 'pages/che.html', totalVideos: 57, color: '#fa709a', storageKey: 'chem_watched' },
