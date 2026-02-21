@@ -7,6 +7,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        (function() {
+    // التحقق من بيئة تيليجرام
+    var isTelegram = false;
+    try {
+        isTelegram = window.Telegram && window.Telegram.WebApp ? true : false;
+    } catch (e) {}
+
+    // التحقق من وضع التثبيت (PWA)
+    var isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                      window.navigator.standalone || false;
+
+    // إذا كان في تيليجرام أو PWA، لا نوجه
+    if (isTelegram || isStandalone) {
+        if (isTelegram) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+        }
+        return;
+    }
+
+    // متصفح عادي: نتحقق إذا كان قد تم الترحيب مسبقاً
+    if (sessionStorage.getItem('welcomed') === 'true') {
+        // سبق أن دخل إلى welcome.html، ابق هنا
+        return;
+    } else {
+        // أول مرة: نوجه إلى welcome.html
+        window.location.replace('welcome.html');
+    }
+})();
+</script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         
