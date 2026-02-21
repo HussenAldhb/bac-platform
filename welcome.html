@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة البكالوريا – رمضانك معنا</title>
     <script>
+    // وضع علامة في sessionStorage تفيد بأن المستخدم قد تم توجيهه إلى welcome.html
+    sessionStorage.setItem('welcomed', 'true');
+    </script>
+    <script>
     (function() {
         // التحقق من بيئة تيليجرام بطريقة آمنة ومتوافقة
         var isTelegram = false;
@@ -892,6 +896,7 @@
     </script>
 </body>
 </html>
+
 
 
 
