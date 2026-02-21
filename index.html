@@ -9,7 +9,10 @@
     <script>
         if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
             window.location.href = 'app.html';
-        }
+       }
+        if (window.Telegram?.WebApp) {
+            window.location.href = 'app.html';
+       }
     </script>
     
     <!-- Fonts & Icons -->
@@ -863,5 +866,6 @@
     </script>
 </body>
 </html>
+
 
 
