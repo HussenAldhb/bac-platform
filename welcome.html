@@ -8,43 +8,6 @@
     // وضع علامة في sessionStorage تفيد بأن المستخدم قد تم توجيهه إلى welcome.html
     sessionStorage.setItem('welcomed', 'true');
     </script>
-    <script>
-    (function() {
-        // التحقق من بيئة تيليجرام بطريقة آمنة ومتوافقة
-        var isTelegram = false;
-        try {
-            isTelegram = window.Telegram && window.Telegram.WebApp ? true : false;
-        } catch (e) {
-            // تجاهل أي خطأ
-        }
-
-        // التحقق من وضع PWA (مثبت على الشاشة الرئيسية)
-        var isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                          window.navigator.standalone || false;
-
-        // إذا كان أي من الشرطين صحيحاً، انتقل إلى app.html فوراً
-        if (isTelegram || isStandalone) {
-            // منع أي تنفيذ آخر للصفحة
-            window.stop();
-            window.location.replace('app.html');
-            return;
-        }
-
-        // إذا لم يتم التوجيه، نضيف مستمعاً لحدث التحميل للتأكد مجدداً
-        window.addEventListener('load', function() {
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.location.replace('app.html');
-            }
-        });
-    })();
-    </script>
-    <!-- كود إعادة التوجيه: إذا كان التطبيق مثبتاً، انتقل إلى app.html -->
-    <script>
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-            window.location.href = 'app.html';
-       }
-    </script>
-    
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -896,6 +859,7 @@
     </script>
 </body>
 </html>
+
 
 
 
