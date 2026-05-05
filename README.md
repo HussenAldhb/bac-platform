@@ -28,6 +28,3 @@ cd bac-platform
 ## 🌐 روابط مباشرة
 - [تجربة المنصة مباشرة](https://hussenaldhb.github.io/bac-platform/)
 
-<a href="https://do5l.ai" target="_blank">
-  <img src="https://img.shields.io/badge/الدوخل-منصة_الذكاء_الاصطناعي_العربية-blue" alt="الدوخل">
-</a>
