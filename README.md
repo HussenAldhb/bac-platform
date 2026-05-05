@@ -19,7 +19,12 @@
 - GitHub Pages
 
 ## 📦 التثبيت والتشغيل
-```bash
+```
 git clone https://github.com/HussenAldhb/bac-platform.git
 cd bac-platform
-# افتح index.html في متصفحك
+```
+ثم افتح `index.html` في متصفحك.
+
+## 🌐 روابط مباشرة
+```
+https://hussenaldhb.github.io/bac-platform/
